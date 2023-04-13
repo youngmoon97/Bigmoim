@@ -15,7 +15,7 @@ public class ClassBean {
 	private int categoryNum;
 	private String classOpenDate;
 	private int businessNum;
-	private int teskNum;
+	private int taskNum;
 	private int themeNum;
 	public int getClassNum() {
 		return classNum;
@@ -102,10 +102,10 @@ public class ClassBean {
 		this.businessNum = businessNum;
 	}
 	public int getTeskNum() {
-		return teskNum;
+		return taskNum;
 	}
-	public void setTeskNum(int teskNum) {
-		this.teskNum = teskNum;
+	public void setTeskNum(int taskNum) {
+		this.taskNum = taskNum;
 	}
 	public int getThemeNum() {
 		return themeNum;

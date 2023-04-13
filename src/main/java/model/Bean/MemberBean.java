@@ -19,6 +19,18 @@ public class MemberBean {
 	private int taskNum;
 	private int themeNum;
 	
+	public String getMemberLikeArea() {
+		return memberLikeArea;
+	}
+	public void setMemberLikeArea(String memberLikeArea) {
+		this.memberLikeArea = memberLikeArea;
+	}
+	public int getMemberGrade() {
+		return memberGrade;
+	}
+	public void setMemberGrade(int memberGrade) {
+		this.memberGrade = memberGrade;
+	}
 	public String getMemberId() {
 		return memberId;
 	}
