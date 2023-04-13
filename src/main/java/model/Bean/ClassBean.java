@@ -17,6 +17,13 @@ public class ClassBean {
 	private int businessNum;
 	private int taskNum;
 	private int themeNum;
+	
+	public int getTaskNum() {
+		return taskNum;
+	}
+	public void setTaskNum(int taskNum) {
+		this.taskNum = taskNum;
+	}
 	public int getClassNum() {
 		return classNum;
 	}
@@ -100,12 +107,6 @@ public class ClassBean {
 	}
 	public void setBusinessNum(int businessNum) {
 		this.businessNum = businessNum;
-	}
-	public int getTeskNum() {
-		return taskNum;
-	}
-	public void setTeskNum(int taskNum) {
-		this.taskNum = taskNum;
 	}
 	public int getThemeNum() {
 		return themeNum;
