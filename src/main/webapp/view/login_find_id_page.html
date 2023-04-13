@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>아이디 결과</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        .result-container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-container">
+        <h2>아이디 결과</h2>
+        <p>당신의 아이디는 <strong id="resultId"></strong>입니다.</p>
+    </div>
+
+    <script>
+        var params = new URLSearchParams(location.search);
+        var resultId = params.get("id");
+        document.getElementById("resultId").innerHTML = resultId;
+    </script>
+
+</body>
+</html>

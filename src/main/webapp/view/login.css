@@ -1,0 +1,180 @@
+:root{
+    /*컬러를 미리 지정해줌*/
+    --font-color: #4e4e4e;
+    --border-gray-color: #dadada;
+    --kakao-color: #f9e000;
+    --naver-color: #04c75a;
+    --facebook-color: #4064ac;
+}
+*{
+    /*전체요소에 대해*/
+    margin: 0;
+    padding: 0;
+}
+.main-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 80px;
+    margin: 0 auto;
+}
+.main-container .main-wrap{
+    width: 768px;
+}
+.main-container .main-wrap {
+    width: 96px;
+    height: 30px;
+}
+.main-container .main-wrap /* .logo-wrap */{
+    padding-top: 55px;
+}
+.main-container .main-wrap .logo-wrap /* .lmg */{
+    width: 500px;
+    height: auto;
+}
+.main-container .main-wrap header {
+    display: flex;
+    justify-content: flex-end;
+}
+.main-container .main-wrap header .logo-wrap{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login-input-section-wrap{
+    padding-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login-input-wrap{
+    width: 465px;
+    height: 48px;
+    border: solid 1px var(--border-gray-color);
+}
+.password-wrap{
+    margin-top: 13px;
+}
+.login-input-wrap input{
+    border: none;
+    width: 430px;
+    margin-top: 10px;
+    font-size: 14px;
+    margin-left: 10px;
+    height: 30px;
+}
+.login-button-wrap{
+    padding-top: 13px;
+}
+.login-button-wrap button{
+    width: 465px;
+    height: 48px;
+    font-size: 18px;
+    background: pink;/* 로그인 버튼 컬러 */
+    color: white;
+    border: solid 1px pink;
+    border-radius: 30px;
+}
+.login-findid-findpw-join{
+    width: 465px;
+    height: 42px;
+    display: flex;
+    font-size: 15px;
+    color: var(--font-color);
+    align-items: center;
+    border-bottom: var(--border-gray-color);
+    padding-left: 5px;
+    line-height: 25px;
+    padding-bottom: 20px;
+}
+.forget-msg-id{
+    flex-direction: row;
+    padding-left: 75px;
+    padding-right: 10px;
+}
+.forget-msg-pw{
+    flex-direction: row;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.join-msg{
+    flex-direction: row;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.forget-msg-line{
+    flex-direction: row;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+i{
+    font-size: 25px;
+    font-style: none;
+}
+span{
+    padding-left: 5px;
+    line-height: 25px;
+}
+.easy-sgin-in-wrap{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    
+}
+.easy-sgin-in-wrap h2{
+    font-size: 20px;
+}
+.easy-sgin-in-wrap .sign-button-list{
+    padding-top: 25px;
+    list-style: none;
+    width: 465px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.easy-sgin-in-wrap .sign-button-list li{
+    padding-bottom: 10px;
+}
+.easy-sgin-in-wrap .sign-button-list li button {
+    font-family: 'Barlow', sans-serif;
+    /* font-family: 'Heebo', sans-serif; */
+    width: 465px;
+    height: 56px;
+    text-align: center;
+    border: solid 1px white;
+    border-radius: 30px;
+}
+/* .easy-sgin-in-wrap .sign-button-list li .kakao-btn{
+    background: var(--facebook-color);
+} */
+.easy-sgin-in-wrap .sign-button-list li button i{
+    padding-left: 15px;
+    font-size: 20px;
+}
+.easy-sgin-in-wrap .sign-button-list li button span{
+    font-size: 18px;
+}
+.easy-sgin-in-wrap{
+    font-size: 14px;
+    padding-top: 10px;
+}
+.kakao-btn{
+    background-color: var(--kakao-color);
+}
+.facebook-btn{
+    background-color: var(--facebook-color);
+    color: white;
+}
+.line-btn{
+    background-color: var(--naver-color);
+    color: white;
+}
+/* .forget-msg > a{
+    text-decoration: none !important;
+} */
+a:link{text-decoration: none !important;}
+a:visited{text-decoration: none !important;}
+a:hover{text-decoration: none !important;}
+:active{text-decoration: none !important;}

@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /*<!-- 사진 추가용 스타일-->*/
+        .image-preview-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .file-input-container {
+            margin-right: 10px;
+        }
+
+        #preview-image {
+            max-width: 200px;
+            max-height: 200px;
+        }
+    </style>
+
+    <title>회원가입</title>
+</head>
+
+<body>
+
+    <div class="content">
+        <div class="wrapper">
+            <div class="row justify-content-center">
+                <div class="col-md-6 contents">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="main-merge">
+                                <div>
+                                    <h3> <strong>회원가입</strong></h3>
+                                </div>
+                                <form action="#" method="post">
+                                    <div class="sign-nameHeader">
+                                        <label for="name">이름(필수)</label>
+                                        <input type="text" class="form-control" id="name">
+                                    </div>
+
+                                    <!--버튼이 한줄에 오기위해  부모에 input-button-wrapper 추가후 
+                                    css 수정-->
+                                    <div class="sign-nameHeader">
+                                        <label for="username">아이디(필수)</label>
+                                        <div class="input-button-wrapper">
+                                            <input type="text" class="form-control" id="username">
+                                            <button onclick="checkDuplicate()">중복확인</button>
+                                        </div>
+                                    </div>
+
+
+                                    <!--중복확인 기능 스크립트 (나중에 js로 옮겨야함)-->
+                                    <script>
+                                        function checkDuplicate() {
+                                            // 입력된 아이디 가져오기
+                                            var username = document.getElementById("username").value;
+
+                                            // 아이디 중복 확인 로직 추가
+                                            // 중복된 경우 처리하는 로직 구현
+
+                                            // 예시: 중복된 경우 알림창으로 메시지 출력
+                                            if (username === "중복된아이디") {
+                                                alert("중복된 아이디입니다. 다른 아이디를 입력해주세요.");
+                                            } else {
+                                                alert("사용 가능한 아이디입니다.");
+                                            }
+                                        }
+                                    </script>
+
+
+                                    <div class="sign-nameHeader">
+                                        <label for="password">비밀번호(필수)</label>
+                                        <input type="password" class="form-control" id="password">
+                                    </div>
+
+                                    <div class="sign-nameHeader">
+                                        <label for="passwordConfirm">비밀번호 재확인</label>
+                                        <input type="password" class="form-control" id="passwordConfirm">
+                                    </div>
+
+                                    <div class="sign-nameHeader">
+                                        <label for="tel">전화번호(필수)</label>
+                                        <div class="input-button-wrapper">
+                                            <input type="text" class="form-control" id="username">
+                                            <button onclick="phoneOK()">인증</button>
+                                        </div>
+                                    </div>
+
+                                    <!--집주소 zipcode 그대로 사용한다고 가정-->
+                                    <div class="sign-nameHeader">
+                                        <label for="homeadd">집주소</label>
+                                    </div>
+                                    <div>
+                                        <br>
+                                        <input name="zipcode" size="5" readonly>
+                                        <input type="button" value="우편번호찾기" onClick="zipSearch()">
+                                    </div>
+                                    <div class="sign-nameHeader">
+                                        <br>
+                                        <input name="zipcode-city1" size="7" readonly>
+                                        <input name="zipcode-city2" size="10" readonly>
+                                    </div>
+
+                                    <div class="sign-nameHeader">
+                                        <label>직장 주소</label>
+                                        <br />
+                                    </div>
+                                    <div>
+                                        <input name="zipcode" size="5" readonly>
+                                        <input type="button" value="우편번호찾기" onClick="zipSearch()">
+                                        <div class="sign-nameHeader">
+                                            <br>
+                                            <input name="zipcode-city1" size="7" readonly>
+                                            <input name="zipcode-city2" size="10" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="sign-nameHeader fourth">
+                                        <label for="jobadd">관심 지역</label>
+                                        <br>
+                                    </div>
+
+                                    <div class="sign-nameHeader">
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <select class="form-control" id="bigcity">
+                                                    <option value="">광역시</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <select class="form-control" id="smallcity">
+                                                    <option value="">구 / 동</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="sign-nameHeader">
+                                        <label for="jobadd">생일</label>
+                                        <br>
+
+                                    </div>
+                                    <div class="sign-nameHeader">
+                                        <div class="form-row">
+                                            <div class="col">
+                                                <select class="form-control" id="year">
+                                                    <option value="">연도</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <select class="form-control" id="month">
+                                                    <option value="">월</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <select class="form-control" id="day">
+                                                    <option value="">일</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        // 연도 옵션 생성
+                                        var yearSelect = document.getElementById("year");
+                                        var currentYear = new Date().getFullYear();
+                                        for (var i = currentYear; i >= 1900; i--) {
+                                            var option = document.createElement("option");
+                                            option.text = i;
+                                            option.value = i;
+                                            yearSelect.add(option);
+                                        }
+
+                                        // 월 옵션 생성
+                                        var monthSelect = document.getElementById("month");
+                                        for (var i = 1; i <= 12; i++) {
+                                            var option = document.createElement("option");
+                                            option.text = i;
+                                            option.value = i;
+                                            monthSelect.add(option);
+                                        }
+
+                                        // 일 옵션 생성
+                                        var daySelect = document.getElementById("day");
+                                        for (var i = 1; i <= 31; i++) {
+                                            var option = document.createElement("option");
+                                            option.text = i;
+                                            option.value = i;
+                                            daySelect.add(option);
+                                        }
+                                    </script>
+
+
+                                    <div class="sign-nameHeader">
+                                        <label for="jobadd">업종 / 직무 / 테마</label>
+                                        <br>
+
+                                    </div>
+
+                                    <div class="sign-nameHeader">
+
+                                        <div class="form-row">
+
+                                            <div class="col">
+                                                <select class="form-control" id="year">
+                                                    <option value="">업종</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <select class="form-control" id="month">
+                                                    <option value="">직무</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <select class="form-control" id="day">
+                                                    <option value="">테마</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="sign-nameHeader">
+                                        <label for="jobadd">성별</label>
+                                        <br>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <div class="d-inline-block" style="margin-right: 50px;">
+                                            <input class="form-check-input" type="radio" name="gender" id="male"
+                                                value="male">
+                                            <label class="form-check-label" for="male">
+                                                남자
+                                            </label>
+                                        </div>
+                                        <div class="d-inline-block" style="margin-left: 50px;">
+                                            <input class="form-check-input" type="radio" name="gender" id="female"
+                                                value="female">
+                                            <label class="form-check-label" for="female">
+                                                여자
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="sign-nameHeader">
+                                        <label for="jobadd">관심사</label>
+                                        <br>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-control" id="day">
+                                            <option value="">관심사 선택</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="sign-nameHeader">
+                                        <label for="jobadd">회원사진</label>
+                                        <br>
+                                    </div>
+
+                                    <div class="image-preview-container">
+                                        <img id="preview-image" src="" alt="Preview Image">
+                                        <div class="file-input-container">
+                                            <input type="file" class="form-control-file" id="profile-image"
+                                                name="profile-image" onchange="showPreviewImage(this)">
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        function showPreviewImage(input) {
+                                            var previewImage = document.getElementById('preview-image');
+                                            if (input.files && input.files[0]) {
+                                                var reader = new FileReader();
+                                                reader.onload = function (e) {
+                                                    previewImage.src = e.target.result;
+                                                }
+                                                reader.readAsDataURL(input.files[0]);
+                                            } else {
+                                                previewImage.src = '';
+                                            }
+                                        }
+                                    </script>
+
+                                    <br>
+                                    <br>
+                                    <div class="sign-nameHeader">
+                                        <label for="jobadd">자기소개</label>
+                                        <br>
+                                    </div>
+
+                                    <div class="sign-nameHeader">
+                                        <textarea class="form-control" id="self-intro" name="self-intro" rows="4"
+                                            maxlength="100" placeholder="자기소개를 해주세요. (100자 이내)"></textarea>
+                                    </div>
+                                    <input type="submit" value="가입하기" class="btn btn-pill text-white btn-block"
+                                        style="background-color: pink;">
+
+                            </div>
+                        </div>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

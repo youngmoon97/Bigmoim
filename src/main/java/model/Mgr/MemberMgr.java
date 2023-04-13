@@ -139,7 +139,7 @@ public class MemberMgr {
 			MemberBean bean = new MemberBean();
 			try {
 				con = pool.getConnection();
-				sql = "select * from tblMember where memberId = ?";
+				sql = "select * from member where memberId = ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, id);
 				rs = pstmt.executeQuery();

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대모임 로그인 페이지</title>
+    <link type="text/css" rel="stylesheet" href="login.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap');
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="main-wrap">
+            <header>
+                <div class="logo-wrap">
+                    <h1>대모임</h4>
+                </div>
+            </header>
+            <form class="login-input-section-wrap">
+                <div class="login-input-wrap">
+                    <input id="LOGIN_ID" placeholder="아이디" type="text">
+                </div>            
+                <div class="login-input-wrap password-wrap">
+                    <input id="LOGIN_PW" placeholder="비밀번호" type="password">
+                </div>
+                <div class="login-button-wrap">
+                    <a><button id="LOGIN_BTN" type="button">로그인</button></a>
+                </div>
+                <div class="login-findid-findpw-join">
+                    <p><a class="forget-msg-id">아이디찾기</a></p>
+                    <p class="forget-msg-line">|</a></p>
+                    <p><a class="forget-msg-pw">비밀번호찾기</a></p>
+                    <p class="forget-msg-line">|</a></p>
+                    <p><a class="join-msg">회원가입</a></p>
+                </div>
+            </form>
+            <form class="easy-sgin-in-wrap">
+                <ui class="sign-button-list">
+                    <li><button class="kakao-btn"><span class="fas fa-kakao">KAKAO</span></button></li>
+                    <li><button class="facebook-btn"><span class="fab fa-facebook-square">FACEBOOK</span></button></li>
+                    <li><button class="line-btn"><span class="fab fa-line">NAVER</span></button></li>
+                </ui>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

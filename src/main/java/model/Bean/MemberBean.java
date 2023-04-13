@@ -13,7 +13,6 @@ public class MemberBean {
 	private String memberAddr;
 	private String memberJobAddr;
 	private String memberLikeArea;
-	private int memberGrade;	//일반회원=0, 관리자=1
 	private int categoryNum;
 	private int businessNum;
 	private int taskNum;
@@ -24,12 +23,6 @@ public class MemberBean {
 	}
 	public void setMemberLikeArea(String memberLikeArea) {
 		this.memberLikeArea = memberLikeArea;
-	}
-	public int getMemberGrade() {
-		return memberGrade;
-	}
-	public void setMemberGrade(int memberGrade) {
-		this.memberGrade = memberGrade;
 	}
 	public String getMemberId() {
 		return memberId;
