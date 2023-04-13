@@ -9,6 +9,21 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap');
     </style>
+        <script>
+		 function loginCheck(){
+		if(document.loginFrm.loginId.value==""){
+			alert("아이디를 입력해 주세요.");
+			document.loginFrm.loginId.focus();
+			return;
+		}
+		if(document.loginFrm.loginPw.value==""){
+			alert("비밀번호를 입력해 주세요.");
+			document.loginFrm.loginPw.focus();
+			return;
+		}
+		document.loginFrm.submit();
+	}
+</script>
 </head>
 <body>
     <div class="main-container">
@@ -18,17 +33,18 @@
                     <h1>대모임</h4>
                 </div>
             </header>
-            <form class="login-input-section-wrap">
+            <form method="post" name=loginFrm class="login-input-section-wrap" action="loginProcs.jsp">
                 <div class="login-input-wrap">
-                    <input id="LOGIN_ID" placeholder="아이디" type="text">
+                    <input name="login_id" id="loginId" placeholder="아이디" type="text">
                 </div>            
-                <div class="login-input-wrap password-wrap">
-                    <input id="LOGIN_PW" placeholder="비밀번호" type="password">
+                <div  class="login-input-wrap password-wrap">
+                    <input name="login_pw" id="loginPw" placeholder="비밀번호" type="password">
                 </div>
                 <div class="login-button-wrap">
-                    <a><button id="LOGIN_BTN" type="button">로그인</button></a>
+                    <a><button id="loginBtn" type="button" onclick = "loginCheck()" >로그인</button></a>
                 </div>
                 <div class="login-findid-findpw-join">
+                	<a >
                     <p><a class="forget-msg-id">아이디찾기</a></p>
                     <p class="forget-msg-line">|</a></p>
                     <p><a class="forget-msg-pw">비밀번호찾기</a></p>

@@ -167,42 +167,42 @@ public class MemberMgr {
 			}
 			return bean;
 		}
-		//회원정보 수정
-		public boolean updateMember(MemberBean bean) {
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			String sql = null;
-			boolean flag = false;
-			try {
-				con = pool.getConnection();
-				sql = "update member "
-					+ "set memberPw=?,memberName=?,memberTel =?,memberImg =?,memberProfile =?,"
-					+ "memberAddr =?, memberJobAddr =?, memberLikeArea =?, categoryNum=?"
-					+ "businessNum =?, taskNum =?,themeNum =?  "
-					+ "where memberid = ?;";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, bean.getMemberPw());
-				pstmt.setString(2, bean.getMemberName());
-				pstmt.setString(3, bean.getMemberTel());
-				pstmt.setString(4, bean.getMemberImg());
-				pstmt.setString(5, bean.getMemberProfile());
-				pstmt.setString(6, bean.getMemberAddr());
-				pstmt.setString(7, bean.getMemberJobAddr());
-				pstmt.setString(8, bean.getMemberLikeArea());
-				pstmt.setInt(9, bean.getCategoryNum());
-				pstmt.setInt(10, bean.getBusinessNum());
-				pstmt.setInt(11, bean.getTaskNum());
-				pstmt.setInt(12, bean.getThemeNum());	
-				pstmt.setString(13, bean.getMemberId());			
-				if(pstmt.executeUpdate()==1)
-					flag = true;
-			} catch (Exception e) {
-				e.printStackTrace();
+	//회원정보 수정
+	public boolean updateMember(MemberBean bean) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "update member "
+				+ "set memberPw=?,memberName=?,memberTel =?,memberImg =?,memberProfile =?,"
+				+ "memberAddr =?, memberJobAddr =?, memberLikeArea =?, categoryNum=?"
+				+ "businessNum =?, taskNum =?,themeNum =?  "
+				+ "where memberid = ?;";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, bean.getMemberPw());
+			pstmt.setString(2, bean.getMemberName());
+			pstmt.setString(3, bean.getMemberTel());
+			pstmt.setString(4, bean.getMemberImg());
+			pstmt.setString(5, bean.getMemberProfile());
+			pstmt.setString(6, bean.getMemberAddr());
+			pstmt.setString(7, bean.getMemberJobAddr());
+			pstmt.setString(8, bean.getMemberLikeArea());
+			pstmt.setInt(9, bean.getCategoryNum());
+			pstmt.setInt(10, bean.getBusinessNum());
+			pstmt.setInt(11, bean.getTaskNum());
+			pstmt.setInt(12, bean.getThemeNum());	
+			pstmt.setString(13, bean.getMemberId());			
+			if(pstmt.executeUpdate()==1)
+				flag = true;
+		} catch (Exception e) {
+			e.printStackTrace();
 			} finally {
-				pool.freeConnection(con, pstmt);
-			}
-			return flag;
+			pool.freeConnection(con, pstmt);
 		}
+		return flag;
+	}
 		///admin mode/////////////
 		public Vector<MemberBean> getMemberList() {
 			Connection con = null;

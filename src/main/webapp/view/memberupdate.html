@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /*<!-- 사진 추가용 스타일-->*/
+        .image-preview-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .file-input-container {
+            margin-right: 10px;
+        }
+
+        #preview-image {
+            max-width: 200px;
+            max-height: 200px;
+        }
+    </style>
+
+
+
+    <title>개인정보 수정</title>
+</head>
+
+<body>
+
+    <div class="content">
+        <div class="wrapper">
+            <div class="row justify-content-center">
+
+                <div class="col-md-6 contents ">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="main-merge"> <!--main page 간격-->
+                                <div class="mb-4 d-flex align-items-center justify-content-between">
+                                    <!--justify-content-between : 수정 버튼을 우측으로 가기위에 클래스 추가 -->
+                                    <a href="#" class="btn btn-light ml-0">
+                                        <span class="icon-arrow-left"></span>
+                                    </a>
+                                    <h3 class="ml-1 mb-0"><strong>내 프로필</strong></h3>
+                                    <input type="submit" value="수정">
+
+                                </div>
+                                <form action="/update" method="post">
+
+                                    <div class="image-preview-container">
+                                        <img id="preview-image" src="" alt="Preview Image">
+                                        <div class="file-input-container">
+                                            <input type="file" class="form-control-file" id="profile-image"
+                                                name="profile-image" onchange="showPreviewImage(this)">
+
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <script>
+                                        function showPreviewImage(input) {
+                                            var previewImage = document.getElementById('preview-image');
+                                            if (input.files && input.files[0]) {
+                                                var reader = new FileReader();
+                                                reader.onload = function (e) {
+                                                    previewImage.src = e.target.result;
+                                                }
+                                                reader.readAsDataURL(input.files[0]);
+                                            } else {
+                                                previewImage.src = '';
+                                            }
+                                        }
+                                    </script>
+
+                                    <div style="display: flex; justify-content: space-between;">
+                                        <!-- display: flex; justify-content: space-between;: 한줄에 다 나오도록-->
+                                        <input type="text" id="name" name="name" size="20" value="기존이름">
+                                        <div style="display: flex; gap: 10px;">
+                                            <input type="radio" id="male" name="gender" value="male">
+                                            <label for="male">남자</label>
+                                            <input type="radio" id="female" name="gender" value="female">
+                                            <label for="female">여자</label>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <br>
+                                        <input type="text" id="birth" name="birth" size="12"
+                                            value="기존생일(ex.2000.01.01)">
+                                        <input type="text" id="city" name="city" size="20" value="기존도시">
+                                    </div>
+
+                                    <div class="sign-nameHeader">
+                                        <br>
+                                        <textarea class="form-control" id="self-intro" name="self-intro" rows="4"
+                                            maxlength="100" placeholder="간단한 자기소개 (학교,회사)                                  한국대 경영학과 학생입니다."></textarea>
+                                    </div>
+
+
+
+
+
+
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
