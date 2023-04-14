@@ -319,6 +319,5 @@ public class MoimMgr {
 			pool.freeConnection(con, pstmt, rs);
 		}
 		return bean;
-		
 	}
 }

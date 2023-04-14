@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
 
+import com.mysql.cj.protocol.a.result.ResultsetRowsStatic;
+
 import controll.DBConnectionMgr;
 import model.Bean.MemberBean;
 import model.Bean.ZipcodeBean;
@@ -87,6 +89,57 @@ public class MemberMgr {
 				bean.setArea3(rs.getString(4));
 				vlist.addElement(bean);
 			} 
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return vlist;
+	}
+	// 도시리스트
+	public Vector<ZipcodeBean> cityList() {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		Vector<ZipcodeBean> vlist = new Vector<ZipcodeBean>();
+		try {
+			con = pool.getConnection();
+			sql = "select distinct area1 "
+				+ "from tblzipcode";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ZipcodeBean bean = new ZipcodeBean();
+				bean.setArea1(rs.getString("area1"));
+				vlist.addElement(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return vlist;
+	}
+	// 구 리스트 가져오기
+	public Vector<ZipcodeBean> area2List(String area1) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		Vector<ZipcodeBean> vlist = new Vector<ZipcodeBean>();
+		try {
+			con = pool.getConnection();
+			sql = "select distinct area2 from tblzipcode "
+				+ "where area1=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(0, area1);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ZipcodeBean bean = new ZipcodeBean();
+				bean.setArea1(rs.getString("area2"));
+				vlist.addElement(bean);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
