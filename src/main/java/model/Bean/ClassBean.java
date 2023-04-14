@@ -17,7 +17,14 @@ public class ClassBean {
 	private int businessNum;
 	private int taskNum;
 	private int themeNum;
+	private String classImg;
 	
+	public String getClassImg() {
+		return classImg;
+	}
+	public void setClassImg(String classImg) {
+		this.classImg = classImg;
+	}
 	public int getTaskNum() {
 		return taskNum;
 	}

@@ -4,7 +4,15 @@ public class ScheduleJoinBean {
 	private int sjNum;
 	private String memberid;
 	private int moimNum;
+	private int msNum;
 	
+	
+	public int getMsNum() {
+		return msNum;
+	}
+	public void setMsNum(int msNum) {
+		this.msNum = msNum;
+	}
 	public int getSjNum() {
 		return sjNum;
 	}

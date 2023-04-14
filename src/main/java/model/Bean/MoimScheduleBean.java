@@ -7,6 +7,29 @@ public class MoimScheduleBean {
 	private int moimNum;
 	private int msHCount;
 	private String memberId;
+	private int msNCount;
+	private String msTitle;
+	private String msContent;
+	
+	
+	public int getMsNCount() {
+		return msNCount;
+	}
+	public void setMsNCount(int msNCount) {
+		this.msNCount = msNCount;
+	}
+	public String getMsTitle() {
+		return msTitle;
+	}
+	public void setMsTitle(String msTitle) {
+		this.msTitle = msTitle;
+	}
+	public String getMsContent() {
+		return msContent;
+	}
+	public void setMsContent(String msContent) {
+		this.msContent = msContent;
+	}
 	public int getMsNum() {
 		return msNum;
 	}
