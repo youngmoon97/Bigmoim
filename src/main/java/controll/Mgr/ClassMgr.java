@@ -1,11 +1,11 @@
-package controller.Mgr;
+package controll.Mgr;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
 
-import controller.DBConnectionMgr;
+import controll.DBConnectionMgr;
 import model.Bean.ClassBean;
 
 public class ClassMgr {
@@ -37,7 +37,7 @@ public class ClassMgr {
 		return flag;
 	}
 	//클래스 생성
-	public boolean classMake(ClassBean bean) {
+	public boolean classInsert(ClassBean bean) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = null;

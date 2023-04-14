@@ -1,11 +1,11 @@
-package controller.Mgr;
+package controll.Mgr;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
 
-import controller.DBConnectionMgr;
+import controll.DBConnectionMgr;
 import model.Bean.MoimBean;
 
 public class MoimMgr {
@@ -14,7 +14,7 @@ public class MoimMgr {
 		pool = DBConnectionMgr.getInstance();
 	}
 	//모임 생성
-	public boolean moimMake(MoimBean bean) {
+	public boolean moimInsert(MoimBean bean) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = null;

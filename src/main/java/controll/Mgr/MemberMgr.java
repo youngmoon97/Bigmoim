@@ -1,11 +1,11 @@
-package controller.Mgr;
+package controll.Mgr;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
 
-import controller.DBConnectionMgr;
+import controll.DBConnectionMgr;
 import model.Bean.MemberBean;
 import model.Bean.ZipcodeBean;
 

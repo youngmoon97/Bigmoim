@@ -1,5 +1,5 @@
 <%@page contentType="text/html;charset=UTF-8"%>
-<jsp:useBean id="mMgr" class="controller.Mgr.MemberMgr" />
+<jsp:useBean id="mMgr" class="controll.Mgr.MemberMgr" />
 <%
 	String id = request.getParameter("login_id");
 	String pw = request.getParameter("login_pw");
