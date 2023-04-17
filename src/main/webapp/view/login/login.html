@@ -11,12 +11,12 @@
     </style>
         <script>
 		 function loginCheck(){
-		if(document.loginFrm.loginId.value==""){
+		if(document.loginFrm.memberId.value==""){
 			alert("아이디를 입력해 주세요.");
 			document.loginFrm.loginId.focus();
 			return;
 		}
-		if(document.loginFrm.loginPw.value==""){
+		if(document.loginFrm.memberPw.value==""){
 			alert("비밀번호를 입력해 주세요.");
 			document.loginFrm.loginPw.focus();
 			return;
@@ -35,10 +35,10 @@
             </header>
             <form method="post" name=loginFrm class="login-input-section-wrap" action="loginProcs.jsp">
                 <div class="login-input-wrap">
-                    <input name="login_id" id="loginId" placeholder="아이디" type="text">
+                    <input name="memberId" id="memberId" placeholder="아이디" type="text">
                 </div>            
                 <div  class="login-input-wrap password-wrap">
-                    <input name="login_pw" id="loginPw" placeholder="비밀번호" type="password">
+                    <input name="memberPw" id="memberPw" placeholder="비밀번호" type="password">
                 </div>
                 <div class="login-button-wrap">
                     <a><button id="loginBtn" type="button" onclick = "loginCheck()" >로그인</button></a>
@@ -49,7 +49,7 @@
                     <p class="forget-msg-line">|</a></p>
                     <p><a class="forget-msg-pw">비밀번호찾기</a></p>
                     <p class="forget-msg-line">|</a></p>
-                    <p><a class="join-msg">회원가입</a></p>
+                    <p><a href="signup.jsp" class="join-msg">회원가입</a></p>
                 </div>
             </form>
             <form class="easy-sgin-in-wrap">

@@ -17,6 +17,23 @@
     <!-- Style -->
     <link rel="stylesheet" href="css/style.css">
 
+    <!--<style>
+        /* 사진 추가용 스타일*/
+        .image-preview-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .file-input-container {
+            margin-right: 10px;
+        }
+
+        #preview-image {
+            max-width: 200px;
+            max-height: 200px;
+        }
+    </style>-->
+
 
     <title>모임 개설</title>
 </head>
@@ -38,23 +55,90 @@
                                     <h3 class="ml-1 mb-0"><strong>모임 개설</strong></h3>
                                 </div>
                                 <form action="#" method="post">
+
                                     <div>
-                                        <label for="moimArea">지역</label>
+                                        <label>모임 명</label>
+                                        <textarea class="form-control" name="moimname" rows="2"
+                                            maxlength="30" placeholder="모임 이름을 적어주세요"></textarea>
+                                    </div>
+
+                                    <!-- class="sign-nameHeader"-->
+                                    <div>
+                                        <label for="memberAddr">모임 지역</label>
+                                    </div>
+                                    <div>
                                         <br>
-                                        <textarea class="form-control" id="moimArea" name="moimArea" rows="2"
-                                            maxlength="30" placeholder="동.읍.면을 입력해주세요"></textarea>
+                                        <input name="zipcode" size="5" readonly>
+                                        <input type="button" value="우편번호찾기" onClick="zipSearch()">
+                                    </div>
+                                    <div class="sign-nameHeader">
+                                        <br>
+                                        <input name="zipcode-city1" size="7" readonly>
+                                        <input name="zipcode-city2" size="10" readonly>
                                     </div>
 
                                     <div>
-                                        <label for="kindofmoim">모임 종류</label>
+                                        <label>모임 종류</label>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-control" name="categoryName">
+                                            <option value="">카테고리</option>
+                                        </select>
+                                        <br>
+                                    </div>
+
+                                    <div class="col">
+                                        <select class="form-control" name="businessName">
+                                            <option value="">업종</option>
+                                        </select>
+                                        <br>
+                                    </div>
+
+                                    <div class="col">
+                                        <select class="form-control" name="taskName">
+                                            <option value="">직무</option>
+                                        </select>
                                         <br>
                                     </div>
                                     <div class="col">
-                                        <select class="form-control" id="kindofmoim">
-                                            <option value="">모임종류(ex.알바모임)</option>
+                                        <select class="form-control" name="themeName">
+                                            <option value="">테마</option>
                                         </select>
                                         <br>
-                                        <textarea class="form-control" id="moimGoal" name="moimGoal" rows="5"
+                                    </div>
+
+                                    <div class="sign-nameHeader">
+                                        <label>모임 대표 이미지</label>
+                                        <br>
+                                    </div>
+
+                                    <div class="image-preview-container">
+                                        <img name="preview-image" src="" alt="Preview Image">
+                                        <div class="file-input-container">
+                                            <input type="file" class="form-control-file" name="moimImg"
+                                                onchange="showPreviewImage(this)">
+                                        </div>
+                                    </div>
+
+                                    <script>
+                                        function showPreviewImage(input) {
+                                            var previewImage = document.getElementById('preview-image');
+                                            if (input.files && input.files[0]) {
+                                                var reader = new FileReader();
+                                                reader.onload = function (e) {
+                                                    previewImage.src = e.target.result;
+                                                };
+                                                reader.readAsDataURL(input.files[0]);
+                                            } else {
+                                                previewImage.src = '';
+                                            }
+                                        }
+                                    </script>
+
+
+                                    <div>
+                                        <br>
+                                        <textarea class="form-control" id="moimProfile" name="moimProfile" rows="5"
                                             maxlength="100" placeholder="모임목표를 설명해주세요"></textarea>
                                     </div>
 
@@ -64,6 +148,14 @@
                                         <textarea class="form-control" id="moimHCount" name="moimHCount" rows="2"
                                             maxlength="3" placeholder="300"></textarea>
                                     </div>
+
+                                    <div>
+                                        <label>카카오톡 오픈채팅방</label>
+                                        <textarea class="form-control" id="moimKakao" name="moimKakao" rows="2"
+                                            maxlength="30" placeholder="카카오톡 오픈채팅 주소를 입력해주세요."></textarea>
+                                            <br>
+                                    </div>
+
                                     <input type="submit" value="모임 만들기" class="btn btn-pill text-white btn-block"
                                         style="background-color: pink;">
                                     <br>
@@ -85,9 +177,7 @@
     </div>
 
 
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+
     <script src="js/main.js"></script>
 </body>
 

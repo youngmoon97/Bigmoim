@@ -19,34 +19,29 @@ public class MemberMgr {
 		pool = DBConnectionMgr.getInstance();
 	}
 	//로그인
-	public int loginMember(String memberId, String memberPw) {
+	public boolean loginMember(String memberId, String memberPw) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String sql = null;
-		int mode = 0;
-		// 0-id false, 1-id true pwd-false, 2-id&pwd true
+		boolean flag = false;
 		try {
-			if (!checkId(memberId))
-				return mode;
 			con = pool.getConnection();
-			sql = "select memberId, memberPw from member "
-				+ "where memberId = ? and memberPw = ?";
+			sql = "select memberId, memberPw from member  "
+				+"where memberId = ? and memberPw = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, memberId);
 			pstmt.setString(2, memberPw);
 			rs = pstmt.executeQuery();
-			if (rs.next())
-				mode = 2;
-			else
-				mode = 1;
+			flag = rs.next();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			pool.freeConnection(con, pstmt, rs);
+			pool.freeConnection(con);
 		}
-		return mode;
+		return flag;
 	}
+	
 	//id 중복 체크 : 중복 -> true
 	public boolean checkId(String memberId) {
 		Connection con = null;
@@ -87,6 +82,7 @@ public class MemberMgr {
 				bean.setArea1(rs.getString(2));
 				bean.setArea2(rs.getString(3));
 				bean.setArea3(rs.getString(4));
+				bean.setArea4(rs.getString(5));
 				vlist.addElement(bean);
 			} 
 		} catch (Exception e) {
@@ -96,57 +92,113 @@ public class MemberMgr {
 		}
 		return vlist;
 	}
-	// 도시리스트
-	public Vector<ZipcodeBean> cityList() {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = null;
-		Vector<ZipcodeBean> vlist = new Vector<ZipcodeBean>();
-		try {
-			con = pool.getConnection();
-			sql = "select distinct area1 "
-				+ "from tblzipcode";
-			pstmt = con.prepareStatement(sql);
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				ZipcodeBean bean = new ZipcodeBean();
-				bean.setArea1(rs.getString("area1"));
-				vlist.addElement(bean);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			pool.freeConnection(con, pstmt, rs);
-		}
-		return vlist;
-	}
-	// 구 리스트 가져오기
-	public Vector<ZipcodeBean> area2List(String area1) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = null;
-		Vector<ZipcodeBean> vlist = new Vector<ZipcodeBean>();
-		try {
-			con = pool.getConnection();
-			sql = "select distinct area2 from tblzipcode "
-				+ "where area1=?";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(0, area1);
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				ZipcodeBean bean = new ZipcodeBean();
-				bean.setArea1(rs.getString("area2"));
-				vlist.addElement(bean);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			pool.freeConnection(con, pstmt, rs);
-		}
-		return vlist;
-	}
+	//시 리스트 가져오기
+	   public Vector<ZipcodeBean> cityList() {
+	         Connection con = null;
+	         PreparedStatement pstmt = null;
+	         ResultSet rs = null;
+	         String sql = null;
+	         Vector<ZipcodeBean> vlist = new Vector<ZipcodeBean>();
+	         try {
+	            con = pool.getConnection();
+	            sql = "select distinct area1 from tblzipcode";
+	            pstmt = con.prepareStatement(sql);
+	            rs = pstmt.executeQuery();
+	            while(rs.next()) {
+	               ZipcodeBean bean = new ZipcodeBean();
+	               bean.setArea1(rs.getString("area1"));
+	               vlist.addElement(bean);
+	            }
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         } finally {
+	            pool.freeConnection(con, pstmt, rs);
+	         }
+	         return vlist;
+	      }
+	   
+	   // 구 리스트 가져오기
+	      public Vector<ZipcodeBean> area2List(String area1) {
+	         Connection con = null;
+	         PreparedStatement pstmt = null;
+	         ResultSet rs = null;
+	         String sql = null;
+	         Vector<ZipcodeBean> vlist = new Vector<ZipcodeBean>();
+	         try {
+	            con = pool.getConnection();
+	            sql = "select distinct area2 from tblzipcode where area1=?";
+	            pstmt = con.prepareStatement(sql);
+	            pstmt.setString(1, area1);
+	            rs = pstmt.executeQuery();
+	            while(rs.next()) {
+	               ZipcodeBean bean = new ZipcodeBean();
+	               bean.setArea2(rs.getString("area2"));
+	               vlist.addElement(bean);
+	            }
+	         } catch (Exception e) {
+	            e.printStackTrace();
+	         } finally {
+	            pool.freeConnection(con, pstmt, rs);
+	         }
+	         return vlist;
+	      }
+
+	   // ID찾기
+	   public String getIdSearch(String name , String tel) {
+	      Connection con = null;
+	      PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      String sql = null;
+	      String id = null;
+	      String mid = null;
+	      
+	      try {
+	         con = pool.getConnection();
+	         sql = "select memberId from Member where membername = ? and "
+	               + "membertel = ?";
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setString(1, name);
+	         pstmt.setString(2, tel);
+	         rs = pstmt.executeQuery();
+	            if(rs.next()) {
+	               mid = rs.getString("memberId");
+	            }
+	         
+	      
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         pool.freeConnection(con, pstmt, rs);
+	      }
+	      return mid;
+	   }
+	   
+	   // 비밀번호 찾기  id 와 전화번호
+	   public String getPwSearch(String id , String pwtel) {
+	      Connection con = null;
+	      PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      String sql = null;
+	      String mpw = null;
+	      try {
+	         con = pool.getConnection();
+	         sql = "select memberPw from Member where memberid = ? and membertel = ?";
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setString(1, id);
+	         pstmt.setString(2, pwtel);
+	         rs = pstmt.executeQuery();
+	         
+	         if(rs.next()) {
+	            mpw = rs.getString("memberPw");
+	         }
+
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         pool.freeConnection(con, pstmt, rs);
+	      }
+	      return mpw;
+	   }
 	//회원가입
 	public boolean insertMember(MemberBean bean) {
 		Connection con = null;
