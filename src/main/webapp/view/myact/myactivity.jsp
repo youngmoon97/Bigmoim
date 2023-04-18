@@ -10,7 +10,7 @@
 	//id만 받아와서 넣으면 된다.
 	MemberBean mbean = mMgr.getMember("aaa");
 	int businessNum = mbean.getBusinessNum();	
-	Vector<MoimBean> moimvlist = myactMgr.businessList(businessNum);
+	Vector<MoimBean> moimvlist = myactMgr.pbusinessList(businessNum);
 %>
 <!DOCTYPE html>
 <html lang="en">

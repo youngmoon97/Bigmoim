@@ -6,7 +6,7 @@
 <%@page import="java.util.Vector"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <jsp:useBean id="mMgr" class="controll.Mgr.MemberMgr" />
-<jsp:useBean id="macMgr" class="controll.Mgr.MyActivityMgr" />
+<jsp:useBean id="myactMgr" class="controll.Mgr.MyActivityMgr" />
 <jsp:useBean id="cMgr" class="controll.Mgr.CategoryMgr" />
 <%
 Vector<ZipcodeBean> vCity = mMgr.cityList(); //area1 시
@@ -43,9 +43,9 @@ if (request.getParameter("area1") != null) {
 vArea2 = mMgr.area2List(area1);
 //System.out.println(vArea2.get(1));
 
-Vector<BusinessBean> vBusiness = macMgr.businessList(); //업종
-Vector<TaskBean> vTask = macMgr.taskList(); //직무
-Vector<ThemeBean> vTheme = macMgr.themeList(); //테마
+Vector<BusinessBean> vBusiness = myactMgr.businessList(); //업종
+Vector<TaskBean> vTask = myactMgr.taskList(); //직무
+Vector<ThemeBean> vTheme = myactMgr.themeList(); //테마
 Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
 %>
 
@@ -147,11 +147,15 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
 	}
 	function getDay(memberBirth_day){
 		document.signFrm.memberBirth_day.value=memberBirth_day;
+		//alert(memberBirth_day);
 	}
 	function getCategoryNum(categoryNum){
-		//var cnum = document.getElementById("categoryNum")
 		document.signFrm.categoryNum.value=categoryNum;
-		alert(categoryNum);
+		//alert(categoryNum);
+	}
+	function getBusinessNum(businessNum){
+		document.signFrm.businessNum.value=businessNum;
+		alert(businessNum);
 	}
 </script>
 
@@ -334,10 +338,8 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
 						}
 					</script>
 
-
 					<div class="sign-nameHeader">
 						<label for="jobadd">업종 / 직무 / 테마</label> <br>
-
 					</div>
 
 					<div class="sign-nameHeader">
@@ -345,18 +347,21 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
 						<div class="form-row">
 
 							<div class="col">
-								<select class="form-control" id="business">
+								<select class="form-control" id="business" name="business"
+								onChange="javascript:getBusiness(this.value)">
 									<option value="">업종</option>
 									<%
 									for (int i = 0; i < vBusiness.size(); i++) {
 										BusinessBean bBean = vBusiness.get(i);
 									%>
-									<option value="<%=bBean.getBusinessName()%>">
+									<option value="<%=bBean.getBusinessNum()%>" >
 										<%=bBean.getBusinessName()%></option>
 									<%
 									}
 									%>
 								</select>
+								  <input type="hidden" name="businessNum" value="">
+								
 							</div>
 							<div class="col">
 								<select class="form-control" id="task">
@@ -393,33 +398,31 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
 					</div>
 					<div style="text-align: center;">
 						<div class="d-inline-block" style="margin-right: 50px;">
+							<input class="form-check-input" type="radio" name="memberSex" id="male" value="1" checked> 
+								<label class="form-check-label" for="male"> 남자 </label>
+						</div>
+						<div class="d-inline-block" style="margin-left: 50px;">
 							<input class="form-check-input" type="radio" name="memberSex"
-								id="male" value="1" checked> <label class="form-check-label"
-								for="male"> 남자 </label>
-							<input class="form-check-input" type="radio" name="memberSex"
-								id="female" value="2"> <label
-								class="form-check-label" for="female"> 여자 </label>
+								id="female" value="2"> <label class="form-check-label" for="female"> 여자 </label>
 						</div>
 					</div>
 
 					<div class="sign-nameHeader">
-						<label for="categoryNum">관심사</label> <br>
+						<label for="categoryNum" onchange = "">관심사</label> <br>
 					</div>
 					<div class="col">
 						<select class="form-control" id="day">
-							 
+							<option id="categoryNum" name="categoryNum" onChange=
+								"javascript:getCategoryNum(this.form.categoryNum.value)">관심사 선택</option>
 							<%
 							for (int i = 0; i < vCategory.size(); i++) {
 								MoimCategoryBean mcBean = vCategory.get(i);
 							%>
-							<option id="categoryNum" name="categoryNum"
-							 value="<%=mcBean.getCategoryNum()%>"
-							 onChange="javascript:getCategoryNum(this.form.categoryNum.value)">
+							<option value="<%=mcBean.getCategoryNum()%>">
 								<%=mcBean.getCategoryName()%>
 								<%
 								}
-								%>	
-								</option>	
+								%>		
 						</select>
 					</div>
 
@@ -430,8 +433,8 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
 					<div class="image-preview-container">
 						<img id="preview-image" src="" alt="Preview Image">
 						<div class="file-input-container">
-							<input type="file" class="form-control-file" id="profileImg"
-								name="profileImg" onchange="showPreviewImage(this)">
+							<input type="file" class="form-control-file" id="profile-image"
+								name="profile-image" onchange="showPreviewImage(this)">
 						</div>
 					</div>
 
@@ -457,7 +460,7 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
 					</div>
 
 					<div class="sign-nameHeader">
-						<textarea class="form-control" id="memberProfile" name="memberProfile"
+						<textarea class="form-control" id="memberProfile_content" name="memberProfile_content"
 							rows="4" maxlength="100" placeholder="자기소개를 해주세요. (100자 이내)"></textarea>
 					</div>
 					<input type="button" value="가입하기" onclick ="inputCheck()"

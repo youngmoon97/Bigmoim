@@ -17,9 +17,83 @@ public class MyActivityMgr {
 		pool = DBConnectionMgr.getInstance();
 	}
 	
-	//business(업종)
+	//business(업종) 리스트
+	public Vector<BusinessBean> businessList(){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		Vector<BusinessBean> vlist = new Vector<BusinessBean>();
+		try {
+			con = pool.getConnection();
+			sql = "select * from business";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				BusinessBean bean = new BusinessBean();
+				bean.setBusinessNum(rs.getInt(1));
+				bean.setBusinessName(rs.getString(2));
+				vlist.addElement(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return vlist;
+	}
+	//business(업종) 리스트
+	public Vector<TaskBean> taskList(){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		Vector<TaskBean> vlist = new Vector<TaskBean>();
+		try {
+			con = pool.getConnection();
+			sql = "select * from task";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				TaskBean bean = new TaskBean();
+				bean.setTaskNum(rs.getInt(1));
+				bean.setTaskName(rs.getString(2));
+				vlist.addElement(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return vlist;
+	}
+	//theme(테마) 리스트
+		public Vector<ThemeBean> themeList(){
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String sql = null;
+			Vector<ThemeBean> vlist = new Vector<ThemeBean>();
+			try {
+				con = pool.getConnection();
+				sql = "select * from theme";
+				pstmt = con.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					ThemeBean bean = new ThemeBean();
+					bean.setThemeNum(rs.getInt(1));
+					bean.setThemeName(rs.getString(2));
+					vlist.addElement(bean);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				pool.freeConnection(con, pstmt, rs);
+			}
+			return vlist;
+		}
 	//업종 별 개인의 모임 가져오기
-		public Vector<MoimBean> businessList(int businessNum){
+		public Vector<MoimBean> pbusinessList(int businessNum){
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -54,7 +128,7 @@ public class MyActivityMgr {
 	// 업종별클래스도 만들어야함
 	/////////////////////////////////////////
 	//task(직무)
-		public Vector<MoimBean> taskList(int taskNum){
+		public Vector<MoimBean> ptaskList(int taskNum){
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -89,7 +163,7 @@ public class MyActivityMgr {
 		
 	/////////////////////////////////////////	
 	//theme(테마)
-		public Vector<MoimBean> themeList(int themeNum){
+		public Vector<MoimBean> pthemeList(int themeNum){
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
