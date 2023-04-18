@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
 
     <!-- Style -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 
 
     <title>모임 수정</title>
@@ -48,11 +48,30 @@
 
                                     <div>
                                         <label>모임 종류</label>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-control" name="categoryNum">
+                                            <option value="">카테고리</option>
+                                        </select>
+                                        <br>
+                                    </div>
+
+                                    <div class="col">
+                                        <select class="form-control" name="businessNum">
+                                            <option value="">업종</option>
+                                        </select>
+                                        <br>
+                                    </div>
+
+                                    <div class="col">
+                                        <select class="form-control" name="taskNum">
+                                            <option value="">직무</option>
+                                        </select>
                                         <br>
                                     </div>
                                     <div class="col">
-                                        <select class="form-control" name="categoryName">
-                                            <option value="">모임종류(ex.알바모임)</option>
+                                        <select class="form-control" name="themeNum">
+                                            <option value="">테마</option>
                                         </select>
                                         <br>
                                         <textarea class="form-control" id="moimProfile" name="moimProfile" rows="5"
@@ -155,9 +174,9 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="js/jquery-3.6.0.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,645 @@
+body {
+  font-family: 'Heebo', sans-serif;
+  background-color: #F2F2F2;
+  width: 100%;
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 */
+}
+
+.main-container {
+  padding: 50px;
+  background-color: rgb(255, 231, 235);
+  min-width: min-content; /* 내용 최소너비를 유지 */
+}
+
+.main-wrapper {
+  max-width: 1300px; /* 전체적인 크기를 1300px로 제한 */
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+.main-wrapper .search-area {
+  margin-right: 4px;
+  }
+
+.search-area {
+  width: calc(100% - 800px); /* 5px 크기 증가 */
+  display: flex;
+  margin-left: 4cm;
+  align-items: center;  /* 요소 수직정렬 */
+  border: 1px solid rgb(196, 196, 196);
+}
+
+form {
+  display: flex;
+  margin-bottom: 0;
+}
+
+/* 모든 텍스트 박스에 적용 */
+input[type="text"] {
+  height: 30px;
+  width: 390px;
+  margin-left: 10px;
+  border: none;
+  font-size: 16px;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.search-btn {
+  background-color: pink;
+  max-width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.login-btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #F5F5F5;
+  margin-right: 10px;
+}
+
+.signup-btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: pink;
+  color: white;
+  margin-right: 10px;
+}
+
+.notification {
+  margin-right: 10px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  margin-right: 30px;
+}
+
+nav li:last-child {
+  margin-right: 0;
+}
+
+nav a {
+  display: block;
+  padding: 20px;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+nav a:hover {
+  background-color: white;
+  color: black;
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto; /* 가운데 정렬을 위한 margin 설정 */
+  width: 85%; /* 예시 값 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.category {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px 56px;
+  align-content: center;
+}
+
+.hidden-category {
+  display: none;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px 56px;
+}
+
+.category .image-text {
+  font-size: 12px;
+}
+
+.hidden-category .image-text {
+  font-size: 12px;
+}
+
+.category .more {
+  background-color: rgb(236, 236, 236);
+  width: 40px;
+  height: 40px;
+  font-size: 13px;
+}
+
+.category a img,
+.hidden-category a img {
+  width: 108px;
+  height: 150px;
+}
+
+
+.more {
+  background-color: #f2f2f2;
+  color: #666;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+
+.more:hover {
+  background-color: #555;
+  color: #fff;
+}
+
+.category a .image-wrapper {
+  border-radius: 25px;
+}
+
+.category a .image-wrapper .image-text {
+  margin-top: 10px;
+}
+
+.category img {
+  width: 60px;
+  height: 60px;
+}
+
+.hidden-category img {
+  width: 60px;
+  height: 60px;
+}
+
+.category a .image-wrapper img {
+  width: 40px;
+  height: 40px;
+}
+
+.category a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 130px;
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  text-decoration: none;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.category a:not(:last-child) {
+  margin-right: 0;
+}
+
+.category a, .hidden-category a {
+  flex-basis: 15%;
+  border-radius: 100px;
+}
+
+.hidden-category a .image-text {
+  margin-top: 10px;
+}
+
+.category a:hover {
+transform: translateY(-10px);
+box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.more-wrapper {
+  margin: 0 auto;
+}
+
+.product-list {
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+}
+
+.product-card {
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 300px;
+height: 400px;
+margin: 20px;
+background-color: white;
+box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-card img {
+width: 200px;
+height: 200px;
+margin-top: 20px;
+}
+
+.product-card h3 {
+margin-top: 20px;
+font-size: 24px;
+}
+
+.product-card p {
+margin-top: 10px;
+font-size: 16px;
+color: gray;
+}
+
+.product-card button {
+margin-top: 20px;
+padding: 10px 20px;
+border-radius: 5px;
+background-color: pink;
+color: white;
+border: none;
+cursor: pointer;
+}
+
+.product-card button:hover {
+background-color: pink;
+}
+
+/* 카드 */
+
+/* Style for the card group */
+.card-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center; /* 추가 */
+  align-items: center; /* 추가 */
+}
+
+/* Style for each card */
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+  max-width: 300px;
+  width: 100%;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.card-wrapper {
+  position: relative;
+}
+
+.card-wrapper img {
+  width: 100%;
+  height: 50px;
+}
+
+.card-nav {
+  display: flex;
+  flex-direction: row;
+  /* justify-content: center;
+  align-items: center; */
+  font-size: 16px;
+}
+
+.card-nav a{
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-nav-moimArea{
+  flex-direction: row;
+  padding-right: 50px;
+  padding-left: 50px;
+}
+
+.card-nav-categoryName{
+  flex-direction: row;
+  padding-right: 50px;
+}
+
+.card-nav-line{
+  flex-direction: row;
+  
+}
+
+.like-btn {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  background-color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+
+/* Style for the card image */
+.card img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}
+
+/* Style for the card title */
+.card h4 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Style for the card category */
+.card .category {
+  margin-top: 0;
+  margin: 0 20px 10px;
+  font-size: 0.8rem;
+  color: #999;
+}
+
+/* Style for the card moimProfile */
+.card .moimProfile {
+  margin-top: 0;
+  margin: 0 20px;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #666;
+}
+
+/* Style for the like button */
+.card .btn-like {
+  margin: 20px;
+  padding: 10px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #ff5a5f;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Style for the card group */
+.card-group {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+  padding-top: 15px;
+  }
+  
+  /* Style for each card */
+  .card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+  max-width: 250px;
+  width: 100%;
+  padding: 10px;
+  }
+  
+  .card:hover {
+  transform: scale(1.03);
+  }
+  
+  /* Style for the card image */
+  .card img {
+    width: 100%;
+    height: 150px;
+  }
+
+  .like-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .like-btn img {
+    position: absolute;
+    right: 5px;
+    top: 6px;
+    width: 30px;
+    height: 30px;
+  }
+  
+  /* Style for the card title */
+  .card h4 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  
+  
+  /* Style for the card category and like button */
+  .card .card-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* margin: 0 20px 10px; */
+  }
+  
+  .card .category {
+  font-size: 0.8rem;
+  color: #999;
+  }
+  
+  .card .btn-like {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  }
+  
+  /* Style for the card moimProfile */
+  .card .moimProfile {
+  margin: 0 20px;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #666;
+  }
+  
+  /* Style for the like button on hover */
+  .card .btn-like:hover img {
+  filter: brightness(0.8);
+  }
+
+/* 하단 */
+footer {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 20px;
+background-color: pink;
+color: white;
+font-size: 16px;
+}
+
+.social-media {
+display: flex;
+}
+
+.social-media a {
+display: flex;
+justify-content: center;
+align-items: center;
+width: 30px;
+height: 30px;
+margin-right: 10px;
+border-radius: 50%;
+background-color: white;
+color: pink;
+text-decoration: none;
+}
+
+.social-media a:hover {
+background-color: pink;
+color: white;
+}
+
+@media (max-width: 768px) {
+
+  header {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  }
+  
+  .search-area {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  }
+  
+  input[type="text"] {
+  width: 200px;
+  margin-left: 5px;
+  }
+  
+  .login-btn, .signup-btn {
+  padding: 5px 10px;
+  font-size: 14px;
+  margin-right: 5px;
+  }
+  
+  nav {
+  justify-content: space-between;
+  padding: 10px;
+  }
+  
+  nav ul {
+  flex-direction: column;
+  align-items: center;
+  }
+  
+  nav li {
+  margin-right: 0;
+  margin-bottom: 10px;
+  }
+  
+  .category a {
+  width: 150px;
+  height: 150px;
+  font-size: 16px;
+  }
+  
+  .product-card {
+  width: 250px;
+  height: 350px;
+  margin: 10px;
+  }
+  
+  .product-card img {
+  width: 150px;
+  height: 150px;
+  }
+  
+  .product-card h3 {
+  font-size: 20px;
+  }
+  
+  .product-card p {
+  font-size: 14px;
+  }
+  
+  }
+  
+  @media (max-width: 576px) {
+  
+  input[type="text"] {
+  width: 150px;
+  font-size: 14px;
+  }
+  
+  .category a {
+  width: 120px;
+  height: 120px;
+  font-size: 14px;
+  }
+  
+  .product-card {
+  width: 200px;
+  height: 300px;
+  }
+  
+  .product-card img {
+  width: 120px;
+  height: 120px;
+  }
+  
+  .product-card h3 {
+  font-size: 18px;
+  }
+  
+  .product-card p {
+  font-size: 12px;
+  }
+  
+  }

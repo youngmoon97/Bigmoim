@@ -18,22 +18,30 @@ public class MyActivityMgr {
 	}
 	
 	//business(업종)
-	//업종 가져오기
-		public Vector<BusinessBean> businessList(){
+	//업종 별 개인의 모임 가져오기
+		public Vector<MoimBean> businessList(int businessNum){
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			String sql = null;
-			Vector<BusinessBean> vlist = new Vector<BusinessBean>();
+			Vector<MoimBean> vlist = new Vector<MoimBean>();
 			try {
 				con = pool.getConnection();
-				sql = "select * from business";
+				sql = "select moimNum, moimName, moimArea, moimHCount,"
+					+ "moimNCount ,moimImg ,moimProfile  "
+					+ "from moim where businessNum = ?";
 				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, businessNum);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
-					BusinessBean bean = new BusinessBean();
-					bean.setBusinessNum(rs.getInt(1));
-					bean.setBusinessName(rs.getString(2));
+					MoimBean bean = new MoimBean();
+					bean.setMoimNum(rs.getInt(1));
+					bean.setMoimName(rs.getString(2));
+					bean.setMoimArea(rs.getString(3));
+					bean.setMoimHCount(rs.getInt(4));
+					bean.setMoimNCount(rs.getInt(5));
+					bean.setMoimImg(rs.getString(6));
+					bean.setMoimProfile(rs.getString(7));
 					vlist.addElement(bean);
 				}
 			} catch (Exception e) {
@@ -43,24 +51,32 @@ public class MyActivityMgr {
 			}
 			return vlist;
 		}
-	
+	// 업종별클래스도 만들어야함
 	/////////////////////////////////////////
 	//task(직무)
-		public Vector<TaskBean> taskList(){
+		public Vector<MoimBean> taskList(int taskNum){
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			String sql = null;
-			Vector<TaskBean> vlist = new Vector<TaskBean>();
+			Vector<MoimBean> vlist = new Vector<MoimBean>();
 			try {
 				con = pool.getConnection();
-				sql = "select * from task";
+				sql = "select moimNum, moimName, moimArea, moimHCount,"
+					+ "moimNCount ,moimImg ,moimProfile  "
+					+ "from moim where taskNum = ?";
 				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, taskNum);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
-					TaskBean bean = new TaskBean();
-					bean.setTaskNum(rs.getInt(1));
-					bean.setTaskName(rs.getString(2));
+					MoimBean bean = new MoimBean();
+					bean.setMoimNum(rs.getInt(1));
+					bean.setMoimName(rs.getString(2));
+					bean.setMoimArea(rs.getString(3));
+					bean.setMoimHCount(rs.getInt(4));
+					bean.setMoimNCount(rs.getInt(5));
+					bean.setMoimImg(rs.getString(6));
+					bean.setMoimProfile(rs.getString(7));
 					vlist.addElement(bean);
 				}
 			} catch (Exception e) {
@@ -73,21 +89,29 @@ public class MyActivityMgr {
 		
 	/////////////////////////////////////////	
 	//theme(테마)
-		public Vector<ThemeBean> themeList(){
+		public Vector<MoimBean> themeList(int themeNum){
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			String sql = null;
-			Vector<ThemeBean> vlist = new Vector<ThemeBean>();
+			Vector<MoimBean> vlist = new Vector<MoimBean>();
 			try {
 				con = pool.getConnection();
-				sql = "select * from theme";
+				sql = "select moimNum, moimName, moimArea, moimHCount,"
+					+ "moimNCount ,moimImg ,moimProfile  "
+					+ "from moim where themeNum = ?";
 				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, themeNum);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
-					ThemeBean bean = new ThemeBean();
-					bean.setThemeNum(rs.getInt(1));
-					bean.setThemeName(rs.getString(2));
+					MoimBean bean = new MoimBean();
+					bean.setMoimNum(rs.getInt(1));
+					bean.setMoimName(rs.getString(2));
+					bean.setMoimArea(rs.getString(3));
+					bean.setMoimHCount(rs.getInt(4));
+					bean.setMoimNCount(rs.getInt(5));
+					bean.setMoimImg(rs.getString(6));
+					bean.setMoimProfile(rs.getString(7));
 					vlist.addElement(bean);
 				}
 			} catch (Exception e) {

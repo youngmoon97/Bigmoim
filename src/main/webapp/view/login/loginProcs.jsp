@@ -9,8 +9,8 @@
 	
 	if (flag==true){ //로그인 성공
 		////session.setAttribute("idKey",id);
-		System.out.println("로그인 성공!");
-		response.sendRedirect("login.html");
+		//alert(memberId+"님 환영합니다");
+		response.sendRedirect("../main.jsp");
 	}else{ //로그인 실패
 		System.out.println("로그인 실패");
 		response.sendRedirect("login.html");

@@ -36,13 +36,13 @@ function inputCheck(){
 		alert("집주소를 검색해 주세요.");
 		return;
 	}
-	//if(document.signFrm.memberBirth_year.value==""||
-	//document.signFrm.memberBirth_month.value==""||
-	//document.signFrm.memberBirth_day.value==""){
-		//alert("생일을 입력해 주세요.");
-		//document.signFrm.memberBirth_year.focus();
-		//return;
-	//}
+	if(document.signFrm.memberBirth_year.value==""||
+	document.signFrm.memberBirth_month.value==""||
+	document.signFrm.memberBirth_day.value==""){
+		alert("생일을 입력해 주세요.");
+		document.signFrm.memberBirth_year.focus();
+		return;
+	}
 	document.signFrm.submit();
 }
 

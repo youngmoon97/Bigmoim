@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        /* 사진 추가용 스타일 */
+        .image-preview-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .file-input-container {
+            margin-right: 10px;
+        }
+
+        #preview-image {
+            max-width: 200px;
+            max-height: 200px;
+        }
+        /*  모임참여 인원 한줄에 다 나오도록하는 css */       
+        /* 이미지가 한 줄에 나열되도록 Flexbox 사용 */
+        .here {
+            display: flex;
+            flex-wrap: nowrap; /* 넘치는 이미지를 줄바꿈하지 않고 한 줄에 나열 */
+            overflow-x: auto; /* 가로로 넘치는 이미지를 스크롤로 볼 수 있도록 설정 */
+        }
+
+        /* 각 이미지의 공간 설정 */
+        .here img {
+            flex: 0 0 auto; /* 이미지가 컨테이너 크기에 따라 자동으로 조절되도록 설정 */
+            max-width: 100px;
+            max-height: 100px;
+            margin-right: 9px; /* 이미지 사이에 간격 추가 */
+        }
+
+        /* 가로 스크롤바 스타일링 */
+        ::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #999;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #777;
+        }
+
+        
+    </style>
+
+    <title>모임 일정 참여</title>
+</head>
+
+<body>
+
+    <div class="content">
+        <div class="wrapper">
+            <div class="row justify-content-center">
+
+                <div class="col-md-6 contents">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12">
+                            <div class="main-merge"> <!--main page 간격-->
+                             
+                                <form action="#" method="post"> 
+                                    <!-- 모임 일정 목록 -->
+                                    <ul class="list-group mt-4">
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <img src="images/mssample.png" alt="Product 1" class="img-fluid" name="moimImg">
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <h5 class="mb-0" name="moimName"><strong>부산 왕발FC</strong></h5>
+                                                    <h6>티어 욕심 있으시거나 실력 향상 원하시는분 환영합니다</h7>
+                                                    <div class="location-info">
+                                                        <span class="location-text" name="msArea">사하구</span>
+                                                        <span>|참여 </span>
+                                                        <span id="msNCount">4</span>
+                                                        <span>/ </span>
+                                                        <span id="msHCount">6</span>
+                                                        <span id="categoryNum" style="margin-left: 10px; background-color: lightslategray;">운동 / 스포츠</span>
+                                                    </div>
+                                                    <div class="here">
+                                                        <img src="images/samplememberImg.png" alt="Participant Image" class="img-fluid" style="max-width: 100px; max-height: 100px;" name="memberImg">
+                                                        <img src="images/samplememberImg.png" alt="Participant Image" class="img-fluid" style="max-width: 100px; max-height: 100px;" name="memberImg">
+                                                        <img src="images/samplememberImg3.png" alt="Participant Image" class="img-fluid" style="max-width: 100px; max-height: 100px;" name="memberImg">
+                                                        <img src="images/samplememberImg.png" alt="Participant Image" class="img-fluid" style="max-width: 100px; max-height: 100px;" name="memberImg">
+                                                        <img src="images/samplememberImg2.png" alt="Participant Image" class="img-fluid" style="max-width: 100px; max-height: 100px;" name="memberImg">
+                                                       <!-- <img src="images/samplememberImg.png" alt="Participant Image" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+                                                       -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <!--찜 추가 기폰 폼
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <img src="img/product2.jpg" alt="Product 2" class="img-fluid">
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <h5 class="mb-0">상품 2</h5>
+                                                    <p>상품 2에 대한 설명</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        -->
+                                    </ul>
+
+
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>
