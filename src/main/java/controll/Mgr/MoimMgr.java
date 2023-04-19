@@ -141,7 +141,7 @@ public class MoimMgr {
 		}
 		return vlist;
 	}
-	//모임 업무별 리스트
+	//모임 직무별 리스트
 	public Vector<MoimBean> taskMoimList(int taskNum){
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -261,13 +261,13 @@ public class MoimMgr {
 		String sql = null;
 		try {
 			con = pool.getConnection();
-			sql = "select * from moim where moimArea=? ";
+			sql = "select * from moim where moimArea = ? ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, moimArea);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				MoimBean bean = new MoimBean();
-				bean.setMoimNum(rs.getInt("moinNum"));
+				bean.setMoimNum(rs.getInt("moimNum"));
 				bean.setMoimName(rs.getString("moimName"));
 				bean.setMoimArea(rs.getString("moimArea"));
 				bean.setMoimHCount(rs.getInt("moimHCount"));
@@ -347,6 +347,38 @@ public class MoimMgr {
 			pool.freeConnection(con, pstmt);
 		}
 		return flag;
+	}
+	//멤버가 가입한 모임 리스트 가져오기
+	public Vector<MoimBean> joinmoimList(String memberId){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		Vector<MoimBean> vlist = new Vector<MoimBean>();
+		try {
+			con = pool.getConnection();
+			sql = "select m2.* from moimmember m , moim m2 "
+				+ "where m.moimNum =m2.moimNum and "
+				+ "m.memberId  = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MoimBean bean = new MoimBean();
+				bean.setMoimNum(rs.getInt("moimNum"));
+				bean.setMoimName(rs.getString("moimName"));
+				bean.setMoimImg(rs.getString("moimImg"));
+				bean.setMoimArea(rs.getString("moimArea"));
+				bean.setCategoryNum(rs.getInt("categoryNum"));
+				bean.setMoimProfile(rs.getString("moimProfile"));
+				vlist.addElement(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return vlist;
 	}
 	//모임멤버리스트->멤버아이디 받아오기
 	public Vector<MemberBean> mmList(int moimNum){

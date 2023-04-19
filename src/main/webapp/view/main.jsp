@@ -1,51 +1,21 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
-		
+	
 %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>대모임에 오신걸 환영합니다!</title>
     <link type="text/css" rel="stylesheet" href="main.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
     </style>
   </head>
   <body>
-    <!-- 상단 -->
-    <div class = "main-wrapper">
-    <header>
-      <div class="logo">
-        <a href="main.jsp"><img src="../logo.png" alt="대모임 로고" width="130px" height="130px" /></a>
-      </div>
-      <div class="search-area">
-        <form>
-          <button type="submit" class="search-btn"><img src="img_icon\search.png" alt="검색" style="width: 30px; height: 30px;">
-          </button>
-          <input type="text" />
-        </form>
-      </div>
-        <div class="header-function">
-        <!-- TODO 로그인 시 로그인 아이디나와야함 -->
-          <button class="login-btn" onclick="location.href='./login/login.html'">로그인</button>
-          <button class="signup-btn" onclick="location.href='./login/signup.html'">회원가입</button>
-          <button class="notification"><img src="img_icon\bell.png" alt="알림" style="width: 25px; height: 25px;"></button>
-        </div>
-    </header>
-
-    <!-- 네비게이션 -->
-    <nav>
-      <ul>
-        <li><a href="main.jsp">클래스</a></li>
-        <li><a href="recomoim.jsp">모임추천</a></li>
-        <li><a href="moimschedule.jsp">모임일정</a></li>
-        <li><a href="newmoim.jsp">모임신규</a></li>
-        <li><a href="myactivity.jsp">내 활동</a></li>
-      </ul>
-    </nav>
-
+  <%@ include file = "top.jsp" %>
     <!-- 카테고리 -->
     <div class="main-container">
       <main>
@@ -178,18 +148,20 @@
     <!-- 카드 -->
     <div class="card-group">
       <article class="card">
-        <div class="image-wrapper">
-          <img src=".jpg" alt="Image">
-          <button class="like-btn">찜하기</button>
+        <div class="card-wrapper">
+          <img src="ex_img\토끼.jpg" alt="Image">
+          <button class="like-btn"><i class="far fa-heart"></i></button>
         </div>
         <h4>좋은기타 동호회</h4>
         <div class="card-nav">
-          <p class="moimArea" name="moimArea" value="">금정구</p>
-          <p class="clubdetail-nav-line">|</p>
-          <p class="categoryName" name="categoryName" value="">음악 / 악기</p>
-      </div>
-        <p class="moimProfile" name="moimProfile" value="">설명</p>
+          <p class="moimArea" name="moimArea" value="" style="margin-top: 0;">금정구</p>
+          <p class="card-nav-line" style="margin-top: 0;"> &nbsp; | &nbsp;</p>
+          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;">음악 / 악기</p>
+        </div>
+        <p class="moimProfile" name="moimProfile" value="" style="margin-top: 0;">설명
+        으앙 배고파 으앙 집 가고싶어 으앙 게임하고싶어 으앙 그냥 자고싶어 으앙으앙</p>
       </article>
+
     </div>
     
     
@@ -216,6 +188,13 @@
         hiddenCategory.style.display = "none";
       }
       });
+      
+      const likeBtn = document.querySelector('.like-btn');
+      	likeBtn.addEventListener('click', () => {
+     	likeBtn.querySelector('i').classList.toggle('fas');
+     	likeBtn.querySelector('i').classList.toggle('far');
+     	});
+      	
     </script>
     </div>
   </body>

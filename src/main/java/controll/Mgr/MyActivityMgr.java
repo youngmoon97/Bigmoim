@@ -229,7 +229,8 @@ public class MyActivityMgr {
 			Vector<MoimBean> vlist = new Vector<MoimBean>();
 			try {
 				con = pool.getConnection();
-				sql = "select m.moimName ,m.moimImg ,m.moimArea ,m.moimNCount ,m.categoryNum "
+				sql = "select m.moimName ,m.moimImg,m.moimArea, "
+					+ "m.moimNCount ,m.categoryNum, m.moimProfile "
 					+ "from moim m ,recentseen r "
 					+ "where m.moimNum = r.moimNum and "
 					+ "r.memberId = ? ";
@@ -243,6 +244,7 @@ public class MyActivityMgr {
 					bean.setMoimArea(rs.getString("moimArea"));
 					bean.setMoimNCount(rs.getInt("moimNCount"));
 					bean.setCategoryNum(rs.getInt("categoryNum"));
+					bean.setMoimProfile(rs.getString("moimProfile"));
 					vlist.addElement(bean);
 				}
 			} catch (Exception e) {

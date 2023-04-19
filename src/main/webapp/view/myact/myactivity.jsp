@@ -1,3 +1,4 @@
+<%@page import="controll.Mgr.MemberMgr"%>
 <%@page import="model.Bean.MemberBean"%>
 <%@page import="model.Bean.MoimBean"%>
 <%@page import="java.util.Vector"%>
@@ -8,9 +9,26 @@
 <jsp:useBean id="myactMgr" class="controll.Mgr.MyActivityMgr"/>
 <%
 	//id만 받아와서 넣으면 된다.
-	MemberBean mbean = mMgr.getMember("aaa");
-	int businessNum = mbean.getBusinessNum();	
-	Vector<MoimBean> moimvlist = myactMgr.pbusinessList(businessNum);
+	String memberId = "aaa";
+	MemberBean mbean = mMgr.getMember(memberId);
+	int businessNum = mbean.getBusinessNum();
+	int taskNum = mbean.getTaskNum();
+	int themeNum = mbean.getThemeNum();
+	String memberAddr = mbean.getMemberAddr();
+	
+	//자기지역모임
+	Vector<MoimBean> addrmoim = moimMgr.areaMoimList(memberAddr);
+	//가입한모임
+	Vector<MoimBean> joinmoim = moimMgr.joinmoimList(memberId);
+	//최근본모임
+	Vector<MoimBean> recentmoim = myactMgr.rsList(memberId);
+	//업무별
+	Vector<MoimBean> bmoim = myactMgr.pbusinessList(businessNum);
+	//직무별
+	Vector<MoimBean> taskmoim = myactMgr.ptaskList(taskNum);
+	//테마별
+	Vector<MoimBean> thememoim = myactMgr.pthemeList(themeNum);
+	
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,33 +74,7 @@
     </nav>
     
     <!-- 가입한모임 -->
-
-    <hr>
-    <!-- 최근본모임 -->
-    <article>
-      <div class = "text">
-        <!-- class 이름 알잘딱깔센으로 적어보시길... -->
-        <p class = "join-text">최근 본 모임</p>
-      </div>
-    </article>
-    <div class="card-group">
-      <article class="card">
-        <div class="image-wrapper">
-          <img src="../ex_img\토끼.jpg" alt="Image">
-          <button class="like-btn">찜하기</button>
-        </div>
-        <h4>좋은기타 동호회</h4>
-        <div class="card-nav">
-          <p class="moimArea" name="moimArea" value="">금정구</p>
-          <p class="clubdetail-nav-line">|</p>
-          <p class="categoryName" name="categoryName" value="">음악 / 악기</p>
-      </div>
-        <p class="moimProfile" name="moimProfile" value="">설명</p>
-      </article>
-    </div>
-    <hr>
-    <!-- 업무별 모임(업무없으면 전체모임)-->
-    <% if(moimvlist.isEmpty()){
+	<% if(joinmoim.isEmpty()){
     %>
     <article>
       <div class = "text">
@@ -90,16 +82,39 @@
         <p class = "join-text">가입한 모임이 아직 없습니다.</p>
       </div>
     </article>
-    <%}else{%>
+    <!-- 업무 선택안해서 본인 지역 모임 전부 출력 -->
+    		<% 
+    		for(int i=0;i<addrmoim.size();i++){
+    			MoimBean moimbean = addrmoim.get(i);
+    		%>
+    		<div class="card-group">
+      		<article class="card">
+    		<div class="image-wrapper">
+          <img src=<%=moimbean.getMoimImg()%> alt="Image">
+          <h1></h1>
+          <button class="like-btn">찜하기</button>
+        </div>
+        <h4><%=moimbean.getMoimName() %></h4>
+        <div class="card-nav">
+          <p class="moimArea" name="moimArea" value=""><%=moimbean.getMoimArea() %></p>
+          <p class="clubdetail-nav-line">|</p>
+          <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
+      </div>
+        <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+    		</article>
+    		</div>
+    		
+    		<%}//--for
+    }else{//--if-else %>
     		<article>
       			<div class = "text">
-		        <p class = "join-text">업무 맞춤 모임</p>
+		        <p class = "join-text">가입한 모임</p>
  	     		</div>
     		</article>
     		
     		<% 
-    		for(int i=0;i<moimvlist.size();i++){
-    			MoimBean moimbean = moimvlist.get(i);
+    		for(int i=0;i<joinmoim.size();i++){
+    			MoimBean moimbean = joinmoim.get(i);
     		%>
     		<div class="card-group">
       		<article class="card">
@@ -120,53 +135,253 @@
     		<%}//--for
     }//--if-else %>
     <hr>
-    <!-- 직무별 모임 -->
+   
+    <!-- 최근본모임 -->
+    <% if(recentmoim.isEmpty()){
+    %>
     <article>
       <div class = "text">
         <!-- class 이름 알잘딱깔센으로 적어보시길... -->
-        <p class = "join-text">직무 맞춤 모임</p>
+        <p class = "join-text">최근 본 모임이 없네요! 추천드려요</p>
       </div>
     </article>
-    
-    <div class="card-group">
-      <article class="card">
-        <div class="image-wrapper">
-          <img src="../ex_img\토끼.jpg" alt="Image">
+    <!-- 업무 선택안해서 본인 지역 모임 전부 출력 -->
+    		<% 
+    		for(int i=0;i<addrmoim.size();i++){
+    			MoimBean moimbean = addrmoim.get(i);
+    		%>
+    		<div class="card-group">
+      		<article class="card">
+    		<div class="image-wrapper">
+          <img src=<%=moimbean.getMoimImg()%> alt="Image">
+          <h1></h1>
           <button class="like-btn">찜하기</button>
         </div>
-        <h4>좋은기타 동호회</h4>
+        <h4><%=moimbean.getMoimName() %></h4>
         <div class="card-nav">
-          <p class="moimArea" name="moimArea" value="">금정구</p>
+          <p class="moimArea" name="moimArea" value=""><%=moimbean.getMoimArea() %></p>
           <p class="clubdetail-nav-line">|</p>
-          <p class="categoryName" name="categoryName" value="">음악 / 악기</p>
+          <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
       </div>
-        <p class="moimProfile" name="moimProfile" value="">설명</p>
-      </article>
-    </div>
+        <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+    		</article>
+    		</div>
+    		<%}//--for
+    }else{//--if-else %>
+    		<article>
+      			<div class = "text">
+		        <p class = "join-text">최근 본 모임</p>
+ 	     		</div>
+    		</article>
+    		
+    		<% 
+    		for(int i=0;i<recentmoim.size();i++){
+    			MoimBean moimbean = recentmoim.get(i);
+    		%>
+    		<div class="card-group">
+      		<article class="card">
+    		<div class="image-wrapper">
+          <img src=<%=moimbean.getMoimImg()%> alt="Image">
+          <h1></h1>
+          <button class="like-btn">찜하기</button>
+        </div>
+        <h4><%=moimbean.getMoimName() %></h4>
+        <div class="card-nav">
+          <p class="moimArea" name="moimArea" value=""><%=moimbean.getMoimArea() %></p>
+          <p class="clubdetail-nav-line">|</p>
+          <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
+      </div>
+        <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+    		</article>
+    		</div>
+    		<%}//--for
+    }//--if-else %>
     
+    <br>
+    <!-- 업무별 모임 -->
+    <% if(bmoim.isEmpty()){
+    %>
+    <article>
+      <div class = "text">
+        <!-- class 이름 알잘딱깔센으로 적어보시길... -->
+        <p class = "join-text">업무별 모임이 아직 없습니다. 추천드려용</p>
+      </div>
+    </article>
+    <!-- 업무 선택안해서 본인 지역 모임 전부 출력 -->
+    		<% 
+    		for(int i=0;i<addrmoim.size();i++){
+    			MoimBean moimbean = addrmoim.get(i);
+    		%>
+    		<div class="card-group">
+      		<article class="card">
+    		<div class="image-wrapper">
+          <img src=<%=moimbean.getMoimImg()%> alt="Image">
+          <h1></h1>
+          <button class="like-btn">찜하기</button>
+        </div>
+        <h4><%=moimbean.getMoimName() %></h4>
+        <div class="card-nav">
+          <p class="moimArea" name="moimArea" value=""><%=moimbean.getMoimArea() %></p>
+          <p class="clubdetail-nav-line">|</p>
+          <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
+      </div>
+        <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+    		</article>
+    		</div>
+    		<%}//--for
+    }else{//--if-else %>
+    		<article>
+      			<div class = "text">
+		        <p class = "join-text">업무 맞춤 모임</p>
+ 	     		</div>
+    		</article>
+    		
+    		<% 
+    		for(int i=0;i<bmoim.size();i++){
+    			MoimBean moimbean = bmoim.get(i);
+    		%>
+    		<div class="card-group">
+      		<article class="card">
+    		<div class="image-wrapper">
+          <img src=<%=moimbean.getMoimImg()%> alt="Image">
+          <h1></h1>
+          <button class="like-btn">찜하기</button>
+        </div>
+        <h4><%=moimbean.getMoimName() %></h4>
+        <div class="card-nav">
+          <p class="moimArea" name="moimArea" value=""><%=moimbean.getMoimArea() %></p>
+          <p class="clubdetail-nav-line">|</p>
+          <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
+      </div>
+        <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+    		</article>
+    		</div>
+    		<%}//--for
+    }//--if-else %>
     <hr>
-    <!-- 태마별 모임 -->
+    
+    
+    <!-- 직무별 모임 -->
+    <% if(taskmoim.isEmpty()){
+    %>
     <article>
       <div class = "text">
         <!-- class 이름 알잘딱깔센으로 적어보시길... -->
-        <p class = "join-text">테마 맞춤 모임</p>
+        <p class = "join-text">직무별 모임이 아직 없습니다. 추천해드려요</p>
       </div>
     </article>
-    <div class="card-group">
-      <article class="card">
-        <div class="image-wrapper">
-          <img src="../ex_img\토끼.jpg" alt="Image">
+    <!-- 업무 선택안해서 본인 지역 모임 전부 출력 -->
+    		<% 
+    		for(int i=0;i<addrmoim.size();i++){
+    			MoimBean moimbean = addrmoim.get(i);
+    		%>
+    		<div class="card-group">
+      		<article class="card">
+    		<div class="image-wrapper">
+          <img src=<%=moimbean.getMoimImg()%> alt="Image">
+          <h1></h1>
           <button class="like-btn">찜하기</button>
         </div>
-        <h4>좋은기타 동호회</h4>
+        <h4><%=moimbean.getMoimName() %></h4>
         <div class="card-nav">
-          <p class="moimArea" name="moimArea" value="">금정구</p>
+          <p class="moimArea" name="moimArea" value=""><%=moimbean.getMoimArea() %></p>
           <p class="clubdetail-nav-line">|</p>
-          <p class="categoryName" name="categoryName" value="">음악 / 악기</p>
+          <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
       </div>
-        <p class="moimProfile" name="moimProfile" value="">설명</p>
-      </article>
-    </div>
+        <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+    		</article>
+    		</div>
+    		<%}//--for
+    }else{//--if-else %>
+    		<article>
+      			<div class = "text">
+		        <p class = "join-text">직무 맞춤 모임</p>
+ 	     		</div>
+    		</article>
+    		
+    		<% 
+    		for(int i=0;i<taskmoim.size();i++){
+    			MoimBean moimbean = taskmoim.get(i);
+    		%>
+    		<div class="card-group">
+      		<article class="card">
+    		<div class="image-wrapper">
+          <img src=<%=moimbean.getMoimImg()%> alt="Image">
+          <h1></h1>
+          <button class="like-btn">찜하기</button>
+        </div>
+        <h4><%=moimbean.getMoimName() %></h4>
+        <div class="card-nav">
+          <p class="moimArea" name="moimArea" value=""><%=moimbean.getMoimArea() %></p>
+          <p class="clubdetail-nav-line">|</p>
+          <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
+      </div>
+        <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+    		</article>
+    		</div>
+    		<%}//--for
+    }//--if-else %>
+    <hr>
+    <!-- 테마별 모임 -->
+    <% if(thememoim.isEmpty()){
+    %>
+    <article>
+      <div class = "text">
+        <!-- class 이름 알잘딱깔센으로 적어보시길... -->
+        <p class = "join-text">테마별 모임이 아직 없습니다. 추천해드려요</p>
+      </div>
+    </article>
+    <!-- 업무 선택안해서 본인 지역 모임 전부 출력 -->
+    		<% 
+    		for(int i=0;i<addrmoim.size();i++){
+    			MoimBean moimbean = addrmoim.get(i);
+    		%>
+    		<div class="card-group">
+      		<article class="card">
+    		<div class="image-wrapper">
+          <img src=<%=moimbean.getMoimImg()%> alt="Image">
+          <h1></h1>
+          <button class="like-btn">찜하기</button>
+        </div>
+        <h4><%=moimbean.getMoimName() %></h4>
+        <div class="card-nav">
+          <p class="moimArea" name="moimArea" value=""><%=moimbean.getMoimArea() %></p>
+          <p class="clubdetail-nav-line">|</p>
+          <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
+      </div>
+        <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+    		</article>
+    		</div>
+    		<%}//--for
+    }else{//--if-else %>
+    		<article>
+      			<div class = "text">
+		        <p class = "join-text">테마 맞춤 모임</p>
+ 	     		</div>
+    		</article>
+    		
+    		<% 
+    		for(int i=0;i<thememoim.size();i++){
+    			MoimBean moimbean = thememoim.get(i);
+    		%>
+    		<div class="card-group">
+      		<article class="card">
+    		<div class="image-wrapper">
+          <img src=<%=moimbean.getMoimImg()%> alt="Image">
+          <h1></h1>
+          <button class="like-btn">찜하기</button>
+        </div>
+        <h4><%=moimbean.getMoimName() %></h4>
+        <div class="card-nav">
+          <p class="moimArea" name="moimArea" value=""><%=moimbean.getMoimArea() %></p>
+          <p class="clubdetail-nav-line">|</p>
+          <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
+      </div>
+        <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+    		</article>
+    		</div>
+    		<%}//--for
+    }//--if-else %>
     <hr>
     
     <!-- 하단 -->
