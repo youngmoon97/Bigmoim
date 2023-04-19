@@ -8,6 +8,7 @@
 <jsp:useBean id="cMgr" class="controll.Mgr.ClassMgr"/>
 <jsp:useBean id="myactMgr" class="controll.Mgr.MyActivityMgr"/>
 <%
+	
 	//id만 받아와서 넣으면 된다.
 	String memberId = "aaa";
 	MemberBean mbean = mMgr.getMember(memberId);
@@ -36,7 +37,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>대모임에 오신걸 환영합니다!</title>
-    <link type="text/css" rel="stylesheet" href="../main.css" />
+    <link type="text/css" rel="stylesheet" href="../main/main.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
     </style>
@@ -46,7 +47,7 @@
     <div class = "main-wrapper">
     <header>
       <div class="logo">
-        <a href="#"><img src="../../logo.png" alt="대모임 로고" width="130px" height="130px"/></a>
+        <a href="../main/main.jsp"><img src="C:\Jsp\bigmoim\src\main\webapp\image/logo.png" alt="대모임 로고" width="130px" height="130px"/></a>
       </div>
       <div class="search-area">
         <form>

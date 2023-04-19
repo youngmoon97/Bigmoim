@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%
+		String SAVEPOINT = "C:/Jsp/bigmoim/src/main/webapp/image/";
 		String memberId = (String)session.getAttribute("idKey");
 		System.out.println("main.jsp:memberId = "+memberId);
 %>
@@ -19,7 +20,7 @@
     <div class = "main-wrapper">
     <header>
       <div class="logo">
-        <a href="main.jsp"><img src="../logo.png" alt="대모임 로고" width="130px" height="130px" /></a>
+        <a href="main.jsp"><img src="logo.png" alt="대모임 로고" width="130px" height="130px" /></a>
       </div>
       <div class="search-area">
         <form>

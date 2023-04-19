@@ -15,7 +15,7 @@
     </style>
   </head>
   <body>
-  <%@ include file = "top.jsp" %>
+  <%@ include file = "../top.jsp" %>
     <!-- 카테고리 -->
     <div class="main-container">
       <main>

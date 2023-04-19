@@ -1,0 +1,578 @@
+body {
+  font-family: 'Heebo', sans-serif;
+  width: 100%;
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+ul, li {
+  list-style:none;
+  padding: 0px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: white;
+}
+
+.logo{
+  display: flex;
+  padding-top: 10px;
+}
+
+.logo h5{
+  font-size: 20px;
+}
+
+.main-container {
+  padding: 50px;
+  background-color: rgb(255, 231, 235);
+  min-width: min-content; /* 내용 최소너비를 유지 */
+}
+
+.main-wrapper {
+  max-width: 1300px; /* 전체적인 크기를 1300px로 제한 */
+  margin: 0 auto; /* 가운데 정렬 */
+}
+
+.main-wrapper .search-area {
+  margin-right: 4px;
+}
+
+.search-area {
+  width: calc(100% - 800px); /* 5px 크기 증가 */
+  display: flex;
+  margin-left: 4cm;
+  align-items: center;  /* 요소 수직정렬 */
+  border: 1px solid rgb(196, 196, 196);
+}
+
+form {
+  display: flex;
+}
+
+/* 모든 텍스트 박스에 적용 */
+input[type="text"] {
+  height: 30px;
+  width: 390px;
+  margin-left: 10px;
+  border: none;
+  font-size: 16px;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.search-btn {
+  background-color: pink;
+  max-width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.login-btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #F5F5F5;
+  margin-right: 10px;
+}
+
+.signup-btn {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: pink;
+  color: white;
+  margin-right: 10px;
+}
+
+.notification {
+  margin-right: 10px;
+}
+
+.notification img{
+  width: 30px;
+  height: 30px;
+  padding-top: 10px;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  margin-right: 30px;
+
+}
+
+nav li:last-child {
+  margin-right: 0;
+}
+
+nav a {
+  display: block;
+  padding: 20px;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+nav a:hover {
+  background-color: white;
+  color: black;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 20px;
+  background-color: white;
+}
+
+.clubdetail-nav{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  font-size: 20px;
+}
+
+.clubdetail-nav a{
+  text-decoration: none; /* ë§í¬ì˜ ë°‘ì¤„ ì œê±° */
+  color: inherit; /* ë§í¬ì˜ ìƒ‰ìƒ ì œê±° */
+}
+
+.clubdetail-nav .clubdetail-nav-home{
+  flex-direction: row;
+  padding-right: 50px;
+  padding-left: 30px;
+}
+
+.clubdetail-nav .clubdetail-nav-notice{
+  flex-direction: row;
+  padding-right: 50px;
+}
+
+.clubdetail-nav .clubdetail-nav-line1{
+  flex-direction: row;
+  padding-right: 50px;
+}
+
+.clubdetail-nav .clubdetail-nav-line2{
+  flex-direction: row;
+  padding-right: 50px;
+}
+
+.clubdetail{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+  height: 170px;
+}
+
+.category{
+  width: 120px;
+  height: 120px;
+  background-color: #F2F2F2;
+  border-radius: 50%;
+}
+
+.category .image-wrapper img{
+  padding-left: 10px;
+  width: 100px;
+  height: 100px;
+}
+
+.clubdetail-moim{
+  flex-direction: column;
+  padding-top: 10px;
+  margin-left: 50px;
+  text-align: left;
+}
+
+.clubdetail-moimname{
+  font-size: 30px;
+  padding: 0;
+  margin: 0;
+}
+
+.clubdetail-area{
+  display: flex;
+  padding: 0;
+}
+
+.moimarea-line{
+  margin: 0 10px;
+}
+
+.clubdetail-membercount{
+  margin-right: 20px;
+}
+
+.clubdetail-jjim{
+  width: 21px;
+  height: 20px;
+}
+
+.clubdetail-photo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(255, 231, 235);
+}
+
+.clubdetail-photo-detail{
+  width: 700px;
+  height: 470px;
+  padding: 30px 0;
+}
+
+.clubdetail-content{
+  display: flex;
+  margin: 20px auto;
+  font-size: 20px;
+  text-align: left;
+  width: 700px;
+}
+
+.clubdetail-schedule{
+  margin: 0 auto;
+  width: 700px;
+}
+
+.clubdetail-schedule .meeting_list {
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+}
+
+.clubdetail-schedule .meeting_list h2 {
+  color: cornflowerblue;
+  font-size: 20px;
+}
+
+.clubdetail-schedule .meeting_list > li + li {
+  border-top:1px solid #d9d9d9;
+  margin-top: 30px;
+  padding-top: 20px;
+}
+
+.clubdetail-schedule .meeting_list .mlist_in {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  margin-top: 10px;
+}
+
+.clubdetail-schedule .meeting_list .mlist_in .date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 13px;
+  border: 2px solid #d9d9d9;
+  border-radius: 10px;
+  font-weight: bold;
+  line-height: 28px;
+}
+
+.clubdetail-schedule .meeting_list .mlist_in .date span {
+  font-size: 29px;
+  display: block;
+  margin-top: 3px;
+}
+
+.clubdetail-schedule .meeting_list .mlist_in .in_cont {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.clubdetail-schedule .meeting_list .mlist_in .in_cont .ico::before {
+content:"";
+display:inline-block;
+background:url('/img_icon/icon.png') no-repeat 0 0;
+width:25px;
+height:25px;
+vertical-align: middle;
+background-size: cover;
+margin-right: 7px;
+}
+
+.clubdetail-schedule .meeting_list .mlist_in .in_cont .place::before {
+  background-position: -25px 0;
+}
+
+.clubdetail-schedule .meeting_list .mlist_in .in_cont .cost::before {
+  background-position: -50px 0;
+}
+
+.clubdetail-schedule .meeting_list .mlist_in .btn {
+  position: absolute;
+  right: 0;
+}
+
+.clubdetail-schedule .meeting_list .mlist_in .btn .share {
+  display: block;
+  color: #666666;
+}
+
+.clubdetail-schedule .meeting_list .member {
+  margin: 13px 0;
+  position: relative;
+}
+
+.clubdetail-schedule .meeting_list .member h4 {
+  margin-bottom: 8px;
+}
+
+::-webkit-scrollbar {
+  width: 1px;
+  height: 1px;
+}
+
+::-webkit-scrollbar-button {
+  width: 1px;
+  height: 1px;
+}
+
+.container {
+  width: 100px;
+  height: 300px;
+  box-sizing: border-box;
+  transform: rotate(-90deg) translateY(100px);
+  /* transform-origin: right top; */
+  overflow-y: scroll;
+  overflow-x: hidden;
+  overflow: auto;
+  margin: -100px 0px; 
+}
+
+.container div{
+  -webkit-transform: rotate(90deg);
+  overflow: hidden;
+  height: auto;
+}
+
+.container div img{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.clubdetail-schedule .meeting_list .member .member_in {
+  width: 700px;
+  height: 125px;
+  white-space: nowrap;
+  overflow-y: hidden;
+  overflow-x: auto;
+  scroll-snap-type: none;
+}
+
+.clubdetail-schedule .meeting_list .member .member_in li {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  display: inline-flex;
+  /* scroll-snap-align: center; */
+  overflow: hidden;
+}
+
+.clubdetail-schedule .meeting_list .member .member_in li img {
+  width: 100%;
+}
+
+/*tab css*/
+.tab{
+  padding-top: 30px;
+  padding-bottom: 50px;
+}
+
+.tabnav{
+  font-size:0; 
+  border:1px solid #ddd;
+  border-bottom: none;
+}
+
+.tabnav li{
+  display: inline-block;  
+  height:46px; 
+  text-align:center; 
+  /* border-right:1px solid #ddd; */
+  margin: 0;
+  padding: 0;
+}
+
+.tabnav li a:before{
+  content:""; 
+  position:absolute; 
+  left:0; top:0px; 
+  width:100%; 
+  height:3px; 
+}
+.tabnav li a.active:before{
+  background:rgb(255, 231, 235)
+}
+
+.tabnav li a.active{
+  border-bottom:1px solid #fff;
+}
+
+.tabnav li a{ 
+  position:relative; 
+  display:block; 
+  background: #f8f8f8; 
+  color: #000; 
+  padding:0 30px; 
+  line-height:46px; 
+  text-decoration:none; 
+  font-size:16px;
+}
+
+.tabnav li a:hover, 
+.tabnav li a.active{
+  background:#fff; 
+  color:rgb(255, 231, 235); 
+}
+
+.tabcontent{
+  padding: 20px; 
+  height: auto; 
+  border:1px solid #ddd; 
+  border-top:none;
+}
+.tab .tabcontent .tabcontent-list {
+  display: flex;
+  height: auto;
+}
+
+.tab .tabcontent .tabcontent-list .tabcontent-list-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+}
+
+.tab .tabcontent .tabcontent-list li img {
+  width: 100%;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.tab .tabcontent .tabcontent-list .tabcontent-list-detail {
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 25px;
+}
+
+.tab .tabcontent .tabcontent-list .tabcontent-list-detail .tabcontent-list-name{
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.tab .tabcontent .tabcontent-list .tabcontent-list-detail .tabcontent-list-hello{
+  font-size: 15px;
+  color: #999;
+}
+
+/* 하단 */
+footer {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 20px;
+background-color: pink;
+color: white;
+font-size: 16px;
+}
+
+.social-media {
+display: flex;
+}
+
+.social-media a {
+display: flex;
+justify-content: center;
+align-items: center;
+width: 30px;
+height: 30px;
+margin-right: 10px;
+border-radius: 50%;
+background-color: white;
+color: pink;
+text-decoration: none;
+}
+
+.social-media a:hover {
+background-color: pink;
+color: white;
+}
+
+@media (max-width: 768px) {
+
+  header {
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 10px;
+  }
+  
+  .search-area {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  }
+  
+  input[type="text"] {
+  width: 200px;
+  margin-left: 5px;
+  }
+  
+  .login-btn, .signup-btn {
+  padding: 5px 10px;
+  font-size: 14px;
+  margin-right: 5px;
+  }
+  
+  nav {
+  justify-content: space-between;
+  padding: 10px;
+  }
+  
+  nav ul {
+  flex-direction: column;
+  align-items: center;
+  }
+  
+  nav li {
+  margin-right: 0;
+  margin-bottom: 10px;
+  }
+  
+  }
+  
+  @media (max-width: 576px) {
+  
+  input[type="text"] {
+  width: 150px;
+  font-size: 14px;
+  }
+  
+  }
