@@ -398,12 +398,12 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
 					</div>
 					<div style="text-align: center;">
 						<div class="d-inline-block" style="margin-right: 50px;">
-							<input class="form-check-input" type="radio" name="memberSex" id="male" value="1" checked> 
+							<input class="form-check-input" type="radio" name="memberSex" 
+								id="male" value="1" checked> 
 								<label class="form-check-label" for="male"> 남자 </label>
-						</div>
-						<div class="d-inline-block" style="margin-left: 50px;">
 							<input class="form-check-input" type="radio" name="memberSex"
-								id="female" value="2"> <label class="form-check-label" for="female"> 여자 </label>
+								id="female" value="2"> 
+								<label class="form-check-label" for="female"> 여자 </label>
 						</div>
 					</div>
 

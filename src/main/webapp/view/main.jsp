@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
-
 <%
 		
 %>
@@ -39,11 +38,11 @@
     <!-- 네비게이션 -->
     <nav>
       <ul>
-        <li><a href="#">홈</a></li>
-        <li><a href="#">모임추천</a></li>
-        <li><a href="#">모임일정</a></li>
-        <li><a href="#">모임신규</a></li>
-        <li><a href="#">내 활동</a></li>
+        <li><a href="main.jsp">클래스</a></li>
+        <li><a href="recomoim.jsp">모임추천</a></li>
+        <li><a href="moimschedule.jsp">모임일정</a></li>
+        <li><a href="newmoim.jsp">모임신규</a></li>
+        <li><a href="myactivity.jsp">내 활동</a></li>
       </ul>
     </nav>
 
