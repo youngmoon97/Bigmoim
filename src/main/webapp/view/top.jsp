@@ -14,6 +14,18 @@
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
     </style>
+    <script>
+   function toggleDropdown() {
+      var dropdown = document.querySelector(".member-dropdown-content");
+      if (dropdown.style.display === "none") {
+         dropdown.style.display = "block";
+      } else {
+         dropdown.style.display = "none";
+      }
+   }
+</script>
+
+    
 </head>
 <body>
 	<!-- 상단 -->
@@ -32,18 +44,21 @@
         <div class="header-function">
         <!-- TODO 로그인 시 로그인 아이디나와야함 -->
           <%if(memberId != null){ %>
-           <input type = "button" id="member-btn" name="member-btn" value="<%=memberId%>"></button>
-           <button class="logout-btn" onclick="location.href='/bigmoim/view/login/logout.jsp'">로그아웃</button>
-          <script type="text/javascript">
-  			alert("멤버아이디 넘어옴."); //테스트후 삭제
-		</script>
-         <%}else{%>
-          <button class="login-btn" onclick="location.href='/bigmoim/view/login/login.html'">로그인</button>
-          <button class="signup-btn" onclick="location.href='/bigmoim/view/login/signup.jsp'">회원가입</button>
-            <script type="text/javascript">
-  			alert("멤버아이디 안넘어옴."); //테스트후 삭제
-		</script>
-         <%}%>
+    			<div class="member-wrapper">
+    				<div class="member-dropdown">
+        			<button class="member-btn" onclick="toggleDropdown()"><%=memberId%></button>
+        			<div class="member-dropdown-content">
+            			<a href="#">내 정보</a>
+            			<a href="#">내가 가입한 모임</a>
+        			</div>
+    				</div>
+    			<button class="logout-btn" onclick="location.href='/bigmoim/view/login/logout.jsp'">로그아웃</button>
+				</div>
+				
+			<%}else{%>
+    			<button class="login-btn" onclick="location.href='/bigmoim/view/login/login.html'">로그인</button>
+    			<button class="signup-btn" onclick="location.href='/bigmoim/view/login/signup.jsp'">회원가입</button>
+				<%}%>
           <button class="notification"><img src="/bigmoim/image/bell.png" alt="알림" style="width: 25px; height: 25px;"></button>
         </div>
     </header>

@@ -21,7 +21,7 @@
 		String url = "signup.jsp";
 		if(result){
 			msg = "가입성공";
-			url = "main.jsp"; //추후에 main페이지로 가도록 수정필요
+			url = "../main.jsp"; //추후에 main페이지로 가도록 수정필요
 			//가입과 동시에 로그인 처리
 			session.setAttribute("idKey", mBean.getMemberId());
 		}

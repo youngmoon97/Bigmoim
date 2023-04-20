@@ -53,16 +53,6 @@
     </footer>
 
     <script>
-      const moreBtn = document.querySelector(".more");
-      const hiddenCategory = document.querySelector(".hidden-category");
-
-      moreBtn.addEventListener("click", function() {
-        if (hiddenCategory.style.display === "none") {
-        hiddenCategory.style.display = "flex";
-      } else {
-        hiddenCategory.style.display = "none";
-      }
-      });
       
       const likeBtn = document.querySelector('.like-btn');
       	likeBtn.addEventListener('click', () => {

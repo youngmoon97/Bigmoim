@@ -10,7 +10,7 @@
 <title>대모임 ID 중복체크</title>
 <link href="style.css" rel="stylesheet" type="text/css">
 </head>
-<body bgcolor="#FFFFCC">
+<body bgcolor=#FFE7EB>
 <div align="center">
 <br/><b><%=id%></b>
 <%

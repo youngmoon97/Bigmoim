@@ -12,7 +12,6 @@
 <%
 Vector<ZipcodeBean> vCity = mMgr.cityList(); //area1 시
 String memberLikeArea_area1 = "서울"; //시
-//String memberLikeArea_area2 = "";
 String memberName = ""; //이름
 String memberId = ""; //Id
 String memberPw = ""; //비밀번호
@@ -28,23 +27,21 @@ String memberJobAddrArea2 = ""; //직장주소 area2
 
 Vector<ZipcodeBean> vArea2 = null; //area2 구/동
 if (request.getParameter("memberLikeArea_area1") != null) {
-	//System.out.println("signup.jsp: memberLikeArea_area1 = " + memberLikeArea_area1);
-	memberLikeArea_area1 = request.getParameter("memberLikeArea_area1");
-	memberName = request.getParameter("memberName");
-	memberId = request.getParameter("memberId");
-	memberPw = request.getParameter("memberPw");
-	memberPwConfirm = request.getParameter("memberPwConfirm");
-	memberTel = request.getParameter("memberTel");
-	
-	memberAddrZipcode = request.getParameter("memberAddrZipcode");
-	memberAddrArea1 = request.getParameter("memberAddrArea1");
-	memberAddrArea2 = request.getParameter("memberAddrArea2");
-	memberJobAddrZipcode = request.getParameter("memberJobAddrZipcode");
-	memberJobAddrArea1 = request.getParameter("memberJobAddrArea1");
-	memberJobAddrArea2 = request.getParameter("memberJobAddrArea2");
-}//else if(request.getParameter("memberLikeArea_area1") == null){System.out.println("signup.jsp: memberLikeArea_area1 null= " + memberLikeArea_area1);}
+   memberLikeArea_area1 = request.getParameter("memberLikeArea_area1");
+   memberName = request.getParameter("memberName");
+   memberId = request.getParameter("memberId");
+   memberPw = request.getParameter("memberPw");
+   memberPwConfirm = request.getParameter("memberPwConfirm");
+   memberTel = request.getParameter("memberTel");
+   
+   memberAddrZipcode = request.getParameter("memberAddrZipcode");
+   memberAddrArea1 = request.getParameter("memberAddrArea1");
+   memberAddrArea2 = request.getParameter("memberAddrArea2");
+   memberJobAddrZipcode = request.getParameter("memberJobAddrZipcode");
+   memberJobAddrArea1 = request.getParameter("memberJobAddrArea1");
+   memberJobAddrArea2 = request.getParameter("memberJobAddrArea2");
+}
 vArea2 = mMgr.area2List(memberLikeArea_area1);
-//System.out.println(vArea2.get(1));
 
 Vector<BusinessBean> vBusiness = macMgr.businessList(); //업종
 Vector<TaskBean> vTask = macMgr.taskList(); //직무
@@ -52,68 +49,72 @@ Vector<ThemeBean> vTheme = macMgr.themeList(); //테마
 Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
 %>
 <script>
-	function idCheck(id) {
-	    if (id == "") {
-	        alert("아이디를 입력하세요.");
-	        document.regFrm.id.focus();
-	        return;//이후에 코드를 실행이 안됨. 함수를 빠져나감.
-	    }
-	    url = "idCheck.jsp?id=" + id;
-	    window.open(url, "ID 중복체크", "width=300, height=150, top=100, left=300");
-	}
-	
-	function setArea2List(memberLikeArea_area1) {
-		document.hiddenFrm.memberLikeArea_area1.value = memberLikeArea_area1;
-		document.hiddenFrm.memberName.value = document.signFrm.memberName.value;
-		document.hiddenFrm.memberId.value = document.signFrm.memberId.value;
-		document.hiddenFrm.memberPw.value = document.signFrm.memberPw.value;
-		document.hiddenFrm.memberPwConfirm.value = document.signFrm.memberPwConfirm.value;
-		document.hiddenFrm.memberTel.value=document.signFrm.memberTel.value;
-		
-		document.hiddenFrm.memberAddrZipcode.value=document.signFrm.memberAddrZipcode.value;
-		document.hiddenFrm.memberAddrArea1.value=document.signFrm.memberAddrArea1.value;
-		document.hiddenFrm.memberAddrArea2.value=document.signFrm.memberAddrArea2.value;
-		document.hiddenFrm.memberJobAddrZipcode.value=document.signFrm.memberJobAddrZipcode.value;
-		document.hiddenFrm.memberJobAddrArea1.value=document.signFrm.memberJobAddrArea1.value;
-		document.hiddenFrm.memberJobAddrArea2.value=document.signFrm.memberJobAddrArea2.value;
-		document.hiddenFrm.submit();
-	}
-	
-	function zipSearch(name) { //우편번호 검색
-		url = "zipSearch.jsp?search=n&type=" + name;
-		window.open(url, "bigmoim 우편번호 검색", "width=500, height=300, top=100, left=300, scrollbar=yes");
-	}
-	
-	//선택된 값들을 가져와서 세팅
-	function getYear(memberBirth_year){
-		document.signFrm.memberBirth_year.value=memberBirth_year;
-	}
-	function getMonth(memberBirth_month){
-		document.signFrm.memberBirth_month.value=memberBirth_month;
-	}
-	function getDay(memberBirth_day){
-		document.signFrm.memberBirth_day.value=memberBirth_day;
-	}
-	
-	function getCategoryNum(categoryNum){
-		document.signFrm.categoryNum.value=categoryNum;
-	}
-	function getBusinessNum(businessNum){
-		document.signFrm.businessNum.value=businessNum;
-	}
-	function getTaskNum(taskNum){
-		document.signFrm.taskNum.value=taskNum;
-	}
-	function getThemeNum(themeNum){
-		document.signFrm.themeNum.value=themeNum;
-	}
+   function idCheck(id) {
+       if (id == "") {
+           alert("아이디를 입력하세요.");
+           document.signFrm.id.focus();
+           return;//이후에 코드를 실행이 안됨. 함수를 빠져나감.
+       }
+       url = "idCheck.jsp?id=" + id;
+       window.open(url, "ID 중복체크", "width=300, height=150, top=100, left=300");
+   }
+   
+   function phoneOK(){
+	   
+   }
+   
+   function setArea2List(memberLikeArea_area1) {
+      document.hiddenFrm.memberLikeArea_area1.value = memberLikeArea_area1;
+      document.hiddenFrm.memberName.value = document.signFrm.memberName.value;
+      document.hiddenFrm.memberId.value = document.signFrm.memberId.value;
+      document.hiddenFrm.memberPw.value = document.signFrm.memberPw.value;
+      document.hiddenFrm.memberPwConfirm.value = document.signFrm.memberPwConfirm.value;
+      document.hiddenFrm.memberTel.value=document.signFrm.memberTel.value;
+      
+      document.hiddenFrm.memberAddrZipcode.value=document.signFrm.memberAddrZipcode.value;
+      document.hiddenFrm.memberAddrArea1.value=document.signFrm.memberAddrArea1.value;
+      document.hiddenFrm.memberAddrArea2.value=document.signFrm.memberAddrArea2.value;
+      document.hiddenFrm.memberJobAddrZipcode.value=document.signFrm.memberJobAddrZipcode.value;
+      document.hiddenFrm.memberJobAddrArea1.value=document.signFrm.memberJobAddrArea1.value;
+      document.hiddenFrm.memberJobAddrArea2.value=document.signFrm.memberJobAddrArea2.value;
+      document.hiddenFrm.submit();
+   }
+   
+   function zipSearch(name) { //우편번호 검색
+      url = "zipSearch.jsp?search=n&type=" + name;
+      window.open(url, "bigmoim 우편번호 검색", "width=500, height=300, top=100, left=300, scrollbar=yes");
+   }
+   
+   //선택된 값들을 가져와서 세팅
+   function getYear(memberBirth_year){
+      document.signFrm.memberBirth_year.value=memberBirth_year;
+   }
+   function getMonth(memberBirth_month){
+      document.signFrm.memberBirth_month.value=memberBirth_month;
+   }
+   function getDay(memberBirth_day){
+      document.signFrm.memberBirth_day.value=memberBirth_day;
+   }
+   
+   function getCategoryNum(categoryNum){
+      document.signFrm.categoryNum.value=categoryNum;
+   }
+   function getBusinessNum(businessNum){
+      document.signFrm.businessNum.value=businessNum;
+   }
+   function getTaskNum(taskNum){
+      document.signFrm.taskNum.value=taskNum;
+   }
+   function getThemeNum(themeNum){
+      document.signFrm.themeNum.value=themeNum;
+   }
 </script>
 
 <!doctype html>
 <html lang="en">
 
 <head>
-	<script type="text/javascript" src="script.js"></script>
+   <script type="text/javascript" src="script.js"></script>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -160,8 +161,9 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
             /* 이미지와 글씨 사이의 간격 조절 */
             margin-top: -9px;
             /* 원하는 위치만큼의 음수 값을 입력하여 이미지를 높일 수 있습니다. */
-            margin-left: -0.5em;
+            margin-left: -16em;
         }
+
 
         .file-input-container {
             background-color: pink;
@@ -177,130 +179,162 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
             margin-left: 1em;
         }
 
-/*
-background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;
-*/
-
         /* 파일 선택 버튼 숨기기 */
         #profile-image {
             display: none;
         }
+
+        .main-container {
+            padding: 50px;
+            background-color: rgb(255, 231, 235);
+            min-width: min-content;
+            /* 내용 최소너비를 유지 */
+        }
+
+        .main-wrapper {
+            max-width: 1300px;
+            /* 전체적인 크기를 1300px로 제한 */
+            margin: 0 auto;
+            /* 가운데 정렬 */
+        }
+
+        .category {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px 56px;
+            align-content: center;
+        }
+
+        .main-merge {
+            max-width: 900px;
+            margin: 0 auto;
+            /* 가운데 정렬을 위한 margin 설정 */
+            width: 85%;
+            /* 예시 값 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+            background-color: white;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
     </style>
     <title>회원가입</title>
 </head>
 
 <body>
-    <div class="content">
-        <div class="wrapper">
-            <div class="row justify-content-center">
-                <div class="col-md-6 contents">
-                    <div class="row justify-content-center">
-                        <div class="col-md-12">
-                            <div class="main-merge">
-                                <div class="back-button">
-                                    <!--a 태그에 메인 URL 입력해야함-->
-                                    <a href="#">
-                                        <img src="../images/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
-                                    </a>
-                                    <h3><strong>회원가입</strong></h3>
-                                </div>
-                                <form name="signFrm" action="signProc.jsp" method="get">
-                                    <div class="sign-nameHeader">
-                                        <label for="">이름(필수)</label>
-                                        </div>
-                                        <div>
-                                        <input type="text" class="form-control" name="memberName"
-                                        value="" placeholder="이름을 입력해주세요.">
+    <div class="main-wrapper">
+        <div class="main-container">
+            <div class="category">
+                <div class="main-merge"> <!--main page 간격-->
+                    <div class="back-button" style="margin-top: 3em">
+  <!--a 태그에 메인 URL 입력해야함-->
+                        <a href="javascript:history.back();">
+                            <img src="/bigmoim/image/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
+                        </a>    
+                        <h3 style="margin-left: -7.5em"><strong>회원가입</strong></h3>
+                     </div>                    
+                        <form name="signFrm" action="signProc.jsp" method="POST">
+                           <div style="width: 500px; font-size: 16px;">
+                                   
+                             <div class="sign-nameHeader">
+                          <br>
+                                <label>이름(필수)</label>
+                                    <input type="text" class="form-control" name="memberName"
+                                      placeholder="이름을 입력해주세요."  value= "<%=memberName%>">
                                     </div>
 
-									<!--버튼이 한줄에 오기위해  부모에 input-button-wrapper 추가후 
+                           <!--버튼이 한줄에 오기위해  부모에 input-button-wrapper 추가후 
                                     css 수정-->
-									<div>
-										<div class="sign-nameHeader">
-											<label for="">아이디(필수)</label>
-										</div>
-										<div style="display: flex; align-items: center;">
-											<input class="form-control" name="memberId" id="memberId"
-												value="tempid">
-											<button onclick="idCheck(this.form.memberId.value)"
-												style="background: pink; color: #fff; border: none; padding: 10px 20px; 
-												cursor: pointer; border-radius: 5px; white-space: nowrap;">
-												중복확인</button>
-										</div>
-									</div>
-									<br>
-									<div class ="sign-nameHeader">
-                                        <label for="memberPw">비밀번호(필수)</label></div>
-                                    <div>
+                           <div>
+                              <div class="sign-nameHeader">
+                                 <label>아이디(필수)</label>
+                                        <div class="input-button-wrapper">
+                                         <input type="text" class="form-control" name="memberId" id="memberId"
+                                         placeholder="아이디를 입력해주세요."  value= "<%=memberId%>">
+                                 <button type="button" onclick="idCheck(this.form.memberId.value)"
+                                    style="background: pink; color: #fff; border: none; padding: 10px 20px; 
+                                    cursor: pointer; border-radius: 5px; white-space: nowrap;">
+                                    중복확인</button>
+                              </div>
+                           </div>
+                           
+                           <div class ="sign-nameHeader">
+                                        <label for="memberPw">비밀번호(필수)</label>
                                         <input type="password" class="form-control" name="memberPw"
-                                        value="temppw">
+                                        placeholder="비밀번호를 입력해주세요."  value= "<%=memberPw%>">
                                     </div>
-                                    <br>
+                                    
                                     <div class="sign-nameHeader">
-                                        <label for="memberPwConfirm">비밀번호 재확인</label></div>
-                                        <div>
+                                        <label for="memberPwConfirm">비밀번호 재확인</label>
                                         <input type="password" class="form-control" name="memberPwConfirm"
-                                         value="temppw">
+                                         placeholder="비밀번호 재확인"  value= "<%=memberPwConfirm%>">
                                     </div>
-									<br>
+                           
                                     <div class="sign-nameHeader">
-                                        <label for="memberTel">전화번호(필수)</label></div>
-                                        <div>
+                                        <label for="memberTel">전화번호(필수)</label>
                                         <div class="input-button-wrapper">
                                             <input type="text" class="form-control" name="memberTel" 
-                                            value="010-1234-1234">
-                                            <button onclick="phoneOK()"
+                                            placeholder="전화번호를 입력해주세요."  value= "<%=memberTel%>">
+                                            <button type="button" onclick="phoneOK()"
                                                 style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">인증</button>
                                         </div>
                                     </div>
-									<br>
+                           
                                     <!--집주소 zipcode 그대로 사용한다고 가정-->
-                                    <div class="sign-nameHeader">
-                                        <label for="">집주소</label>
-                                    </div>
-                                    <div>
-                                        <br>
-                                        <input name="memberAddrZipcode" size="5" readonly style="height: 40px;"
-                                        value = "135-888">
-                                        <input type="button" name ="memberAddrBtn" value="우편번호찾기" onClick="zipSearch(this.name)"
-                                            style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; height: 40px;">
-                                    </div>
-                                    <div class="sign-nameHeader">
-                                        <br>
-                                        <input name="memberAddrArea1" size="7" value="서울" readonly>
-                                        <input name="memberAddrArea2" size="10" value="은평구" readonly>
-                                            <input type="hidden" name="memberAddr" id="memberAddr">
-                                    </div>
-
-                                    <div class="sign-nameHeader">
-                                        <label>직장 주소</label>
-                                        <br />
-                                    </div>
-                                    <div>
-                                        <br>
-                                        <input name="memberJobAddrZipcode" size="5" readonly style="height: 40px;">
-                                        <input type="button" name="memberJobAddrBtn" value="우편번호찾기" onClick="zipSearch(this.name)"
-                                            style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; height: 40px;">
-                                    </div>
-                                        <div class="sign-nameHeader">
-                                            <br>
-                                            <input name="memberJobAddrArea1" size="7" readonly>
-                                            <input name="memberJobAddrArea2" size="10" readonly>
-                                            <input type="hidden" name="memberJobAddr" id="memberJobAddr">
-                                        </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="sign-nameHeader">
+                                                <label for="memberAddr">집주소</label>
+                                            </div>
+                                            <div>
+                                              <input name="memberAddrZipcode" size="5" readonly style="height: 40px;"
+                                              value = "135-888">
+                                              <input type="button" name ="memberAddrBtn" value="우편번호찾기" onClick="zipSearch(this.name)"
+                                               style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; height: 40px;">
+                                            </div>
+                                             <div class="sign-nameHeader">
+                                              <br>
+                                              <input name="memberAddrArea1" size="5" value="서울" readonly>
+                                              <input name="memberAddrArea2" size="13" value="은평구" readonly>
+                                                 <input type="hidden" name="memberAddr" id="memberAddr">
+                                            </div>
+                                         </div>
+                                         
+                              <div class="col-md-6">
+                                               <div class="sign-nameHeader">
+                                                 <label>직장 주소</label>
+                                                </div>
+                                             <div>
+                                                 <input name="memberJobAddrZipcode" size="5" readonly style="height: 40px;">
+                                                 <input type="button" name="memberJobAddrBtn" value="우편번호찾기" onClick="zipSearch(this.name)"
+                                                   style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; height: 40px;">
+                                               </div>
+                                                 <div class="sign-nameHeader">
+                                                  <br>
+                                                  <input name="memberJobAddrArea1" size="5" readonly>
+                                                  <input name="memberJobAddrArea2" size="13" readonly>
+                                                  <input type="hidden" name="memberJobAddr" id="memberJobAddr">
+                                               </div>
+                                            </div>
+                                         </div>
+                                
                                     
 
                                     <div class="sign-nameHeader fourth">
                                         <label for="memberLikeArea_text">관심 지역</label>
                                         <br>
                                     </div>
-		
+      
                                     <div class="sign-nameHeader">
                                         <div class="form-row">
                                             <div class="col">
                                                 <select class="form-control" name="memberLikeArea_area1" id="memberLikeArea_area1"
                                                 onchange="javascript:setArea2List(this.form.memberLikeArea_area1.value)">
-                                                    <option value=""><%=memberLikeArea_area1%></option>
+                                                    <option><%=memberLikeArea_area1%></option>
                                                           <%
                                                     for (int i = 0; i < vCity.size(); i++) {
                                                         ZipcodeBean bean = vCity.get(i);
@@ -313,6 +347,7 @@ background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer
                                                 %>
                                                 </select>
                                             </div>
+                                            
                                             <div class="col">
                                                 <select class="form-control" name="memberLikeArea_area2" id="memberLikeArea_area2" >
                                                     <option value="">구 / 동</option>
@@ -330,8 +365,8 @@ background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer
                                             </div>
                                         </div>
                                     </div>
-									<input type="hidden" name="memberLikeArea">
-									
+                           <input type="hidden" name="memberLikeArea">
+                           
                                     <div class="sign-nameHeader">
                                         <label for="memberBirth">생일</label>
                                         <br>
@@ -482,11 +517,12 @@ background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer
                                         <option value="<%=mcBean.getCategoryNum()%>">
                                                 <%=mcBean.getCategoryName()%>
                                                 <%
-								}
-								%>
+                        }
+                        %>
                                         </select>
                                     </div>
-
+                              <br>
+                              
                                     <div class="sign-nameHeader">
                                         <label>회원사진</label>
                                     
@@ -515,8 +551,7 @@ background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer
                                             }
                                         }
                                     </script>
-									</form>
-
+                           </form>
 
                                     <br>
                                     <br>

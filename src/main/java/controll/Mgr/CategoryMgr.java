@@ -42,5 +42,28 @@ public class CategoryMgr {
 		}
 		return vlist;
 	}
+	public String categoryName(int num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		String name = null;
+		try {
+			con = pool.getConnection();
+			sql = "select categoryName from moimcategory where categoryNum =? ";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				name = rs.getString("categoryName");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return name;
+		
+	}
 	
 }

@@ -611,6 +611,79 @@ color: white;
   
   }
   
+  .member-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.member-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.member-dropdown-content {
+display: none;
+position: absolute;
+background-color: #f9f9f9;
+min-width: 160px;
+box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+z-index: 1;
+}
+
+.member-dropdown-content a {
+color: black;
+padding: 12px 16px;
+text-decoration: none;
+display: block;
+}
+
+.member-dropdown-content a:hover {
+background-color: #f1f1f1;
+}
+
+.member-dropdown-content a:hover {
+background-color: #f1f1f1;
+}
+
+.member-dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+}
+
+.member-dropdown:hover .member-dropdown-content {
+    display: block;
+}
+
+.logout-btn {
+    background-color: pink;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.member-dropdown, .logout-btn, .notification {
+  display: inline-block;
+  vertical-align: middle; /* this will vertically align the elements */
+}
+
+.header-function {
+  display: flex;
+  align-items: center; /* center the items vertically */
+}
+
+.notification {
+  margin-left: 10px; /* add some space between the logout button and notification icon */
+}
+
+
+  
+  
   @media (max-width: 576px) {
   
   input[type="text"] {

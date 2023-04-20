@@ -267,7 +267,7 @@ public class MoimMgr {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				MoimBean bean = new MoimBean();
-				bean.setMoimNum(rs.getInt("moinNum"));
+				bean.setMoimNum(rs.getInt("moimNum"));
 				bean.setMoimName(rs.getString("moimName"));
 				bean.setMoimArea(rs.getString("moimArea"));
 				bean.setMoimHCount(rs.getInt("moimHCount"));
