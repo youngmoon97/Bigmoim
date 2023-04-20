@@ -15,7 +15,28 @@ public class MoimBean {
 	private int businessNum;
 	private int taskNum;
 	private int themeNum;
+	private String classprice;
+	private int classLike;
+	private int moimOrclass;
 	
+	public String getClassprice() {
+		return classprice;
+	}
+	public void setClassprice(String classprice) {
+		this.classprice = classprice;
+	}
+	public int getClassLike() {
+		return classLike;
+	}
+	public void setClassLike(int classLike) {
+		this.classLike = classLike;
+	}
+	public int getMoimOrclass() {
+		return moimOrclass;
+	}
+	public void setMoimOrclass(int moimOrclass) {
+		this.moimOrclass = moimOrclass;
+	}
 	public int getMoimNum() {
 		return moimNum;
 	}

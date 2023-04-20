@@ -8,13 +8,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title name="moimName">OOO동호회</title>
-    <link type="text/css" rel="stylesheet" href="./css/clubdetail.css">
+    <link type="text/css" rel="stylesheet" href="../css/clubdetail.css">
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
     </style>
   </head>
   <body>
-  <%@ include file = "../top.jsp" %>
+  <%@ include file = "/view/top.jsp" %>
 
       <!-- 카테고리 -->
       <!-- 메인 -->

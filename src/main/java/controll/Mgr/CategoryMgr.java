@@ -32,6 +32,7 @@ public class CategoryMgr {
 				MoimCategoryBean bean = new MoimCategoryBean();
 				bean.setCategoryNum(rs.getInt(1));
 				bean.setCategoryName(rs.getString(2));
+				bean.setCategoruImg(rs.getString(3));
 				vlist.addElement(bean);
 			}
 		} catch (Exception e) {

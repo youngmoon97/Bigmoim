@@ -17,6 +17,28 @@ public class MoimMgr {
 	public MoimMgr() {
 		pool = DBConnectionMgr.getInstance();
 	}
+	// 좋아요수 증가
+		public boolean classLikeUP(int moimNum) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			String sql = null;
+			boolean flag=false;
+			try {
+				con = pool.getConnection();
+				sql = "update moim set classLike=classLike+1"
+					+ "where moimNum = ? ";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, moimNum);
+				if(pstmt.executeUpdate()==1) {
+					flag=true;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				pool.freeConnection(con, pstmt);
+			}
+			return flag;
+		}
 	//모임 생성
 	public boolean moimInsert(MoimBean bean) {
 		Connection con = null;
@@ -25,9 +47,10 @@ public class MoimMgr {
 		boolean flag = false;
 		try {
 			con = pool.getConnection();
-			sql = " insert into moim(moimName,moimArea,moimHCount,memberId,moimKakao,"
-					+ "categoryNum,moimImg,moimProfile,moimDate,themeNum,taskNum,businessNum)  "
-					+ "  values (?,?,?,?,?,?,?,?,now(),?,?,?);";
+			sql = " insert into moim(moimName,moimArea,moimHCount,memberId,moimKakao, "
+					+ "categoryNum,moimImg,moimProfile,moimDate,themeNum,taskNum,businessNum, "
+					+ "classprice, moimOrclass)  "
+					+ "  values (?,?,?,?,?,?,?,?,now(),?,?,?,?,?);";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, bean.getMoimName());
 			pstmt.setString(2, bean.getMoimArea());
@@ -40,6 +63,8 @@ public class MoimMgr {
 			pstmt.setInt(9, bean.getThemeNum());
 			pstmt.setInt(10, bean.getTaskNum());
 			pstmt.setInt(11, bean.getBusinessNum());
+			pstmt.setString(12, bean.getClassprice());
+			pstmt.setInt(14, bean.getMoimOrclass());
 			if(pstmt.executeUpdate()==1) {
 				flag=true;
 			}
@@ -60,7 +85,8 @@ public class MoimMgr {
 			con = pool.getConnection();
 			sql = "update moim"
 				+ "set moinName= ?, moimArea=?, moimKakao=?, categoruNum=?,"
-				+ " moimImg=?, moimProfile=?, themeNum=?, taskNum=?, businessNum=?"
+				+ " moimImg=?, moimProfile=?, themeNum=?, taskNum=?, "
+				+ "businessNum=?, classprice=?, moimOrclass = ?"
 				+ "where moimNum= ? ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, bean.getMoimName());
@@ -72,6 +98,8 @@ public class MoimMgr {
 			pstmt.setInt(7, bean.getThemeNum());
 			pstmt.setInt(8, bean.getTaskNum());
 			pstmt.setInt(9, bean.getBusinessNum());
+			pstmt.setString(10, bean.getClassprice());
+			pstmt.setInt(11, bean.getMoimOrclass());
 			if(pstmt.executeUpdate()==1) {
 				flag=true;
 			}
@@ -132,6 +160,9 @@ public class MoimMgr {
 				bean.setBusinessNum(rs.getInt("businessNum"));
 				bean.setTaskNum(rs.getInt("taskNum"));
 				bean.setThemeNum(rs.getInt("themeNum"));
+				bean.setClassprice(rs.getString("classprice"));
+				bean.setClassLike(rs.getInt("classLike"));
+				bean.setMoimOrclass(rs.getInt("moimOrclass"));
 				vlist.addElement(bean);
 			}
 		} catch (Exception e) {
@@ -169,6 +200,9 @@ public class MoimMgr {
 				bean.setBusinessNum(rs.getInt("businessNum"));
 				bean.setTaskNum(rs.getInt("taskNum"));
 				bean.setThemeNum(rs.getInt("themeNum"));
+				bean.setClassprice(rs.getString("classprice"));
+				bean.setClassLike(rs.getInt("classLike"));
+				bean.setMoimOrclass(rs.getInt("moimOrclass"));
 				vlist.addElement(bean);
 			}
 		} catch (Exception e) {
@@ -206,6 +240,9 @@ public class MoimMgr {
 				bean.setBusinessNum(rs.getInt("businessNum"));
 				bean.setTaskNum(rs.getInt("taskNum"));
 				bean.setThemeNum(rs.getInt("themeNum"));
+				bean.setClassprice(rs.getString("classprice"));
+				bean.setClassLike(rs.getInt("classLike"));
+				bean.setMoimOrclass(rs.getInt("moimOrclass"));
 				vlist.addElement(bean);
 			}
 		} catch (Exception e) {
@@ -243,6 +280,9 @@ public class MoimMgr {
 				bean.setBusinessNum(rs.getInt("businessNum"));
 				bean.setTaskNum(rs.getInt("taskNum"));
 				bean.setThemeNum(rs.getInt("themeNum"));
+				bean.setClassprice(rs.getString("classprice"));
+				bean.setClassLike(rs.getInt("classLike"));
+				bean.setMoimOrclass(rs.getInt("moimOrclass"));
 				vlist.addElement(bean);
 			}
 		} catch (Exception e) {
@@ -280,6 +320,9 @@ public class MoimMgr {
 				bean.setBusinessNum(rs.getInt("businessNum"));
 				bean.setTaskNum(rs.getInt("taskNum"));
 				bean.setThemeNum(rs.getInt("themeNum"));
+				bean.setClassprice(rs.getString("classprice"));
+				bean.setClassLike(rs.getInt("classLike"));
+				bean.setMoimOrclass(rs.getInt("moimOrclass"));
 				vlist.addElement(bean);
 			}
 		} catch (Exception e) {
@@ -316,6 +359,9 @@ public class MoimMgr {
 				bean.setBusinessNum(rs.getInt("businessNum"));
 				bean.setTaskNum(rs.getInt("taskNum"));
 				bean.setThemeNum(rs.getInt("themeNum"));
+				bean.setClassprice(rs.getString("classprice"));
+				bean.setClassLike(rs.getInt("classLike"));
+				bean.setMoimOrclass(rs.getInt("moimOrclass"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

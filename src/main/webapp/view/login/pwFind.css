@@ -1,0 +1,57 @@
+.login-find-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-find-content {
+    width: 400px;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-find-header {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.login-find-input {
+    margin-bottom: 20px;
+}
+
+.login-find-title {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.string {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.login-find-btn {
+    text-align: center;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: pink;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgb(250, 172, 185);
+}

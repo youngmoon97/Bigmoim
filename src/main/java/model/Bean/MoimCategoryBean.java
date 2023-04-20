@@ -3,7 +3,14 @@ package model.Bean;
 public class MoimCategoryBean {
 	private int categoryNum;
 	private String categoryName;
+	private String categoryImg;
 	
+	public String getCategoruImg() {
+		return categoryImg;
+	}
+	public void setCategoruImg(String categoruImg) {
+		this.categoryImg = categoruImg;
+	}
 	public int getCategoryNum() {
 		return categoryNum;
 	}
