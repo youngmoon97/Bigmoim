@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file = "/view/top.jsp" %>
+<jsp:useBean id="moimMgr" class="controll.Mgr.MoimMgr"/>
 <%
 	
 %>
@@ -21,23 +22,76 @@
     <%@ include file = "/view/category.jsp" %>
     
     <!-- 카드 -->
-    <div class="card-group">
-      <article class="card">
-        <div class="card-wrapper">
-          <img src="ex_img\토끼.jpg" alt="Image">
-          <button class="like-btn"><i class="far fa-heart"></i></button>
+    <!-- 가입한모임 -->
+	<% 
+	if(joinmoim.isEmpty()){
+    %>
+    <article>
+      <div class = "text">
+        <!-- class 이름 알잘딱깔센으로 적어보시길... -->
+        <p class = "join-text">가입한 모임이 아직 없습니다.</p>
+      </div>
+    </article>
+    <!-- 가입안하면 본인 지역 모임 전부 출력 -->
+    		<% 
+    		for(int i=0;i<addrmoim.size();i++){
+    			MoimBean moimbean = addrmoim.get(i);
+    		%>
+    		<div class="card-group">
+      		<article class="card">
+    		<div class="image-wrapper">
+    		<% 
+    			img = "/bigmoim/image/"+moimbean.getMoimImg();
+    			System.out.println("img : "+img);
+    		%>
+          <img src=<%=img %> alt="Image">
+          <h1></h1>
+          <button class="like-btn">찜하기</button>
         </div>
-        <h4>좋은기타 동호회</h4>
+        <h4><%=moimbean.getMoimName() %></h4>
         <div class="card-nav">
-          <p class="moimArea" name="moimArea" value="" style="margin-top: 0;">금정구</p>
-          <p class="card-nav-line" style="margin-top: 0;"> &nbsp; | &nbsp;</p>
-          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;">음악 / 악기</p>
+          <p class="moimArea" name="moimArea" value=""><%=moimbean.getMoimArea() %></p>
+          <p class="clubdetail-nav-line">|</p>
+          <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
+      </div>
+        <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+    		</article>
+    		</div>
+    		
+    		<%}//--for
+    }else{//--if-else %>
+    		<article>
+      			<div class = "text">
+		        <p class = "join-text">가입한 모임</p>
+ 	     		</div>
+    		</article>
+    		
+    		<% 
+    		for(int i=0;i<joinmoim.size();i++){
+    			MoimBean moimbean = joinmoim.get(i);
+    		%>
+    		<div class="card-group">
+      		<article class="card">
+    		<div class="image-wrapper">
+          <% 
+    			img = "/bigmoim/image/"+moimbean.getMoimImg();
+    			System.out.println("img : "+img);
+    		%>
+          <img src=<%=img %> alt="Image">
+          <h1></h1>
+          <button class="like-btn">찜하기</button>
         </div>
-        <p class="moimProfile" name="moimProfile" value="" style="margin-top: 0;">설명
-        으앙 배고파 으앙 집 가고싶어 으앙 게임하고싶어 으앙 그냥 자고싶어 으앙으앙</p>
-      </article>
-
-    </div>
+        <h4><%=moimbean.getMoimName() %></h4>
+        <div class="card-nav">
+          <p class="moimArea" name="moimArea" value=""><%=moimbean.getMoimArea() %></p>
+          <p class="clubdetail-nav-line">|</p>
+          <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
+      </div>
+        <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+    		</article>
+    		</div>
+    		<%}//--for
+    }//--if-else %>
     
     
     <!-- 하단 -->
