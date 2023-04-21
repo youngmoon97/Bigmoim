@@ -157,7 +157,7 @@ main {
   font-size: 12px;
 }
 
-.category .more {
+.category .more-btn {
   background-color: rgb(236, 236, 236);
   width: 40px;
   height: 40px;
@@ -171,7 +171,7 @@ main {
 }
 
 
-.more {
+.more-btn {
   background-color: #f2f2f2;
   color: #666;
   font-size: 14px;
@@ -184,7 +184,7 @@ main {
   outline: none;
 }
 
-.more:hover {
+.more-btn:hover {
   background-color: #555;
   color: #fff;
 }
@@ -248,6 +248,25 @@ box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
 .more-wrapper {
   margin: 0 auto;
 }
+
+.more-btn {
+  background-color: #f2f2f2;
+  color: #666;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 5px 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+
+.more-btn:hover {
+  background-color: #555;
+  color: #fff;
+}
+
 
 .product-list {
 display: flex;
@@ -385,6 +404,10 @@ background-color: pink;
 }
 
 .like-btn i.fas.fa-heart {
+  color: red;
+}
+
+.like-btn.clicked {
   color: red;
 }
 
@@ -716,3 +739,4 @@ background-color: #f1f1f1;
   }
   
   }
+  

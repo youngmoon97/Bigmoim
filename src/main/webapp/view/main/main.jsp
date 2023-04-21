@@ -1,8 +1,9 @@
+<%@page import="model.Bean.MoimBean"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<jsp:useBean id="moimMgr" class="controll.Mgr.MoimMgr"></jsp:useBean>
 <%@ include file = "/view/top.jsp" %>
-<jsp:useBean id="moimMgr" class="controll.Mgr.MoimMgr"/>
 <%
-	
+	Vector<MoimBean> classList = moimMgr.classList();
 %>
 <!DOCTYPE html>
 <html lang="kr">
@@ -22,56 +23,32 @@
     <%@ include file = "/view/category.jsp" %>
     
     <!-- 카드 -->
-    <!-- 가입한모임 -->
+    <!-- 클래스 -->
 	<% 
-	if(joinmoim.isEmpty()){
+	if(classList.isEmpty()){
     %>
     <article>
       <div class = "text">
         <!-- class 이름 알잘딱깔센으로 적어보시길... -->
-        <p class = "join-text">가입한 모임이 아직 없습니다.</p>
+        <p class = "join-text"> 클래스 모임이 아직 없습니다 ㅠ</p>
       </div>
     </article>
-    <!-- 가입안하면 본인 지역 모임 전부 출력 -->
-    		<% 
-    		for(int i=0;i<addrmoim.size();i++){
-    			MoimBean moimbean = addrmoim.get(i);
-    		%>
-    		<div class="card-group">
-      		<article class="card">
-    		<div class="image-wrapper">
-    		<% 
-    			img = "/bigmoim/image/"+moimbean.getMoimImg();
-    			System.out.println("img : "+img);
-    		%>
-          <img src=<%=img %> alt="Image">
-          <h1></h1>
-          <button class="like-btn">찜하기</button>
-        </div>
-        <h4><%=moimbean.getMoimName() %></h4>
-        <div class="card-nav">
-          <p class="moimArea" name="moimArea" value=""><%=moimbean.getMoimArea() %></p>
-          <p class="clubdetail-nav-line">|</p>
-          <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
-      </div>
-        <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
-    		</article>
-    		</div>
-    		
-    		<%}//--for
+    <!-- 클래스 리스트 -->
+    		<%
     }else{//--if-else %>
     		<article>
       			<div class = "text">
-		        <p class = "join-text">가입한 모임</p>
+		        <p class = "join-text"> 클래스 모임입니다</p>
  	     		</div>
     		</article>
     		
     		<% 
-    		for(int i=0;i<joinmoim.size();i++){
-    			MoimBean moimbean = joinmoim.get(i);
+    		for(int i=0;i<classList.size();i++){
+    			MoimBean moimbean = classList.get(i);
     		%>
     		<div class="card-group">
       		<article class="card">
+      		<a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
     		<div class="image-wrapper">
           <% 
     			img = "/bigmoim/image/"+moimbean.getMoimImg();
@@ -88,6 +65,7 @@
           <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+        </a>
     		</article>
     		</div>
     		<%}//--for
@@ -107,12 +85,7 @@
     </footer>
 
     <script>
-      
-      const likeBtn = document.querySelector('.like-btn');
-      	likeBtn.addEventListener('click', () => {
-     	likeBtn.querySelector('i').classList.toggle('fas');
-     	likeBtn.querySelector('i').classList.toggle('far');
-     	});
+
       	
     </script>
     </div>

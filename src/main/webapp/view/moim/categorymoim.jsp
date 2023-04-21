@@ -24,54 +24,59 @@
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
   <body>
 
     
   <!-- 중단 -->
- 	<% 
-	if(mvlist.isEmpty()){
-    %>
-    <article>
-      <div class = "text">
-        <!-- class 이름 알잘딱깔센으로 적어보시길... -->
-        <p class = "join-text">이 카테고리에 모임이 없네요 ㅠ </p>
-      </div>
-    </article>
-    
-    <!-- 카테고리 있음 -->		
-    <%}else{//--if-else %>
-    		<article>
-      			<div class = "text">
-		        <p class = "join-text"><%=categoryName %> 별 모임</p>
- 	     		</div>
-    		</article>
-    		<% 
-    		for(int i=0;i<mvlist.size();i++){
-    			MoimBean moimbean = mvlist.get(i);
-    		%>
-    		<div class="card-group">
-      		<article class="card">
-    		<div class="image-wrapper">
-          <% 
-    			img = "/bigmoim/image/"+moimbean.getMoimImg();
-    			System.out.println("img : "+img);
-    		%>
-          <img src=<%=img %> alt="Image">
-          <h1></h1>
-          <button class="like-btn">찜하기</button>
-        </div>
-        <h4><%=moimbean.getMoimName() %></h4>
-        <div class="card-nav">
-          <p class="moimArea" name="moimArea" value=""><%=moimbean.getMoimArea() %></p>
-          <p class="clubdetail-nav-line">|</p>
-          <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
-      </div>
-        <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
-    		</article>
-    		</div>
-    		<%}//--for
-    }//--if-else %>
+<% 
+if(mvlist.isEmpty()){
+%>
+<article>
+  <div class = "text">
+    <!-- class 이름 알잘딱깔센으로 적어보시길... -->
+    <p class = "join-text">이 카테고리에 모임이 없네요 ㅠ </p>
+  </div>
+</article>
+<%}else{//--if-else %>
+<article>
+  <div class = "text">
+    <p class = "join-text"><%=categoryName %> 별 모임</p>
+  </div>
+</article>
+<div class="card-group">
+  <% 
+  for(int i=0;i<mvlist.size();i++){
+    MoimBean moimbean = mvlist.get(i);
+  %>
+  <article class="card">
+  <a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
+    <div class="card-wrapper">
+      <% 
+        img = "/bigmoim/image/"+moimbean.getMoimImg();
+        System.out.println("img : "+img);
+      %>
+      <img src=<%=img %> alt="Image">
+      
+      <button class="like-btn">
+  		<i class="far fa-heart"></i>
+		</button>
+
+    </div>
+    <h4><%=moimbean.getMoimName() %></h4>
+    <div class="card-nav">
+      <p class="moimArea" name="moimArea" value="" style="margin-top: 0;"><%=moimbean.getMoimArea() %></p>
+      <p class="card-nav-line" style="margin-top: 0;">&nbsp; | &nbsp;</p>
+      <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=moimbean.getCategoryNum() %></p>
+    </div>
+    <p class="moimProfile" name="moimProfile" value="" style="margin-top: 0;"><%=moimbean.getMoimProfile() %></p>
+    </a>
+  </article>
+  <%}%><!--for-->
+</div><!--card-group-->
+<%}//--if-else %>
+
     
     
     
@@ -99,6 +104,18 @@
         hiddenCategory.style.display = "none";
       }
       });
+      
+      const likeBtns = document.querySelectorAll('.like-btn');
+      likeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.classList.toggle('clicked');
+        });
+      });
+      
+      
+
+
+
     </script>
    
   </body>

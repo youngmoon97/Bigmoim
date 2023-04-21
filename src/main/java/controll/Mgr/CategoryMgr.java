@@ -63,7 +63,34 @@ public class CategoryMgr {
 			pool.freeConnection(con, pstmt, rs);
 		}
 		return name;
-		
 	}
+	//카테고리 이미지 받기(모임상세에서)
+	   public MoimCategoryBean categoryImg(int num) {
+		      Connection con = null;
+		      PreparedStatement pstmt = null;
+		      ResultSet rs = null;
+		      String sql = null;
+		      String Img = null;
+		      MoimCategoryBean bean = new MoimCategoryBean();
+		      try {
+		         con = pool.getConnection();
+		         sql = "select moimcategory.categoryImg "
+		               + "from moim inner join moimcategory ON moim.categoryNum = moimcategory.categoryNum "
+		               + "where moimNum = ?";
+		         pstmt = con.prepareStatement(sql);
+		         pstmt.setInt(1, num);
+		         rs = pstmt.executeQuery();
+		         
+		         if(rs.next()) {
+		            bean.setCategoruImg(rs.getString(1));
+		         }
+		      } catch (Exception e) {
+		         e.printStackTrace();
+		      } finally {
+		         pool.freeConnection(con, pstmt, rs);
+		      }
+		      return bean;
+		   }
+	
 	
 }

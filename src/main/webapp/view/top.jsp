@@ -1,13 +1,18 @@
+<%@page import="model.Bean.MemberBean"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<jsp:useBean id="mMgr" class="controll.Mgr.MemberMgr"/>
 <%
-		String memberId = (String)session.getAttribute("idKey");
-		System.out.println("main.jsp:memberId = "+memberId);
+      String memberId = (String)session.getAttribute("idKey");
+      MemberBean mbean = mMgr.getMember(memberId);
+      System.out.println(memberId);
+      System.out.println("main.jsp:memberId= "+ mbean.getMemberName());
+      System.out.println(mbean.getMemberImg());
 
 %>
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8" />
+   <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>대모임에 오신걸 환영합니다!</title>
     <link type="text/css" rel="stylesheet" href="main.css" />
@@ -15,20 +20,21 @@
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
     </style>
     <script>
-   function toggleDropdown() {
-      var dropdown = document.querySelector(".member-dropdown-content");
-      if (dropdown.style.display === "none") {
-         dropdown.style.display = "block";
-      } else {
-         dropdown.style.display = "none";
-      }
-   }
+    function toggleDropdown() {
+         var dropdown = document.querySelector(".member-dropdown-content");
+         if (dropdown.style.display === "none" || dropdown.style.display === "") {
+           dropdown.style.display = "block";
+         } else {
+           dropdown.style.display = "none";
+         }
+       }
+
 </script>
 
     
 </head>
 <body>
-	<!-- 상단 -->
+   <!-- 상단 -->
     <div class = "main-wrapper">
     <header>
       <div class="logo">
@@ -44,21 +50,24 @@
         <div class="header-function">
         <!-- TODO 로그인 시 로그인 아이디나와야함 -->
           <%if(memberId != null){ %>
-    			<div class="member-wrapper">
-    				<div class="member-dropdown">
-        			<button class="member-btn" onclick="toggleDropdown()"><%=memberId%></button>
-        			<div class="member-dropdown-content">
-            			<a href="#">내 정보</a>
-            			<a href="#">내가 가입한 모임</a>
-        			</div>
-    				</div>
-    			<button class="logout-btn" onclick="location.href='/bigmoim/view/login/logout.jsp'">로그아웃</button>
-				</div>
-				
-			<%}else{%>
-    			<button class="login-btn" onclick="location.href='/bigmoim/view/login/login.html'">로그인</button>
-    			<button class="signup-btn" onclick="location.href='/bigmoim/view/login/signup.jsp'">회원가입</button>
-				<%}%>
+             <div class="member-wrapper">
+                <div class="member-dropdown">
+                 <img class="member-img" src="/bigmoim/image/<%= mbean.getMemberImg()%>" onclick="toggleDropdown()" 
+                 style = "padding-right: 20px; width: 45px; height: 45px; border-radius: 50%; "/>
+                 <!-- 이미지 스타일 값은 이미지 받아오고 수정해봅니다. -->
+                 <div class="member-dropdown-content">
+                     <a href="#">내 정보</a>
+                     <a href="#">내가 가입한 모임</a>
+                 </div>
+                </div>
+             <span class="member-name" style = "padding-right: 20px;"><%=mbean.getMemberName()%></span>
+             <button class="logout-btn" onclick="location.href='/bigmoim/view/login/logout.jsp'">로그아웃</button>
+            </div>
+            
+         <%}else{%>
+             <button class="login-btn" onclick="location.href='/bigmoim/view/login/login.html'">로그인</button>
+             <button class="signup-btn" onclick="location.href='/bigmoim/view/login/signup.jsp'">회원가입</button>
+            <%}%>
           <button class="notification"><img src="/bigmoim/image/bell.png" alt="알림" style="width: 25px; height: 25px;"></button>
         </div>
     </header>
@@ -71,7 +80,7 @@
         <li><a href="/bigmoim/view/moim/moimschedule.jsp">모임일정</a></li>
         <li><a href="/bigmoim/view/moim/newmoim.jsp">모임신규</a></li>
         <%if(memberId != null){ %>
-        	<li><a href="/bigmoim/view/myact/myactivity.jsp">내 활동</a></li>
+           <li><a href="/bigmoim/view/myact/myactivity.jsp">내 활동</a></li>
         <% }%>
         
       </ul>

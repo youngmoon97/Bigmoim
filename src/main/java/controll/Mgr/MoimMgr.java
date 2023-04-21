@@ -377,7 +377,7 @@ public class MoimMgr {
 			pstmt.setInt(1, moimNum);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
-				bean.setMoimNum(rs.getInt("moinNum"));
+				bean.setMoimNum(rs.getInt("moimNum"));
 				bean.setMoimName(rs.getString("moimName"));
 				bean.setMoimArea(rs.getString("moimArea"));
 				bean.setMoimHCount(rs.getInt("moimHCount"));

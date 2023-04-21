@@ -1,20 +1,36 @@
+<%@page import="model.Bean.MoimBean"%>
+<%@page import="model.Bean.MoimCategoryBean"%>
+<%@page import="java.util.Vector"%>
+<%@ include file = "/view/top.jsp" %>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<jsp:useBean id="moimMgr" class="controll.Mgr.MoimMgr"/>
+<jsp:useBean id="cateMgr" class="controll.Mgr.CategoryMgr"/>
+
 <%
-		
+	int no = Integer.parseInt(request.getParameter("num"));
+	System.out.print(no);
+	
+	MoimBean moimbean = moimMgr.moimDetail(no);
+	String img = "/bigmoim/image/"+moimbean.getMoimImg();
+	System.out.print("img : " + img);
+	
+	MoimCategoryBean cabean = cateMgr.categoryImg(no);
 %>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title name="moimName">OOO동호회</title>
+    <title name="moimName"><%=moimbean.getMoimName()%></title>
     <link type="text/css" rel="stylesheet" href="../css/clubdetail.css">
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
     </style>
   </head>
   <body>
-  <%@ include file = "/view/top.jsp" %>
+
 
       <!-- 카테고리 -->
       <!-- 메인 -->
@@ -32,38 +48,32 @@
         <div class="clubdetail">
           <div class="category">
             <div class="image-wrapper">
-              <img src="img_icon\console.png" alt="게임 / 오락" />
+              <img src="<%="/bigmoim/image/"+ cabean.getCategoruImg() %>" alt="게임 / 오락" />
             </div>
           </div>
           <div class="clubdetail-moim">
-            <h4 class="clubdetail-moimname" name="moimName">롤면뭐하니</h4>
+            <h4 class="clubdetail-moimname" name="moimName"><%=moimbean.getMoimName()%></h4>
             <ul class="clubdetail-area">
               <li class="clubdetail-moimarea" name="moimArea">
-                부산, 울산, 경남
+                <%=moimbean.getMoimArea() %>
               </li>
               <li class="moimarea-line">|</li>
-              <li class="clubdetail-membercount" name="moimNCount">멤버30</li>
+              <li class="clubdetail-membercount" name="moimNCount">멤버&nbsp;<%=moimbean.getMoimNCount() %></li>
               <li><img class="clubdetail-jjim" src="./img_icon/heart.png" name="jjim" /></li>
             </ul>
           </div>
         </div>
         <div class="clubdetail-photo">
-          <img
+         <img
             class="clubdetail-photo-detail"
-            src="./images/example.jpg"
+            src="<%=img %>"
             name="moimImg"
-          />
+          /> 
         </div>
         <div class="clubdetail-content">
           <p name="moimProfile">
             <!-- 단락으로 들어올 시 끊어서 받을 수가 없음-->
-            롤면뭐하니 
-            부산,울산,경남 모임 
-            since.2022.03.09 
-            모임에 실력자들 많습니다. 티어 욕심 있으시거나 실력 향상 원하시는분 환영합니다~
-            솔랭, 내전, 롤체, 칼바람 모두 환영 롤고수 롤린이 남녀노소 모두 우대
-            롤뿐만 아니라 만나서 다양한 활동도 진행중입니다(술자리 보드게임 볼링
-            등) 롤에 진심인 사람들 환영합니다
+			<%=moimbean.getMoimProfile() %>
           </p>
         </div>
         <div class="clubdetail-schedule">
@@ -75,13 +85,13 @@
 					<li class="date" name="msTime">금요일<span>21</span></li>
 					<li>
 						<ul class="in_cont">
-							<li class="ico calendar" name="msTime">4월 21일</li>
+							<li class="ico calendar" name="msTime"><%=moimbean.getMoimDate() %></li>
 							<li class="ico place" name="msArea">시민공원</li>
 							<li class="ico cost" name="">커피값만.</li>
 						</ul>
 					</li>
 					<li class="btn">
-						<a href="#" class="share">
+						<a href="<%=moimbean.getMoimKakao() %>" class="share">
 							친구에게<br />
 							공유하기
 						</a>

@@ -1,15 +1,13 @@
 <%@page import="controll.Mgr.MemberMgr"%>
-<%@page import="model.Bean.MemberBean"%>
 <%@page import="model.Bean.MoimBean"%>
 <%@page import="java.util.Vector"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@include file = "/view/top.jsp" %>
-<jsp:useBean id="mMgr" class="controll.Mgr.MemberMgr"/>
 <jsp:useBean id="moimMgr" class="controll.Mgr.MoimMgr"/>
 <jsp:useBean id="myactMgr" class="controll.Mgr.MyActivityMgr"/>
 <%
 	//id만 받아와서 넣으면 된다.
-	MemberBean mbean = mMgr.getMember(memberId);
+	mbean = mMgr.getMember(memberId);
 	int businessNum = mbean.getBusinessNum();
 	int taskNum = mbean.getTaskNum();
 	int themeNum = mbean.getThemeNum();
@@ -61,6 +59,7 @@
     		%>
     		<div class="card-group">
       		<article class="card">
+      		<a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
     		<div class="image-wrapper">
     		<% 
     			img = "/bigmoim/image/"+moimbean.getMoimImg();
@@ -77,6 +76,7 @@
           <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+        	</a>
     		</article>
     		</div>
     		
@@ -94,6 +94,7 @@
     		%>
     		<div class="card-group">
       		<article class="card">
+      		<a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
     		<div class="image-wrapper">
           <% 
     			img = "/bigmoim/image/"+moimbean.getMoimImg();
@@ -110,6 +111,7 @@
           <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+        	</a>
     		</article>
     		</div>
     		<%}//--for
@@ -132,6 +134,7 @@
     		%>
     		<div class="card-group">
       		<article class="card">
+      		<a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
     		<div class="image-wrapper">
           <% 
     			img = "/bigmoim/image/"+moimbean.getMoimImg();
@@ -148,6 +151,7 @@
           <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+        	</a>
     		</article>
     		</div>
     		<%}//--for
@@ -164,6 +168,7 @@
     		%>
     		<div class="card-group">
       		<article class="card">
+      		<a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
     		<div class="image-wrapper">
           <% 
     			img = "/bigmoim/image/"+moimbean.getMoimImg();
@@ -180,6 +185,7 @@
           <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+        	</a>
     		</article>
     		</div>
     		<%}//--for
@@ -202,6 +208,7 @@
     		%>
     		<div class="card-group">
       		<article class="card">
+      		<a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
     		<div class="image-wrapper">
           <% 
     			img = "/bigmoim/image/"+moimbean.getMoimImg();
@@ -218,6 +225,7 @@
           <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+        	</a>
     		</article>
     		</div>
     		<%}//--for
@@ -234,6 +242,7 @@
     		%>
     		<div class="card-group">
       		<article class="card">
+      		<a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
     		<div class="image-wrapper">
           <% 
     			img = "/bigmoim/image/"+moimbean.getMoimImg();
@@ -250,6 +259,7 @@
           <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+        	</a>
     		</article>
     		</div>
     		<%}//--for
@@ -273,6 +283,7 @@
     		%>
     		<div class="card-group">
       		<article class="card">
+      		<a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
     		<div class="image-wrapper">
           <% 
     			img = "/bigmoim/image/"+moimbean.getMoimImg();
@@ -289,6 +300,7 @@
           <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+        </a>
     		</article>
     		</div>
     		<%}//--for
@@ -305,6 +317,7 @@
     		%>
     		<div class="card-group">
       		<article class="card">
+      		<a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
     		<div class="image-wrapper">
           <% 
     			img = "/bigmoim/image/"+moimbean.getMoimImg();
@@ -321,6 +334,7 @@
           <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+        </a>
     		</article>
     		</div>
     		<%}//--for
@@ -342,6 +356,7 @@
     		%>
     		<div class="card-group">
       		<article class="card">
+      		<a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
     		<div class="image-wrapper">
           <% 
     			img = "/bigmoim/image/"+moimbean.getMoimImg();
@@ -358,6 +373,7 @@
           <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+        </a>
     		</article>
     		</div>
     		<%}//--for
@@ -374,6 +390,7 @@
     		%>
     		<div class="card-group">
       		<article class="card">
+      		<a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
     		<div class="image-wrapper">
           <% 
     			img = "/bigmoim/image/"+moimbean.getMoimImg();
@@ -390,6 +407,7 @@
           <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
+        </a>
     		</article>
     		</div>
     		<%}//--for
