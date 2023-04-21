@@ -190,8 +190,7 @@
     		</div>
     		<%}//--for
     }//--if-else %>
-    
-    <br>
+	<br>
     <!-- 업무별 모임 -->
     <% if(bmoim.isEmpty()){
     %>

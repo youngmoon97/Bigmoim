@@ -24,7 +24,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title name="moimName"><%=moimbean.getMoimName()%></title>
-    <link type="text/css" rel="stylesheet" href="../css/clubdetail.css">
+    <link type="text/css" rel="stylesheet" href="/bigmoim/view/css/clubdetail.css">
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
     </style>

@@ -15,7 +15,7 @@
    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>대모임에 오신걸 환영합니다!</title>
-    <link type="text/css" rel="stylesheet" href="main.css" />
+    <link type="text/css" rel="stylesheet" href="/bigmoim/view/css/main.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
     </style>
@@ -56,8 +56,8 @@
                  style = "padding-right: 20px; width: 45px; height: 45px; border-radius: 50%; "/>
                  <!-- 이미지 스타일 값은 이미지 받아오고 수정해봅니다. -->
                  <div class="member-dropdown-content">
-                     <a href="#">내 정보</a>
-                     <a href="#">내가 가입한 모임</a>
+                     <a href="/bigmoim/view/login/memberupdate.jsp">내 정보 수정</a>
+                     <a href="/bigmoim/view/moim/makemoim.html">모임개설</a>
                  </div>
                 </div>
              <span class="member-name" style = "padding-right: 20px;"><%=mbean.getMemberName()%></span>
