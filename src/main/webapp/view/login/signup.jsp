@@ -82,7 +82,7 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
    
    function zipSearch(name) { //우편번호 검색
       url = "zipSearch.jsp?search=n&type=" + name;
-      window.open(url, "bigmoim 우편번호 검색", "width=500, height=300, top=100, left=300, scrollbar=yes");
+      window.open(url, "zipSearchwindow", "width=500, height=300, top=100, left=300, scrollbar=yes");
    }
    
    //선택된 값들을 가져와서 세팅

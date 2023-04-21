@@ -154,6 +154,8 @@ public class MoimMgr {
 				bean.setMoimNum(rs.getInt("moimNum"));
 				bean.setMemberId(rs.getString("memberId"));
 				bean.setMoimProfile(rs.getString("moimProfile"));
+				bean.setMoimImg(rs.getString("moimImg"));
+				bean.setCategoryNum(rs.getInt("categoryNum"));
 				vlist.addElement(bean);
 			}
 		} catch (Exception e) {
@@ -307,6 +309,7 @@ public class MoimMgr {
 				bean.setMoimKakao(rs.getString("moimKakao"));
 				bean.setMoimImg(rs.getString("moimImg"));
 				bean.setMoimProfile(rs.getString("moimProfile"));
+				bean.setCategoryNum(rs.getInt("categoryNum"));
 				bean.setMoimDate(rs.getString("moimDate"));
 				bean.setBusinessNum(rs.getInt("businessNum"));
 				bean.setTaskNum(rs.getInt("taskNum"));
@@ -350,6 +353,7 @@ public class MoimMgr {
 				bean.setMoimDate(rs.getString("moimDate"));
 				bean.setBusinessNum(rs.getInt("businessNum"));
 				bean.setTaskNum(rs.getInt("taskNum"));
+				bean.setCategoryNum(rs.getInt("categoryNum"));
 				bean.setThemeNum(rs.getInt("themeNum"));
 				bean.setClassprice(rs.getString("classprice"));
 				bean.setClassLike(rs.getInt("classLike"));
@@ -557,6 +561,49 @@ public class MoimMgr {
 	}
 	
 	//최근 생성 모임 리스트(10일)
+	public Vector<MoimBean> newMoimList(String address){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		Vector<MoimBean> vlist = new Vector<MoimBean>();
+		try {
+			con = pool.getConnection();
+			sql = "select * from moim m "
+				+ "where abs(datediff(moimDate,now())) <= 10 and moimArea=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, address);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MoimBean bean = new MoimBean();
+				bean.setMoimNum(rs.getInt("moimNum"));
+				bean.setMoimName(rs.getString("moimName"));
+				bean.setMoimArea(rs.getString("moimArea"));
+				bean.setMoimHCount(rs.getInt("moimHCount"));
+				bean.setMoimNCount(rs.getInt("moimNCount"));
+				bean.setMemberId(rs.getString("memberId"));
+				bean.setMoimKakao(rs.getString("moimKakao"));
+				bean.setMoimImg(rs.getString("moimImg"));
+				bean.setCategoryNum(rs.getInt("categoryNum"));
+				bean.setMoimProfile(rs.getString("moimProfile"));
+				bean.setMoimDate(rs.getString("moimDate"));
+				bean.setBusinessNum(rs.getInt("businessNum"));
+				bean.setTaskNum(rs.getInt("taskNum"));
+				bean.setThemeNum(rs.getInt("themeNum"));
+				bean.setClassprice(rs.getString("classprice"));
+				bean.setClassLike(rs.getInt("classLike"));
+				bean.setMoimOrclass(rs.getInt("moimOrclass"));
+				vlist.addElement(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return vlist;
+		
+	}
+	//최근 생성 모임 리스트(10일)
 	public Vector<MoimBean> newMoimList(){
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -566,7 +613,7 @@ public class MoimMgr {
 		try {
 			con = pool.getConnection();
 			sql = "select * from moim m "
-				+ "where abs(datediff(moimDate,now())) <= 10 ";
+				+ "where abs(datediff(moimDate,now())) <= 10";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
@@ -579,6 +626,7 @@ public class MoimMgr {
 				bean.setMemberId(rs.getString("memberId"));
 				bean.setMoimKakao(rs.getString("moimKakao"));
 				bean.setMoimImg(rs.getString("moimImg"));
+				bean.setCategoryNum(rs.getInt("categoryNum"));
 				bean.setMoimProfile(rs.getString("moimProfile"));
 				bean.setMoimDate(rs.getString("moimDate"));
 				bean.setBusinessNum(rs.getInt("businessNum"));

@@ -1,3 +1,4 @@
+<%@page import="javax.swing.plaf.basic.BasicInternalFrameTitlePane.SystemMenuBar"%>
 <%@page import="java.beans.beancontext.BeanContext"%>
 <%@page import="model.Bean.MoimCategoryBean"%>
 <%@page import="model.Bean.MemberBean"%>
@@ -17,20 +18,44 @@
 			return;
 		}
 		MemberBean mbean = mMgr.getMember(memberId);
+		//ZipcodeBean zbean = mMgr.zipcodeRead(area3);
+		
+		
 		Vector<ZipcodeBean> vCity = mMgr.cityList(); //area1 시
 		Vector<ZipcodeBean> vArea2 = null; //area2 구/동
 		
-		String memberLikeArea_area1 = "서울"; //시
 		String memberName = ""; //이름
-		String memberPw = ""; //비밀번호
-		String memberPwConfirm = ""; //비밀번호확인
+		String memberPwNow = ""; //현재 비밀번호
+		String memberPw = ""; //새 비밀번호
+		String memberPwConfirm = ""; //비밀번호 재확인
 		String memberTel = ""; //전화번호
-		String memberAddrZipcode = ""; //집주소 우편번호
-		String memberAddrArea1 = ""; //집주소 area1
-		String memberAddrArea2 = ""; //집주소 area2
-		String memberJobAddrZipcode = ""; //직장주소 우편번호
-		String memberJobAddrArea1 = ""; //직장주소 area1
-		String memberJobAddrArea2 = ""; //직장주소 area2
+		
+		//주소
+		String memberAddr = mbean.getMemberAddr();	
+		String[] memberAddrParts = memberAddr.split(" ", 2);
+		String memberAddrArea1 = memberAddrParts[0]; // 집주소 area1 "부산시"
+		String memberAddrArea2 = memberAddrParts[1]; // 집주소 area2 "부산진구"
+		String memberAddrZipcode = "";// 집주소 우편번호
+		
+		String memberJobAddr = mbean.getMemberJobAddr();
+		String[] memberJobAddrParts = memberJobAddr.split(" ", 2);
+		String memberJobAddrArea1 = memberJobAddrParts[0]; //직장주소 area1
+		String memberJobAddrArea2 = memberJobAddrParts[1]; //직장주소 area2
+		String memberJobAddrZipcode = ""; // 직장주소 우편번호
+		
+		// 관심지역
+		String memberLikeArea = mbean.getMemberLikeArea();	
+		String[] memberLikeAreaParts = memberLikeArea.split(" ", 2);
+		String memberLikeArea_area1 = memberLikeAreaParts[0]; // 관심지역 area1 "부산시"
+		String memberLikeArea_area2 = memberLikeAreaParts[1]; // 관심지역 area2 "부산진구"
+		
+		//생일
+		String memberBirth = mbean.getMemberBirth();
+		String[] memberBirthParts = memberBirth.split("-", 3);
+		String memberBirth_year = memberBirthParts[0]; // 연
+		String memberBirth_month = memberBirthParts[1]; // 월
+		String memberBirth_day = memberBirthParts[2]; // 일
+		
 		
 		if (request.getParameter("memberLikeArea_area1") != null) {
 			   memberLikeArea_area1 = request.getParameter("memberLikeArea_area1");
@@ -53,25 +78,118 @@
 			Vector<TaskBean> vTask = macMgr.taskList(); //직무
 			Vector<ThemeBean> vTheme = macMgr.themeList(); //테마
 			Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
-		//System.out.println(mbean.getMemberProfile);
 %>
-<<script type="text/javascript">
+<script type="text/javascript">
+
 function setArea2List(memberLikeArea_area1) {
     document.hiddenFrm.memberLikeArea_area1.value = memberLikeArea_area1;  
-    document.hiddenFrm.memberPw.value = document.signFrm.memberPw.value;
-    document.hiddenFrm.memberPwConfirm.value = document.signFrm.memberPwConfirm.value;
-    document.hiddenFrm.memberTel.value=document.signFrm.memberTel.value;
+    document.hiddenFrm.memberPw.value = document.memberUpdateFrm.memberPw.value;
+    document.hiddenFrm.memberPwConfirm.value = document.memberUpdateFrm.memberPwConfirm.value;
+    document.hiddenFrm.memberTel.value=document.memberUpdateFrm.memberTel.value;
     
-    document.hiddenFrm.memberAddrZipcode.value=document.signFrm.memberAddrZipcode.value;
-    document.hiddenFrm.memberAddrArea1.value=document.signFrm.memberAddrArea1.value;
-    document.hiddenFrm.memberAddrArea2.value=document.signFrm.memberAddrArea2.value;
-    document.hiddenFrm.memberJobAddrZipcode.value=document.signFrm.memberJobAddrZipcode.value;
-    document.hiddenFrm.memberJobAddrArea1.value=document.signFrm.memberJobAddrArea1.value;
-    document.hiddenFrm.memberJobAddrArea2.value=document.signFrm.memberJobAddrArea2.value;
+    document.hiddenFrm.memberAddrZipcode.value=document.memberUpdateFrm.memberAddrZipcode.value;
+    document.hiddenFrm.memberAddrArea1.value=document.memberUpdateFrm.memberAddrArea1.value;
+    document.hiddenFrm.memberAddrArea2.value=document.memberUpdateFrm.memberAddrArea2.value;
+    document.hiddenFrm.memberJobAddrZipcode.value=document.memberUpdateFrm.memberJobAddrZipcode.value;
+    document.hiddenFrm.memberJobAddrArea1.value=document.memberUpdateFrm.memberJobAddrArea1.value;
+    document.hiddenFrm.memberJobAddrArea2.value=document.memberUpdateFrm.memberJobAddrArea2.value;
     document.hiddenFrm.submit();
  }
  
+function memberUpdateZipSearch(name) { //우편번호 검색
+    url = "memberUpdateZipSearch.jsp?search=n&type=" + name;
+    window.open(url, "bigmoim 우편번호 검색", "width=500, height=300, top=100, left=300, scrollbar=yes");
+ }
  
+ function memberPwNowCheck(){ //현재 비밀번호 확인. 현재 비밀번호가 맞아야 정보수정 진행
+	 let memberPwNow = document.memberUpdateFrm.memberPwNow; //현재 비밀번호
+	 let memberPw = document.memberUpdateFrm.memberPw; //새 비밀번호
+	 let memberPwConfirm = document.memberUpdateFrm.memberPwConfirm; //새 비밀번호 확인
+	 
+	 if(document.memberUpdateFrm.memberPwNow.value==""){
+			alert("현재 비밀번호를 입력해 주세요");
+			document.memberUpdateFrm.memberPwNow.focus();
+			return;
+		}else if(document.memberUpdateFrm.memberPw.value != ""){//새 비밀번호가 공백이 아닐경우
+ 		if(document.memberUpdateFrm.memberPw.value != document.memberUpdateFrm.memberPwConfirm.value){
+			alert("새 비밀번호가 일치하지 않습니다");
+			//document.memberUpdateFrm.memberPwConfirm.value="";
+			document.memberUpdateFrm.memberPwConfirm.focus();
+			return;
+		}
+		if(document.memberUpdateFrm.memberPwNow.value=='<%=mbean.getMemberPw()%>'){ 
+			//현재 비밀번호가 DB와 일치하면
+			
+			dataFormat();
+			document.memberUpdateFrm.submit(); //회원정보 수정
+			//alert("회원정보 수정 시도 완료");
+		}else{alert("현재 비밀번호가 틀립니다");
+		document.memberUpdateFrm.memberPwNow.focus();
+			return;}
+ 	}else if(document.memberUpdateFrm.memberPw.value == null){//새 비밀번호가 공백일경우 
+		if(document.memberUpdateFrm.memberPwNow.value=='<%=mbean.getMemberPw()%>'){ 
+			//현재 비밀번호가 DB와 일치하면
+			//새 비밀번호 값을 현재 비밀번호로 변경
+			document.memberUpdateFrm.memberPw.value=document.memberUpdateFrm.memberPwNow.value;
+			dataFormat();
+			document.memberUpdateFrm.submit(); //회원정보 수정
+		}else{alert("현재 비밀번호가 틀립니다");
+		document.memberUpdateFrm.memberPwNow.focus();
+			return;}
+ 	}
+ }
+ 
+//선택된 값들을 가져와서 세팅
+ function getYear(memberBirth_year){
+    document.signFrm.memberBirth_year.value=memberBirth_year;
+ }
+ function getMonth(memberBirth_month){
+    document.signFrm.memberBirth_month.value=memberBirth_month;
+ }
+ function getDay(memberBirth_day){
+    document.signFrm.memberBirth_day.value=memberBirth_day;
+ }
+ 
+ function getCategoryNum(categoryNum){
+    document.signFrm.categoryNum.value=categoryNum;
+ }
+ function getBusinessNum(businessNum){
+    document.signFrm.businessNum.value=businessNum;
+ }
+ function getTaskNum(taskNum){
+    document.signFrm.taskNum.value=taskNum;
+ }
+ function getThemeNum(themeNum){
+    document.signFrm.themeNum.value=themeNum;
+ }
+ 
+ function dataFormat(){ //String data들 붙이기
+		//회원 집주소 붙여서 값 저장
+		memberAddrArea1=document.getElementsByName("memberAddrArea1").item(0).value;
+		memberAddrArea2=document.getElementsByName("memberAddrArea2").item(0).value;
+		memberAddr=memberAddrArea1+" "+memberAddrArea2;
+		document.memberUpdateFrm.memberAddr.value = memberAddr;
+		//회원 직장주소 붙여서 값 저장
+		memberJobAddrArea1=document.getElementsByName("memberJobAddrArea1").item(0).value;
+		memberJobAddrArea2=document.getElementsByName("memberJobAddrArea2").item(0).value;
+		memberJobAddr=memberJobAddrArea1+" "+memberJobAddrArea2;
+		document.memberUpdateFrm.memberJobAddr.value = memberJobAddr;
+		//회원 생일 붙여서 값 저장
+		memberBirth_year=document.getElementsByName("memberBirth_year").item(0).value;
+		memberBirth_month=document.getElementsByName("memberBirth_month").item(0).value;
+		memberBirth_day=document.getElementsByName("memberBirth_day").item(0).value;
+		memberBirth = memberBirth_year+"-"+memberBirth_month+"-"+memberBirth_day;
+		document.memberUpdateFrm.memberBirth.value = memberBirth;
+		//관심지역 붙여서 값 저장
+		memberLikeArea_area1=document.getElementsByName("memberLikeArea_area1").item(0).value;
+		memberLikeArea_area2=document.getElementsByName("memberLikeArea_area2").item(0).value;
+		memberLikeArea=memberLikeArea_area1+" "+memberLikeArea_area2;
+		document.memberUpdateFrm.memberLikeArea.value = memberLikeArea;
+ }
+ 
+ function phoneOK(){ //전화인증
+	 
+ }
 </script>
 
 <!doctype html>
@@ -184,8 +302,8 @@ function setArea2List(memberLikeArea_area1) {
                 <div class="main-merge">
                     <div class="back-button" style="margin-top: 3em">
                         <!--a 태그에 메인 URL 입력해야함-->
-                        <a href="#">
-                            <img src="../images/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
+                        <a href="javascript:history.back();">
+                            <img src="/bigmoim/image/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
                         </a>
                         <h3 style="margin-left: -7.5em"><strong>프로필 수정</strong></h3>
                     </div>
@@ -205,13 +323,18 @@ function setArea2List(memberLikeArea_area1) {
 
                             </div>
 
+							<div class="sign-nameHeader">
+                                <label>현재 비밀번호</label>
+                                <input type="password" class="form-control" name="memberPwNow">
+                            </div>
+
                             <div class="sign-nameHeader">
-                                <label>비밀번호(필수)</label>
+                                <label>새 비밀번호</label>
                                 <input type="password" class="form-control" name="memberPw">
                             </div>
 
                             <div class="sign-nameHeader">
-                                <label for="passwordConfirm">비밀번호 재확인</label>
+                                <label for="passwordConfirm">새 비밀번호 재확인</label>
                                 <input type="password" class="form-control" name="memberPwConfirm">
                             </div>
 
@@ -219,7 +342,7 @@ function setArea2List(memberLikeArea_area1) {
                                 <label for="memberTel">전화번호</label>
                                 <div class="input-button-wrapper">
                                     <input type="text" class="form-control" name="memberTel" value="<%=mbean.getMemberTel()%>">
-                                    <button onclick="phoneOK()"
+                                    <button type="button" onclick="phoneOK()"
                                         style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">인증</button>
                                 </div>
                             </div>
@@ -230,16 +353,17 @@ function setArea2List(memberLikeArea_area1) {
                                         <label for="memberAddr">집주소</label>
                                     </div>
                                     <div>
-                                        <br>
+                                        
                                         <input name="memberAddrZipcode" size="5" style="height: 40px;" 
                                         value="<%=memberAddrZipcode%>"readonly >
-                                        <input type="button" value="우편번호찾기" onClick="zipSearch()"
+                                        <input type="button" name ="memberAddrBtn" value="우편번호찾기" onClick="memberUpdateZipSearch(this.name)"
                                             style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; height: 40px;">
                                     </div>
                                     <div class="sign-nameHeader">
                                         <br>
                                         <input name="memberAddrArea1" size="7" value="<%=memberAddrArea1%>" readonly>
                                         <input name="memberAddrArea2" size="10" value="<%=memberAddrArea2%>" readonly>
+                                        <input type="hidden" name="memberAddr" id="memberAddr">
                                     </div>
                                 </div>
 
@@ -249,16 +373,17 @@ function setArea2List(memberLikeArea_area1) {
                                         <br />
                                     </div>
                                     <div>
-                                        <br>
+                                        
                                          <input name="memberJobAddrZipcode" size="5" style="height: 40px;" 
                                         value="<%=memberJobAddrZipcode%>"readonly >
-                                        <input type="button" value="우편번호찾기" onClick="zipSearch()"
+                                        <input type="button" name="memberJobAddrBtn" value="우편번호찾기" onClick="memberUpdateZipSearch(this.name)"
                                             style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; height: 40px;">
                                     </div>
                                     <div class="sign-nameHeader">
                                         <br>
                                         <input name="memberJobAddrArea1" size="7" value="<%=memberJobAddrArea1%>" readonly>
                                         <input name="memberJobAddrArea2" size="10" value="<%=memberJobAddrArea2%>" readonly>
+                                        <input type="hidden" name="memberJobAddr" id="memberJobAddr">
                                     </div>
                                 </div>
                             </div>
@@ -273,7 +398,7 @@ function setArea2List(memberLikeArea_area1) {
                                     <div class="col">
                                         <select class="form-control" name="memberLikeArea_area1" id="memberLikeArea_area1"
                                         onchange="javascript:setArea2List(this.form.memberLikeArea_area1.value)">
-                                                   <option></option>
+                                                   <option><%=memberLikeArea_area1%></option>
                                                           <%
                                                     for (int i = 0; i < vCity.size(); i++) {
                                                         ZipcodeBean bean = vCity.get(i);
@@ -289,7 +414,7 @@ function setArea2List(memberLikeArea_area1) {
                                     
                                     <div class="col">
                                         <select class="form-control" name="memberLikeArea_area2" id="memberLikeArea_area2">
-                                            <option value="">구 / 동</option>
+                                            <option value=""><%=memberLikeArea_area2 %></option>
                                         <%
                                                     for (int i = 0; i < vArea2.size(); i++) {
                                                         ZipcodeBean bean = vArea2.get(i);
@@ -304,6 +429,7 @@ function setArea2List(memberLikeArea_area1) {
                                     </div>
                                 </div>
                             </div>
+                            <input type="hidden" name="memberLikeArea">
 
                             <div class="sign-nameHeader">
                                 <label>생일</label>
@@ -313,19 +439,23 @@ function setArea2List(memberLikeArea_area1) {
                             <div class="sign-nameHeader">
                                 <div class="form-row">
                                     <div class="col">
-                                        <select class="form-control" name="year" id="year">
-                                            <option value="">연도</option>
+                                        <select class="form-control" name="memberBirth_year" id="year">
+                                            <option value=""><%=memberBirth_year
+                                            %></option>
                                         </select>
                                     </div>
                                     <div class="col">
-                                        <select class="form-control" name="month" id="month">
-                                            <option value="">월</option>
+                                        <select class="form-control" name="memberBirth_month" id="month">
+                                            <option value=""><%=memberBirth_month
+                                            %></option>
                                         </select>
                                     </div>
                                     <div class="col">
-                                        <select class="form-control" name="day" id="day">
-                                            <option value="">일</option>
+                                        <select class="form-control" name="memberBirth_day" id="day">
+                                            <option value=""><%=memberBirth_day
+                                            %></option>
                                         </select>
+                                        <input type="hidden" name="memberBirth" id="memberBirth">
                                     </div>
                                 </div>
                             </div>
@@ -369,7 +499,7 @@ function setArea2List(memberLikeArea_area1) {
                                 <div class="form-row">
                                     <div class="col">
                                         <select class="form-control" name="businessName">
-                                            <option value="">업종</option>
+                                            <option value=""><%=macMgr.getBusinessName(mbean.getBusinessNum()) %></option>
                                              <%
                                                     for (int i = 0; i < vBusiness.size(); i++) {
                                                         BusinessBean bBean = vBusiness.get(i);
@@ -384,7 +514,7 @@ function setArea2List(memberLikeArea_area1) {
                                     </div>
                                     <div class="col">
                                         <select class="form-control" name="taskName">
-                                            <option value="">직무</option>
+                                            <option value=""><%=macMgr.getTaskName(mbean.getTaskNum()) %></option>
                                                  <%
                                                     for (int i = 0; i < vTask.size(); i++) {
                                                         TaskBean taBean = vTask.get(i);
@@ -399,7 +529,7 @@ function setArea2List(memberLikeArea_area1) {
                                     </div>
                                     <div class="col">
                                         <select class="form-control" id="themName">
-                                            <option value="">테마</option>
+                                            <option value=""><%=macMgr.getThemeName(mbean.getThemeNum()) %></option>
                                              <%
                                                     for (int i = 0; i < vTheme.size(); i++) {
                                                         ThemeBean thBean = vTheme.get(i);
@@ -420,15 +550,19 @@ function setArea2List(memberLikeArea_area1) {
                             </div>
                             <div style="text-align: center;">
                                 <div class="d-inline-block" style="margin-right: 50px;">
-                                    <input class="form-check-input" type="radio" name="memberSex" id="memberSex"
-                                        value="male">
+                                    <input class="form-check-input" type="radio" name="memberSex" id="memberSex_male"
+                                        value="1" <%if (mbean.getMemberSex()==1){%>
+                                        checked="checked"
+                                        <% }%>>
                                     <label class="form-check-label" for="male">
                                         남자
                                     </label>
                                 </div>
                                 <div class="d-inline-block" style="margin-left: 50px;">
-                                    <input class="form-check-input" type="radio" name="memberSex" id="memberSex"
-                                        value="female">
+                                    <input class="form-check-input" type="radio" name="memberSex" id="memberSex_female"
+                                        value="2" <%if (mbean.getMemberSex()==2){%>
+                                        checked="checked"
+                                        <% }%>>
                                     <label class="form-check-label" for="female">
                                         여자
                                     </label>
@@ -441,7 +575,7 @@ function setArea2List(memberLikeArea_area1) {
                             </div>
                             <div class="col">
                                 <select class="form-control" id="categoryName">
-                                    <option value="">관심사 선택</option>
+                                    <option value=""><%=cMgr.categoryName(mbean.getCategoryNum()) %></option>
                                                          <%
                                             for (int i = 0; i < vCategory.size(); i++) {
                                                 MoimCategoryBean mcBean = vCategory.get(i);
@@ -458,9 +592,11 @@ function setArea2List(memberLikeArea_area1) {
                                 <label>회원사진</label>
                                 <br>
                             </div>
-
+							<%
+							String img = "/bigmoim/image/"+mbean.getMemberImg();
+							%>
                             <div class="image-preview-container">
-                                <img id="preview-image" src="" alt="Preview Image">
+                                <img id="preview-image" src="<%=img %>" alt="Preview Image">
                                 <label for="profile-image" class="file-input-container">사진 선택하기</label>
                                 <input type="file" class="form-control-file" id="profile-image" name="memberImg"
                                     onchange="showPreviewImage(this)">
@@ -491,10 +627,12 @@ function setArea2List(memberLikeArea_area1) {
 
                             <div class="sign-nameHeader">
                                 <textarea class="form-control" id="memberProfile" name="memberProfile" rows="4"
-                                    maxlength="100" value="<%=mbean.getMemberProfile()%>"></textarea>
+                                    maxlength="100"
+                                    style="color: black;"><%=mbean.getMemberProfile()%></textarea>
                             </div>
-                            <input type="submit" value="수정하기" class="btn btn-pill text-white btn-block"
-                                style="background-color: pink;">
+                            <input type="button" value="수정하기" class="btn btn-pill text-white btn-block"
+                                style="background-color: pink;"
+                                onclick="memberPwNowCheck()">
 
                         </div>
                 </div>

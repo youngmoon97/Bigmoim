@@ -27,12 +27,13 @@
     <!-- 카드 -->
     <!-- 클래스 -->
 	<% 
-	if(addrMoim.isEmpty()){
+	if(memberId!=null){
+		if(addrMoim.isEmpty()){
     %>
     <article>
       <div class = "text">
         <!-- class 이름 알잘딱깔센으로 적어보시길... -->
-        <p class = "join-text"> 회원님 주변 추천 모임이 없습니다 ㅜ</p>
+        <p class = "join-text"> <%=memberId %>님 주변 추천 모임이 없습니다 ㅜ</p>
       </div>
     </article>
     <!-- 클래스 리스트 -->
@@ -40,13 +41,15 @@
     }else{//--if-else %>
     		<article>
       			<div class = "text">
-		        <p class = "join-text"> 회원님 주변 추천 모임입니다</p>
+		        <p class = "join-text"> <%=memberId %>님 주변 추천 모임입니다</p>
  	     		</div>
     		</article>
     		
     		<% 
     		for(int i=0;i<addrMoim.size();i++){
     			MoimBean moimbean = addrMoim.get(i);
+    			String cName = cMgr.categoryName(moimbean.getCategoryNum());
+
     		%>
     		<div class="card-group">
       		<article class="card">
@@ -64,14 +67,23 @@
         <div class="card-nav">
           <p class="moimArea" name="moimArea" value=""><%=moimbean.getMoimArea() %></p>
           <p class="clubdetail-nav-line">|</p>
-          <p class="categoryName" name="categoryName" value=""><%=moimbean.getCategoryNum() %></p>
+          <p class="categoryName" name="categoryName" value=""><%=cName %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
         </a>
     		</article>
     		</div>
     		<%}//--for
-    }//--if-else %>
+    }//--if-else 
+    }else{
+    %>
+    <article>
+      <div class = "text">
+        <!-- class 이름 알잘딱깔센으로 적어보시길... -->
+        <p class = "join-text"> 로그인을 해주세요!</p>
+      </div>
+    </article>
+    <%} %>
     
     
     <!-- 하단 -->

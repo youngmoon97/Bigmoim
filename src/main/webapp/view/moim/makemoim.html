@@ -3,29 +3,174 @@
 
 <head>
     <!-- Required meta tags -->
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="fonts/icomoon/style.css">
+    <link rel="stylesheet" href="../fonts/icomoon/style.css">
 
     <link rel="stylesheet" href="../css/owl.carousel.min.css">
 
-    <!-- Bootstrap CSS -->
+
     <link rel="stylesheet" href="../css/bootstrap.min.css">
 
-    <!-- Style -->
+
     <link rel="stylesheet" href="../css/style.css">
 
+
+
+    <script type="text/javascript">
+        function abc() {
+
+            moimArea1 = document.getElementsByName("moimArea1").item(0).value;
+            moimArea2 = document.getElementsByName("moimArea2").item(0).value;
+            moimArea = moimArea1 + " " + moimArea2;
+            document.frm.moimArea.value = moimArea;
+            /*        alert(moimfrm.moimname.value);
+                     alert(moimfrm.moimImg.value);
+                     alert(moimfrm.moimProfile.value);
+                     alert(moimfrm.categoryName.value);
+                     alert(moimfrm);  */
+
+            document.frm.submit();
+            //location.href = "makemoimProc.jsp";
+        }
+
+        function getCategoryNum(categoryNum) {
+            document.frm.categoryNum.value = categoryNum;
+        }
+        function getBusinessNum(businessNum) {
+            document.frm.businessNum.value = businessNum;
+        }
+        function getTaskNum(taskNum) {
+            document.frm.taskNum.value = taskNum;
+        }
+        function getThemeNum(themeNum) {
+            document.frm.themeNum.value = themeNum;
+        }
+
+        function zipSearch(name) { //우편번호 검색
+            url = "zipSearch.jsp?search=n&type=" + name;
+            window.open(url, "bigmoim 우편번호 검색", "width=500, height=300, top=100, left=300, scrollbar=yes");
+        }
+
+        function setArea2List(memberLikeArea_area1) {
+            doucument.hiddenFrm.moimName.value = document.frm.moimName.value;
+            doucument.hiddenFrm.moimImg.value = document.frm.moimImg.value;
+            doucument.hiddenFrm.moimKakao.value = document.frm.moimKakao.value;
+            doucument.hiddenFrm.moimProfile.value = document.frm.moimProfile.value;
+
+            document.hiddenFrm.moimZipcode.value = document.frm.moimZipcode.value;
+            document.hiddenFrm.moimArea1.value = document.frm.moimArea1.value;
+            document.hiddenFrm.moimArea2.value = document.frm.moimArea2.value;
+
+            document.hiddenFrm.submit();
+        }
+        /*모임데표사진 불러오기*/
+        function showPreviewImage(input) {
+            var previewImage = document.getElementById('preview-image');
+            var fileInput = document.getElementById('profile-image');
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                previewImage.src = '';
+            }
+        }
+    </script>
+
     <style>
-       /* 사진 추가용 스타일 */
-    #preview-image {
-        max-width: 20px;
-        max-height: 20px;
-        object-fit: contain; /* 이미지가 너무 크면 비율 유지하며 적합한 크기로 조정 */
-    }
-    
-         
+        .main-container {
+            padding: 50px;
+            background-color: rgb(255, 231, 235);
+            min-width: min-content;
+            /* 내용 최소너비를 유지 */
+        }
+
+        .main-wrapper {
+            max-width: 1300px;
+            /* 전체적인 크기를 1300px로 제한 */
+            margin: 0 auto;
+            /* 가운데 정렬 */
+        }
+
+        .category {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px 56px;
+            align-content: center;
+        }
+
+        .main-merge {
+            max-width: 900px;
+            margin: 0 auto;
+            /* 가운데 정렬을 위한 margin 설정 */
+            width: 85%;
+            /* 예시 값 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+            background-color: white;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /*뒤로가기 버튼 수정 css*/
+        .back-button {
+            display: flex;
+            align-items: center;
+        }
+
+        .back-button img {
+            width: 2em;
+            /* 이미지의 너비를 글씨 크기와 동일하게 조절 */
+            height: 2em;
+            /* 이미지의 높이를 글씨 크기와 동일하게 조절 */
+            margin-right: 0.5em;
+            /* 이미지와 글씨 사이의 간격 조절 */
+            margin-top: -9px;
+            /* 원하는 위치만큼의 음수 값을 입력하여 이미지를 높일 수 있습니다. */
+            margin-left: -16em;
+        }
+
+        /*모임 대표 이미지 관련 css*/
+        #preview-image {
+            max-width: 200px;
+            /* 변경된 부분: 최대 너비를 200px로 설정 */
+            max-height: 200px;
+            /* 변경된 부분: 최대 높이를 200px로 설정 */
+        }
+
+        .file-input-container {
+            background-color: pink;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            margin-left: 15px;
+            /* 해당 버튼의 margin-left 값을 조정하여 간격 조절 가능 */
+        }
+
+        .file-input-container input[type=file] {
+            position: absolute;
+            top: 10px;
+            /* 파일 선택 버튼을 부모 요소의 오른쪽 상단에 위치시킴 */
+            margin-top: 20px;
+            /* 버튼과 상위 요소 간의 간격을 20px로 지정함 */
+        }
+
+        /* 파일 선택 버튼 숨기기 */
+        #profile-image {
+            display: none;
+        }
     </style>
 
 
@@ -34,149 +179,163 @@
 
 <body>
 
-    <div class="content">
-        <div class="wrapper">
-            <div class="row justify-content-center">
+    <div class="main-wrapper">
+        <div class="main-container">
+            <div class="category">
+                <div class="main-merge"> <!--main page 간격-->
+                    
 
-                <div class="col-md-6 contents">
-                    <div class="row justify-content-center">
-                        <div class="col-md-12">
-                            <div class="main-merge"> <!--main page 간격-->
-                                <div class="mt-3 ml-1 d-flex flex-fill">
-                                    <button type="button" class="btn btn-primary mr-2 btn-col" onclick="showMeetupForm()">모임 개설</button>
-                                    <button type="button" class="btn btn-primary btn-col" onclick="showClassForm()">클래스 개설</button>
+                    <div class="back-button" style="margin-top: 3em">
+                        <!--a 태그에 메인 URL 입력해야함-->
+                        <a href="#">
+                            <img src="../images/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
+                        </a>
+                        <h3 style="margin-left: -7.5em"><strong>모임 개설</strong></h3>
+                    </div>
+                    <div style="display:flex; justify-content:center; gap:20px;">
+                        <br>
+                        <br>
+                        <button type="button" class="btn btn-primary mr-2 btn-col"
+                        style="background-color: pink; border: none; width: 250px;" onclick="showMeetupForm()">모임 개설</button>
+                    
+                        <button type="button" class="btn btn-primary btn-col"
+                                style="background-color: pink; border: none; width: 250px;" onclick="showClassForm()">클래스 개설</button>
+                    </div>
+
+                     <form action="makemoimProc.jsp" method="post" name="frm">
+                        <div style="width: 500px; font-size: 16px;">
+                            <div class="image-preview-container">
+                                <div>
+                                    <label>
+                                        <br>
+                                        모임 대표 이미지
+                                        <br>
+                                    </label>
                                 </div>
-                              
+                                <img id="preview-image" src="" alt="Preview Image">
+                                <label for="profile-image" class="file-input-container" style="margin-top: 6em">사진
+                                    변경하기</label>
+                                <input type="file" class="form-control-file" id="profile-image" name="moimImg"
+                                 onchange="showPreviewImage(this)">
+                            </div>
 
-                                
+                            <div>
+                                <label>모임 명</label>
+                                <input type="text" class="form-control" name="moimName" rows="1" maxlength="30"
+                                    placeholder="모임 이름을 적어주세요">
+                                <br>
+                            </div>
 
-                                <form action="#" method="post">
-                                    <div class="mb-4 d-flex align-items-center">
-                                        <a href="#" class="btn btn-light ml-0">
-                                            <span class="icon-arrow-left"></span>
-                                        </a>
-                                        <h3 class="ml-1 mb-0"><strong>모임 개설</strong></h3>
-                                    </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="">모임주소</label>
+                                    <br>
+                                    <input name="moimZipcode" size="5" readonly style="height: 40px;" value="135-888">
+                                    <input type="button" name="memberAddrBtn" value="우편번호찾기"
+                                        onClick="zipSearch(this.name)"
+                                        style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; height: 40px;">
+                                    <br>
+                                    <br>
+                                    <input name="moimArea1" size="7" value="서울" readonly>
+                                    <input name="moimArea2" size="10" value="은평구" readonly>
+                                    <input type="hidden" name="moimArea" id="moimArea">
+                                </div>
 
-                                    <div>
-                                        <label>모임 명</label>
-                                        <textarea class="form-control" name="moimname" rows="2"
-                                            maxlength="30" placeholder="모임 이름을 적어주세요"></textarea>
-                                    </div>
+                                <div class="col-md-6">
+                                    <label >모임 종류</label>
+                                    <select class="form-control" name="categoryNum"
+                                        onchange="javascript:getCategoryNum(this.form.categoryNum.value)">
+                                        <option value="">관심사 선택</option>
+                                        <% for (int i=0; i < vCategory.size(); i++) { MoimCategoryBean
+                                            mcBean=vCategory.get(i); %>
+                                            <option value="<%=mcBean.getCategoryNum()%>">
+                                                <%=mcBean.getCategoryName()%>
+                                            </option>
+                                            <%}%>
+                                    </select>
+                                    <br>
+                                    <select class="form-control" name="businessNum"
+                                        onChange="javascript:getBusinessNum(this.form.businessNum.value)">
+                                        <option value="">업종</option>
+                                        <% for (int i=0; i < vBusiness.size(); i++) { BusinessBean
+                                            bBean=vBusiness.get(i); %>
+                                            <option value="<%=bBean.getBusinessNum()%>">
+                                                <%=bBean.getBusinessName()%>
+                                            </option>
+                                            <% } %>
+                                    </select>
+                                    <br>
+                                    <select class="form-control" name="taskNum"
+                                        onchange="javascript:getTaskNum(this.form.taskNum.value)">
+                                        <option value="">직무</option>
+                                        <% for (int i=0; i < vTask.size(); i++) { TaskBean taBean=vTask.get(i); %>
+                                            <option value="<%=taBean.getTaskNum()%>">
+                                                <%=taBean.getTaskName()%>
+                                            </option>
+                                            <% } %>
+                                    </select>
+                                    <br>
+                                    <select class="form-control" name="themeNum"
+                                        onchange="javascript:getThemeNum(this.form.themeNum.value)">
+                                        <option value="">테마</option>
+                                        <% for (int i=0; i < vTheme.size(); i++) { ThemeBean thBean=vTheme.get(i); %>
+                                            <option value="<%=thBean.getThemeNum()%>">
+                                                <%=thBean.getThemeName()%>
+                                            </option>
+                                            <% } %>
+                                    </select>
+                                </div>
+                            </div>
 
-                                    <!-- class="sign-nameHeader"-->
-                                    <div>
-                                        <label for="memberAddr">모임 지역</label>
-                                    </div>
-                                    <div>
-                                        <br>
-                                        <input name="zipcode" size="5" readonly>
-                                        <input type="button" value="우편번호찾기" onClick="zipSearch()">
-                                    </div>
-                                    <div class="sign-nameHeader">
-                                        <br>
-                                        <input name="zipcode-city1" size="7" readonly>
-                                        <input name="zipcode-city2" size="10" readonly>
-                                    </div>
+                            <div>
 
-                                    <div>
-                                        <label>모임 종류</label>
-                                    </div>
-                                    <div class="col">
-                                        <select class="form-control" name="categoryName">
-                                            <option value="">카테고리</option>
-                                        </select>
-                                        <br>
-                                    </div>
-
-                                    <div class="col">
-                                        <select class="form-control" name="businessName">
-                                            <option value="">업종</option>
-                                        </select>
-                                        <br>
-                                    </div>
-
-                                    <div class="col">
-                                        <select class="form-control" name="taskName">
-                                            <option value="">직무</option>
-                                        </select>
-                                        <br>
-                                    </div>
-                                    <div class="col">
-                                        <select class="form-control" name="themeName">
-                                            <option value="">테마</option>
-                                        </select>
-                                        <br>
-                                    </div>
-
-                                    <div class="sign-nameHeader">
-                                        <label>모임 대표 이미지</label>
-                                        <br>
-                                    </div>
-
-                                    <div class="image-preview-container">
-                                        <img name="preview-image" src="" alt="Preview Image">
-                                        <div class="file-input-container">
-                                            <input type="file" class="form-control-file" name="moimImg"
-                                                onchange="showPreviewImage(this)">
-                                        </div>
-                                    </div>
-
-                                    <script>
-                                        function showPreviewImage(input) {
-                                            var previewImage = document.getElementById('preview-image');
-                                            if (input.files && input.files[0]) {
-                                                var reader = new FileReader();
-                                                reader.onload = function (e) {
-                                                    previewImage.src = e.target.result;
-                                                };
-                                                reader.readAsDataURL(input.files[0]);
-                                            } else {
-                                                previewImage.src = '';
-                                            }
-                                        }
-                                    </script>
-
-                                    <div>
-                                        <br>
-                                        <textarea class="form-control" id="moimProfile" name="moimProfile" rows="5"
-                                            maxlength="100" placeholder="모임목표를 설명해주세요"></textarea>
-                                    </div>
-
-                                    <div>
-                                        <label for="moimHCount">정원 (1~300)</label>
-                                        <br>
-                                        <textarea class="form-control" id="moimHCount" name="moimHCount" rows="2"
-                                            maxlength="3" placeholder="300"></textarea>
-                                    </div>
+                                <label for="moimHCount">정원 (1~300)</label>
+                                <br>
+                                <textarea class="form-control" id="moimHCount" name="moimHCount" rows="2" maxlength="3"
+                                    placeholder="300"></textarea>
+                                <br>
+                            </div>
+                                <div>
+                                    <label>모임 소개</label>
+                                    <br>
+                                    <textarea class="form-control" id="moimProfile" name="moimProfile" rows="5"
+                                      maxlength="500" placeholder="모임 소개를 작성해주세요"></textarea>
+                                    <br>
+                                </div>
 
                                     <div>
                                         <label>카카오톡 오픈채팅방</label>
                                         <textarea class="form-control" id="moimKakao" name="moimKakao" rows="2"
                                             maxlength="30" placeholder="카카오톡 오픈채팅 주소를 입력해주세요."></textarea>
-                                            <br>
+                                        <br>
                                     </div>
 
-                                    <input type="submit" value="모임 만들기" class="btn btn-pill text-white btn-block"
-                                        style="background-color: pink;">
-                                    <br>
-                                    <p>클래스 모임으로 사용 시, 이용이 제한됩니다.</p>
-                                    <a href="#" style="color: blue; ">클래스 모임 만들기</a>
+                                    <input type="button" value="모임 만들기" class="btn btn-pill text-white btn-block"
+                                        style="background-color: pink;" onclick="abc()">
+                                        <br>
+                                   
 
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
+                    </form>
+                   
+                    <form method="GET" name="hiddenFrm">
+                        <input type="hidden" name="memberLikeArea_area1">
+                        <input type="hidden" name="moimName" value="<%=moimName%>">
+                        <input type="hidden" name="moimKakao" value="<%=moimKakao%>">
+                        <input type="hidden" name="moimImg" value="<%=moimImg%>">
+                        <input type="hidden" name="moimImg" value="<%=moimImg%>">
+                        <input type="hidden" name="moimProfile" value="<%=moimProfile%>">
+                        <input type="hidden" name="memberAddrZipcode" value="<%=moimZipcode%>">
+                        <input type="hidden" name="memberAddrArea1" value="<%=moimArea1%>">
+                        <input type="hidden" name="memberAddrArea2" value="<%=moimArea2%>">
+                    </form>
                 </div>
             </div>
-
         </div>
-
     </div>
 
-
-
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
     <script src="../js/main.js"></script>
 </body>
 

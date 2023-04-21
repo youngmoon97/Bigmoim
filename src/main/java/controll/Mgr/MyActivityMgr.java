@@ -309,5 +309,76 @@ public class MyActivityMgr {
 		}
 		return vlist;
 	}
+	//business(업종) 하나의 이름 가져오기
+	public String getBusinessName(int businessNum){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		String bName = null;
+		try {
+			con = pool.getConnection();
+			sql = "select businessName from business where businessNum=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, businessNum);
+			rs = pstmt.executeQuery();
+		    if(rs.next()) {
+		    	bName = rs.getString("businessName");
+		    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return bName;
+	}
+	
+	//task(직무) 하나의 이름 가져오기
+		public String getTaskName(int taskNum){
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String sql = null;
+			String taName = null;
+			try {
+				con = pool.getConnection();
+				sql = "select taskName from task where taskNum=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, taskNum);
+				rs = pstmt.executeQuery();
+			    if(rs.next()) {
+			    	taName = rs.getString("taskName");
+			    }
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				pool.freeConnection(con, pstmt, rs);
+			}
+			return taName;
+		}
+		
+		//theme(테마) 하나의 이름 가져오기
+		public String getThemeName(int themeNum){
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String sql = null;
+			String tmName = null;
+			try {
+				con = pool.getConnection();
+				sql = "select themeName from theme where themeNum=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, themeNum);
+				rs = pstmt.executeQuery();
+			    if(rs.next()) {
+			    	tmName = rs.getString("themeName");
+			    }
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				pool.freeConnection(con, pstmt, rs);
+			}
+			return tmName;
+		}
 		
 }

@@ -42,7 +42,7 @@ if(mvlist.isEmpty()){
 <%}else{//--if-else %>
 <article>
   <div class = "text">
-    <p class = "join-text"><%=categoryName %> 별 모임</p>
+    <p class = "join-text"> <%=categoryName %> 별 모임</p>
   </div>
 </article>
 <div class="card-group">
@@ -55,7 +55,7 @@ if(mvlist.isEmpty()){
     <div class="card-wrapper">
       <% 
         img = "/bigmoim/image/"+moimbean.getMoimImg();
-        System.out.println("img : "+img);
+        //System.out.println("img : "+img);
       %>
       <img src=<%=img %> alt="Image">
       
@@ -68,11 +68,12 @@ if(mvlist.isEmpty()){
     <div class="card-nav">
       <p class="moimArea" name="moimArea" value="" style="margin-top: 0;"><%=moimbean.getMoimArea() %></p>
       <p class="card-nav-line" style="margin-top: 0;">&nbsp; | &nbsp;</p>
-      <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=moimbean.getCategoryNum() %></p>
+      <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=categoryName %></p>
     </div>
     <p class="moimProfile" name="moimProfile" value="" style="margin-top: 0;"><%=moimbean.getMoimProfile() %></p>
     </a>
   </article>
+  
   <%}%><!--for-->
 </div><!--card-group-->
 <%}//--if-else %>

@@ -282,7 +282,7 @@ public class MemberMgr {
 			con = pool.getConnection();
 			sql = "update member "
 				+ "set memberPw=?,memberName=?,memberTel =?,memberImg =?,memberProfile =?,"
-				+ "memberAddr =?, memberJobAddr =?, memberLikeArea =?, categoryNum=?"
+				+ "memberAddr =?, memberJobAddr =?, memberLikeArea =?, categoryNum=?,"
 				+ "businessNum =?, taskNum =?,themeNum =?  "
 				+ "where memberid = ?;";
 			pstmt = con.prepareStatement(sql);

@@ -8,7 +8,7 @@
 %>
 		<script>
 			alert("회원정보 수정 완료");
-			location.href = "../main.jsp";
+			//location.href = "../main/main.jsp";
 		</script>
 <%}else{ //수정실패%>
 		<script>
