@@ -23,6 +23,17 @@ header {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 */
 }
 
+.join-text {
+font-size: 28px;
+font-weight: bold;
+text-align: left;
+margin: 30px auto;
+padding: 20px;
+color: black;
+background-color: transparent;
+border-radius: 5px;
+}
+
 .main-container {
   padding: 50px;
   background-color: rgb(255, 231, 235);
@@ -130,7 +141,7 @@ nav a:hover {
 }
 
 main {
-  max-width: 900px;
+  max-width: 680px;
   margin: 0 auto; /* 가운데 정렬을 위한 margin 설정 */
   width: 85%; /* 예시 값 */
   display: flex;
@@ -156,7 +167,11 @@ main {
   justify-content: space-between;
   align-items: center;
   gap: 20px 56px;
+  padding: 0 55px;
 }
+
+
+
 
 .category .image-text {
   font-size: 12px;

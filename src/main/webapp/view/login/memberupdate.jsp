@@ -92,11 +92,12 @@
 <script type="text/javascript">
 
 function setArea2List(memberLikeArea_area1) {
-    document.hiddenFrm.memberLikeArea_area1.value = memberLikeArea_area1;  
+	document.hiddenFrm.memberLikeArea_area1.value = memberLikeArea_area1;  
     document.hiddenFrm.memberPw.value = document.memberUpdateFrm.memberPw.value;
-    document.hiddenFrm.memberPwConfirm.value = document.memberUpdateFrm.memberPwConfirm.value;
+    document.hiddenFrm.newMemberPw.value = document.memberUpdateFrm.newMemberPw.value;
+    document.hiddenFrm.newMemberPwConfirm.value = document.memberUpdateFrm.newMemberPwConfirm.value;
     document.hiddenFrm.memberTel.value=document.memberUpdateFrm.memberTel.value;
-    
+     
     document.hiddenFrm.memberAddrZipcode.value=document.memberUpdateFrm.memberAddrZipcode.value;
     document.hiddenFrm.memberAddrArea1.value=document.memberUpdateFrm.memberAddrArea1.value;
     document.hiddenFrm.memberAddrArea2.value=document.memberUpdateFrm.memberAddrArea2.value;
