@@ -25,6 +25,9 @@
     <!-- 카드 -->
     <!-- 클래스 -->
 	<% 
+	if(memberId==null){ 
+    	memberId = "방문자";
+    }
 	if(classList.isEmpty()){
     %>
     <article>

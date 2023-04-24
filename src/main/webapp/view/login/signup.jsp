@@ -571,7 +571,7 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
                             </div>
                         </div>
                         </form>
-                         <form method="GET" name="hiddenFrm">
+                         <form method="POST" name="hiddenFrm">
                         <input type="hidden" name="memberLikeArea_area1">
                         <input type="hidden" name="memberName" value="<%=memberName%>">
                         <input type="hidden" name="memberId" value="<%=memberId%>">

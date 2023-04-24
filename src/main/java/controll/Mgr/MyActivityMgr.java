@@ -102,7 +102,7 @@ public class MyActivityMgr {
 			try {
 				con = pool.getConnection();
 				sql = "select moimNum, moimName, moimArea, moimHCount,"
-					+ "moimNCount ,moimImg ,moimProfile  "
+					+ "moimNCount ,moimImg ,moimProfile, categoryNum "
 					+ "from moim where businessNum = ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, businessNum);
@@ -116,6 +116,7 @@ public class MyActivityMgr {
 					bean.setMoimNCount(rs.getInt(5));
 					bean.setMoimImg(rs.getString(6));
 					bean.setMoimProfile(rs.getString(7));
+					bean.setCategoryNum(rs.getInt(8));
 					vlist.addElement(bean);
 				}
 			} catch (Exception e) {
@@ -137,7 +138,7 @@ public class MyActivityMgr {
 			try {
 				con = pool.getConnection();
 				sql = "select moimNum, moimName, moimArea, moimHCount,"
-					+ "moimNCount ,moimImg ,moimProfile  "
+					+ "moimNCount ,moimImg ,moimProfile, categoryNum "
 					+ "from moim where taskNum = ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, taskNum);
@@ -151,6 +152,7 @@ public class MyActivityMgr {
 					bean.setMoimNCount(rs.getInt(5));
 					bean.setMoimImg(rs.getString(6));
 					bean.setMoimProfile(rs.getString(7));
+					bean.setCategoryNum(rs.getInt(8));
 					vlist.addElement(bean);
 				}
 			} catch (Exception e) {
@@ -172,7 +174,7 @@ public class MyActivityMgr {
 			try {
 				con = pool.getConnection();
 				sql = "select moimNum, moimName, moimArea, moimHCount,"
-					+ "moimNCount ,moimImg ,moimProfile  "
+					+ "moimNCount ,moimImg ,moimProfile, categoryNum  "
 					+ "from moim where themeNum = ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, themeNum);
@@ -186,6 +188,7 @@ public class MyActivityMgr {
 					bean.setMoimNCount(rs.getInt(5));
 					bean.setMoimImg(rs.getString(6));
 					bean.setMoimProfile(rs.getString(7));
+					bean.setCategoryNum(rs.getInt(8));
 					vlist.addElement(bean);
 				}
 			} catch (Exception e) {
@@ -230,7 +233,7 @@ public class MyActivityMgr {
 			try {
 				con = pool.getConnection();
 				sql = "select m.moimName ,m.moimImg,m.moimArea, "
-					+ "m.moimNCount ,m.categoryNum, m.moimProfile "
+					+ "m.moimNCount ,m.categoryNum, m.moimProfile, m.categoryNum "
 					+ "from moim m ,recentseen r "
 					+ "where m.moimNum = r.moimNum and "
 					+ "r.memberId = ? ";
@@ -245,6 +248,7 @@ public class MyActivityMgr {
 					bean.setMoimNCount(rs.getInt("moimNCount"));
 					bean.setCategoryNum(rs.getInt("categoryNum"));
 					bean.setMoimProfile(rs.getString("moimProfile"));
+					bean.setCategoryNum(rs.getInt(8));
 					vlist.addElement(bean);
 				}
 			} catch (Exception e) {

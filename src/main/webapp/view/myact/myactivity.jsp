@@ -5,6 +5,7 @@
 <%@include file = "/view/top.jsp" %>
 <jsp:useBean id="moimMgr" class="controll.Mgr.MoimMgr"/>
 <jsp:useBean id="myactMgr" class="controll.Mgr.MyActivityMgr"/>
+<jsp:useBean id="cateMgr" class="controll.Mgr.CategoryMgr"/>
 <%
 	//id만 받아와서 넣으면 된다.
 	mbean = mMgr.getMember(memberId);
@@ -49,7 +50,7 @@
     <article>
       <div class = "text">
         <!-- class 이름 알잘딱깔센으로 적어보시길... -->
-        <p class = "join-text">가입한 모임이 아직 없습니다.</p>
+        <p class = "join-text">가입한 모임이 아직 없습니다. 주변 모임 추천해드려요~</p>
       </div>
     </article>
     <div class="card-group">
@@ -57,6 +58,8 @@
     		<% 
     		for(int i=0;i<addrmoim.size();i++){
     			MoimBean moimbean = addrmoim.get(i);
+    			int cNum = moimbean.getCategoryNum();
+    			String cName = cateMgr.categoryName(cNum);
     		%>
     		
       		<article class="card">
@@ -74,7 +77,7 @@
         <div class="card-nav">
           <p class="moimArea" name="moimArea" value="" style="margin-top: 0;"><%=moimbean.getMoimArea() %></p>
           <p class="card-nav-line" style="margin-top: 0;">&nbsp; | &nbsp;</p>
-          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=moimbean.getCategoryNum() %></p>
+          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=cName %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value="" style="margin-top: 0;"><%=moimbean.getMoimProfile() %></p>
         	</a>
@@ -83,18 +86,21 @@
     		<%} //--for%>
     		</div><!--card-group-->
     <%}else{//--if-else %>
-    
+    <!-- 가입한 모임이 있을때 -->
     		<article>
       			<div class = "text">
 		        <p class = "join-text">가입한 모임</p>
  	     		</div>
     		</article>
-    		
+    		<hr>
     		
     		<div class="card-group">
     		<% 
     		for(int i=0;i<joinmoim.size();i++){
     			MoimBean moimbean = joinmoim.get(i);
+    			int cNum = moimbean.getCategoryNum();
+    			String cName = cateMgr.categoryName(cNum);
+    			
     		%>
     		
       		<article class="card">
@@ -115,7 +121,7 @@
         <div class="card-nav">
           <p class="moimArea" name="moimArea" value="" style="margin-top: 0;"><%=moimbean.getMoimArea() %></p>
           <p class="card-nav-line" style="margin-top: 0;">&nbsp; | &nbsp;</p>
-          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=moimbean.getCategoryNum() %></p>
+          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=cName %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value="" style="margin-top: 0;"><%=moimbean.getMoimProfile() %></p>
         	</a>
@@ -132,53 +138,28 @@
     <article>
       <div class = "text">
         <!-- class 이름 알잘딱깔센으로 적어보시길... -->
-        <p class = "join-text">최근 본 모임이 없네요! 추천드려요</p>
+        <p class = "join-text">최근 본 모임이 없네요!ㅠㅠ</p>
       </div>
     </article>
-    <!-- 업무 선택안해서 본인 지역 모임 전부 출력 -->
+
     
     <div class="card-group">
-    		<% 
-    		for(int i=0;i<addrmoim.size();i++){
-    			MoimBean moimbean = addrmoim.get(i);
-    		%>
-    		
-      		<article class="card">
-      		<a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
-    		<div class="image-wrapper">
-          <% 
-    			img = "/bigmoim/image/"+moimbean.getMoimImg();
-    			System.out.println("img : "+img);
-    		%>
-          <img src=<%=img %> alt="Image">
-          
-          <button class="like-btn">
-  			<i class="far fa-heart"></i>
-			</button>
-			
-        </div>
-        <h4><%=moimbean.getMoimName() %></h4>
-        <div class="card-nav">
-          <p class="moimArea" name="moimArea" value="" style="margin-top: 0;"><%=moimbean.getMoimArea() %></p>
-          <p class="card-nav-line" style="margin-top: 0;">&nbsp; | &nbsp;</p>
-          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=moimbean.getCategoryNum() %></p>
-      </div>
-        <p class="moimProfile" name="moimProfile" value="" style="margin-top: 0;"><%=moimbean.getMoimProfile() %></p>
-        	</a>
-    		</article>
-    		<%}%><!--for-->
-</div><!--card-group-->
+  	<!-- 최근 본 모임이 없음 -->
+	</div><!--card-group-->
     <%}else{//--if-else %>
     		<article>
       			<div class = "text">
 		        <p class = "join-text">최근 본 모임</p>
  	     		</div>
     		</article>
+    		<hr>
     		
     		<div class="card-group">
     		<% 
     		for(int i=0;i<recentmoim.size();i++){
     			MoimBean moimbean = recentmoim.get(i);
+    			int cNum = moimbean.getCategoryNum();
+    			String cName = cateMgr.categoryName(cNum);
     		%>
     		
       		<article class="card">
@@ -199,7 +180,7 @@
         <div class="card-nav">
           <p class="moimArea" name="moimArea" value="" style="margin-top: 0;"><%=moimbean.getMoimArea() %></p>
           <p class="card-nav-line" style="margin-top: 0;">&nbsp; | &nbsp;</p>
-          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=moimbean.getCategoryNum() %></p>
+          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=cName %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
         	</a>
@@ -207,6 +188,7 @@
   <%}%><!--for-->
 </div><!--card-group-->
 <%}//--if-else %>
+<hr>
     
     <br>
     <!-- 업무별 모임 -->
@@ -215,7 +197,7 @@
     <article>
       <div class = "text">
         <!-- class 이름 알잘딱깔센으로 적어보시길... -->
-        <p class = "join-text">업무별 모임이 아직 없습니다. 추천드려용</p>
+        <p class = "join-text">업무별 모임이 아직 없습니다. 회원님 주변 모임 추천드려용</p>
       </div>
     </article>
     
@@ -224,6 +206,8 @@
     		<% 
     		for(int i=0;i<addrmoim.size();i++){
     			MoimBean moimbean = addrmoim.get(i);
+    			int cNum = moimbean.getCategoryNum();
+    			String cName = cateMgr.categoryName(cNum);
     		%>
     		
       		<article class="card">
@@ -244,11 +228,13 @@
         <div class="card-nav">
           <p class="moimArea" name="moimArea" value="" style="margin-top: 0;"><%=moimbean.getMoimArea() %></p>
           <p class="card-nav-line" style="margin-top: 0;">&nbsp; | &nbsp;</p>
-          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=moimbean.getCategoryNum() %></p>
+          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=cName %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
         	</a>
     		</article>
+    		<hr>
+    		
 
     		<%}%><!--for-->
 </div><!--card-group-->
@@ -264,6 +250,8 @@
     		<% 
     		for(int i=0;i<bmoim.size();i++){
     			MoimBean moimbean = bmoim.get(i);
+    			int cNum = moimbean.getCategoryNum();
+    			String cName = cateMgr.categoryName(cNum);
     		%>
     		
       		<article class="card">
@@ -284,7 +272,7 @@
         <div class="card-nav">
           <p class="moimArea" name="moimArea" value="" style="margin-top: 0;"><%=moimbean.getMoimArea() %></p>
           <p class="card-nav-line" style="margin-top: 0;">&nbsp; | &nbsp;</p>
-          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=moimbean.getCategoryNum() %></p>
+          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=cName %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
         	</a>
@@ -292,8 +280,8 @@
 
     		<%}%><!--for-->
 </div><!--card-group-->
+
 <%}//--if-else %>
-    
     
     <!-- 직무별 모임 -->
     <% if(taskmoim.isEmpty()){
@@ -310,6 +298,8 @@
     		<% 
     		for(int i=0;i<addrmoim.size();i++){
     			MoimBean moimbean = addrmoim.get(i);
+    			int cNum = moimbean.getCategoryNum();
+    			String cName = cateMgr.categoryName(cNum);
     		%>
     		
       		<article class="card">
@@ -330,11 +320,12 @@
         <div class="card-nav">
           <p class="moimArea" name="moimArea" value="" style="margin-top: 0;"><%=moimbean.getMoimArea() %></p>
           <p class="card-nav-line" style="margin-top: 0;">&nbsp; | &nbsp;</p>
-          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=moimbean.getCategoryNum() %></p>
+          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=cName %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
         </a>
     		</article>
+    		<hr>
 
     		<%}%><!--for-->
 </div><!--card-group-->
@@ -350,6 +341,8 @@
     		<% 
     		for(int i=0;i<taskmoim.size();i++){
     			MoimBean moimbean = taskmoim.get(i);
+    			int cNum = moimbean.getCategoryNum();
+    			String cName = cateMgr.categoryName(cNum);
     		%>
     		
       		<article class="card">
@@ -370,7 +363,7 @@
         <div class="card-nav">
           <p class="moimArea" name="moimArea" value="" style="margin-top: 0;"><%=moimbean.getMoimArea() %></p>
           <p class="card-nav-line" style="margin-top: 0;">&nbsp; | &nbsp;</p>
-          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=moimbean.getCategoryNum() %></p>
+          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=cName %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
         </a>
@@ -396,6 +389,8 @@
     		<% 
     		for(int i=0;i<addrmoim.size();i++){
     			MoimBean moimbean = addrmoim.get(i);
+    			int cNum = moimbean.getCategoryNum();
+    			String cName = cateMgr.categoryName(cNum);
     		%>
     		
       		<article class="card">
@@ -416,7 +411,7 @@
         <div class="card-nav">
           <p class="moimArea" name="moimArea" value="" style="margin-top: 0;"><%=moimbean.getMoimArea() %></p>
           <p class="card-nav-line" style="margin-top: 0;">&nbsp; | &nbsp;</p>
-          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=moimbean.getCategoryNum() %></p>
+          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=cName %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
         </a>
@@ -436,6 +431,8 @@
     		<% 
     		for(int i=0;i<thememoim.size();i++){
     			MoimBean moimbean = thememoim.get(i);
+    			int cNum = moimbean.getCategoryNum();
+    			String cName = cateMgr.categoryName(cNum);
     		%>
     		
       		<article class="card">
@@ -456,7 +453,7 @@
         <div class="card-nav">
           <p class="moimArea" name="moimArea" value="" style="margin-top: 0;"><%=moimbean.getMoimArea() %></p>
           <p class="card-nav-line" style="margin-top: 0;">&nbsp; | &nbsp;</p>
-          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=moimbean.getCategoryNum() %></p>
+          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=cName %></p>
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
         </a>

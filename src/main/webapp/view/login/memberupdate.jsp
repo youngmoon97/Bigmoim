@@ -24,30 +24,39 @@
 		Vector<ZipcodeBean> vCity = mMgr.cityList(); //area1 시
 		Vector<ZipcodeBean> vArea2 = null; //area2 구/동
 		
-		String memberName = ""; //이름
-		String memberPwNow = ""; //현재 비밀번호
-		String memberPw = ""; //새 비밀번호
-		String memberPwConfirm = ""; //비밀번호 재확인
+		String memberName = mbean.getMemberName(); //이름
+		String memberPw=mbean.getMemberPw(); //비밀번호
+		String newMemberPw=""; //새 비밀번호
+		String newMemberPwConfirm = ""; //새비밀번호 재확인
 		String memberTel = ""; //전화번호
-		
-		//주소
+		/////////////////////////////////////////////////////////////
+		//집주소
 		String memberAddr = mbean.getMemberAddr();	
 		String[] memberAddrParts = memberAddr.split(" ", 2);
-		String memberAddrArea1 = memberAddrParts[0]; // 집주소 area1 "부산시"
-		String memberAddrArea2 = memberAddrParts[1]; // 집주소 area2 "부산진구"
+		String memberAddrArea1 = memberAddrParts[0]; 
+		String memberAddrArea2 = memberAddrParts[1]; 
 		String memberAddrZipcode = "";// 집주소 우편번호
 		
+		//직장주소(기존값이 없을수도 있음)
 		String memberJobAddr = mbean.getMemberJobAddr();
-		String[] memberJobAddrParts = memberJobAddr.split(" ", 2);
-		String memberJobAddrArea1 = memberJobAddrParts[0]; //직장주소 area1
-		String memberJobAddrArea2 = memberJobAddrParts[1]; //직장주소 area2
-		String memberJobAddrZipcode = ""; // 직장주소 우편번호
+		String memberJobAddrArea1 = "";
+		String memberJobAddrArea2 = "";
+		if(memberJobAddr!=null){
+			String[] memberJobAddrParts = memberJobAddr.split(" ", 2);
+			 memberJobAddrArea1 = memberJobAddrParts[0]; 
+		 	 memberJobAddrArea2 = memberJobAddrParts[1]; 
+		}
+		String memberJobAddrZipcode = "";
 		
-		// 관심지역
+		// 관심지역(기존값이 없을수도 있음)
 		String memberLikeArea = mbean.getMemberLikeArea();	
-		String[] memberLikeAreaParts = memberLikeArea.split(" ", 2);
-		String memberLikeArea_area1 = memberLikeAreaParts[0]; // 관심지역 area1 "부산시"
-		String memberLikeArea_area2 = memberLikeAreaParts[1]; // 관심지역 area2 "부산진구"
+		String memberLikeArea_area1 = "도/시";
+		String memberLikeArea_area2 = "구/동";
+		if(memberLikeArea!=null){
+			String[] memberLikeAreaParts = memberLikeArea.split(" ", 2);
+			 memberLikeArea_area1 = memberLikeAreaParts[0];
+			 memberLikeArea_area2 = memberLikeAreaParts[1];
+		}
 		
 		//생일
 		String memberBirth = mbean.getMemberBirth();
@@ -55,14 +64,15 @@
 		String memberBirth_year = memberBirthParts[0]; // 연
 		String memberBirth_month = memberBirthParts[1]; // 월
 		String memberBirth_day = memberBirthParts[2]; // 일
-		
+		/////////////////////////////////////////////////////////////
 		
 		if (request.getParameter("memberLikeArea_area1") != null) {
 			   memberLikeArea_area1 = request.getParameter("memberLikeArea_area1");
 			   memberName = request.getParameter("memberName");
 			   memberId = request.getParameter("memberId");
 			   memberPw = request.getParameter("memberPw");
-			   memberPwConfirm = request.getParameter("memberPwConfirm");
+			   newMemberPw=request.getParameter("newMemberPw");
+			   newMemberPwConfirm = request.getParameter("newMemberPwConfirm");
 			   memberTel = request.getParameter("memberTel");
 			   
 			   memberAddrZipcode = request.getParameter("memberAddrZipcode");
@@ -101,66 +111,80 @@ function memberUpdateZipSearch(name) { //우편번호 검색
     window.open(url, "bigmoim 우편번호 검색", "width=500, height=300, top=100, left=300, scrollbar=yes");
  }
  
- function memberPwNowCheck(){ //현재 비밀번호 확인. 현재 비밀번호가 맞아야 정보수정 진행
-	 let memberPwNow = document.memberUpdateFrm.memberPwNow; //현재 비밀번호
-	 let memberPw = document.memberUpdateFrm.memberPw; //새 비밀번호
-	 let memberPwConfirm = document.memberUpdateFrm.memberPwConfirm; //새 비밀번호 확인
-	 
-	 if(document.memberUpdateFrm.memberPwNow.value==""){
-			alert("현재 비밀번호를 입력해 주세요");
-			document.memberUpdateFrm.memberPwNow.focus();
-			return;
-		}else if(document.memberUpdateFrm.memberPw.value != ""){//새 비밀번호가 공백이 아닐경우
- 		if(document.memberUpdateFrm.memberPw.value != document.memberUpdateFrm.memberPwConfirm.value){
-			alert("새 비밀번호가 일치하지 않습니다");
-			//document.memberUpdateFrm.memberPwConfirm.value="";
-			document.memberUpdateFrm.memberPwConfirm.focus();
-			return;
+ function newMemberPwCheck(){//새 비밀번호 검사(기존 비밀번호와 다른지/새 비밀번호 확인과 같은지)
+	 let memberPw = document.memberUpdateFrm.memberPw;
+	 let newMemberPw = document.memberUpdateFrm.newMemberPw;
+	 let newMemberPwConfirm = document.memberUpdateFrm.newMemberPwConfirm;
+	if (newMemberPw.value == memberPw.value){
+		alert("기존과 다른 비밀번호를 사용해주세요.");
+		newMemberPw.focus();
+		return;
+	}else{
+		if(newMemberPw.value!=newMemberPwConfirm.value){
+			alert("새 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
+			newMemberPwConfirm.focus();
+			return false;
+		}else{
+			memberPw.value = newMemberPw.value;
+			return true;
 		}
-		if(document.memberUpdateFrm.memberPwNow.value=='<%=mbean.getMemberPw()%>'){ 
-			//현재 비밀번호가 DB와 일치하면
-			
-			dataFormat();
-			document.memberUpdateFrm.submit(); //회원정보 수정
-			//alert("회원정보 수정 시도 완료");
-		}else{alert("현재 비밀번호가 틀립니다");
-		document.memberUpdateFrm.memberPwNow.focus();
-			return;}
- 	}else if(document.memberUpdateFrm.memberPw.value == null){//새 비밀번호가 공백일경우 
-		if(document.memberUpdateFrm.memberPwNow.value=='<%=mbean.getMemberPw()%>'){ 
-			//현재 비밀번호가 DB와 일치하면
-			//새 비밀번호 값을 현재 비밀번호로 변경
-			document.memberUpdateFrm.memberPw.value=document.memberUpdateFrm.memberPwNow.value;
-			dataFormat();
-			document.memberUpdateFrm.submit(); //회원정보 수정
-		}else{alert("현재 비밀번호가 틀립니다");
-		document.memberUpdateFrm.memberPwNow.focus();
-			return;}
- 	}
+	}
  }
+ 
+function memberPwCheck(){//현재 비밀번호 검사(DB의 비밀번호와 같은지=> 같으면 새 비밀번호가 있는지 검사
+// 새 비밀번호가 있으면 newMemberPwCheck() 실행=> 새 비번 값을 현재비번 값으로 넣음 => dataFormat()실행하고 submit)\
+   let  memberPw = document.memberUpdateFrm.memberPw;
+   let  newMemberPw = document.memberUpdateFrm.newMemberPw;
+	if(memberPw.value.trim() == ""){
+		 alert("현재 비밀번호를 입력해주세요.");
+		    if (memberPw) {
+		      memberPw.focus();
+		      return;
+		    }
+	}else{
+		if(memberPw.value!='<%=mbean.getMemberPw()%>'){
+			alert("비밀번호를 정확히 입력해주세요.");
+			memberPw.focus();
+			return;
+		}else{
+			if (newMemberPw.value.trim() != ""){
+				if(newMemberPwCheck()==true){
+					dataFormat();
+					document.memberUpdateFrm.submit();
+				}else{
+					return;
+				}
+			}else{ //새 비밀번호 미입력시
+				//alert("새 비밀번호 미입력");
+				dataFormat();
+				document.memberUpdateFrm.submit();
+			} //--맨아래 else
+		}//--2번째 else
+	}// --맨위 else	
+ }// function
  
 //선택된 값들을 가져와서 세팅
  function getYear(memberBirth_year){
-    document.signFrm.memberBirth_year.value=memberBirth_year;
+    document.memberUpdateFrm.memberBirth_year.value=memberBirth_year;
  }
  function getMonth(memberBirth_month){
-    document.signFrm.memberBirth_month.value=memberBirth_month;
+    document.memberUpdateFrm.memberBirth_month.value=memberBirth_month;
  }
  function getDay(memberBirth_day){
-    document.signFrm.memberBirth_day.value=memberBirth_day;
+    document.memberUpdateFrm.memberBirth_day.value=memberBirth_day;
  }
  
  function getCategoryNum(categoryNum){
-    document.signFrm.categoryNum.value=categoryNum;
+    document.memberUpdateFrm.categoryNum.value=categoryNum;
  }
  function getBusinessNum(businessNum){
-    document.signFrm.businessNum.value=businessNum;
+    document.memberUpdateFrm.businessNum.value=businessNum;
  }
  function getTaskNum(taskNum){
-    document.signFrm.taskNum.value=taskNum;
+    document.memberUpdateFrm.taskNum.value=taskNum;
  }
  function getThemeNum(themeNum){
-    document.signFrm.themeNum.value=themeNum;
+    document.memberUpdateFrm.themeNum.value=themeNum;
  }
  
  function dataFormat(){ //String data들 붙이기
@@ -307,7 +331,7 @@ function memberUpdateZipSearch(name) { //우편번호 검색
                         </a>
                         <h3 style="margin-left: -7.5em"><strong>프로필 수정</strong></h3>
                     </div>
-                    <form name="memberUpdateFrm" action="memberupdateProc.jsp" method="get">
+                    <form name="memberUpdateFrm" action="memberupdateProc.jsp" method="POST">
                         <div style="width: 500px; font-size: 16px;">
                             <div class="sign-nameHeader">
                                 <br>
@@ -325,17 +349,20 @@ function memberUpdateZipSearch(name) { //우편번호 검색
 
 							<div class="sign-nameHeader">
                                 <label>현재 비밀번호</label>
-                                <input type="password" class="form-control" name="memberPwNow">
+                                <input type="password" class="form-control" name="memberPw" id="memberPw_id"
+                                >
                             </div>
 
                             <div class="sign-nameHeader">
                                 <label>새 비밀번호</label>
-                                <input type="password" class="form-control" name="memberPw">
+                                <input type="password" class="form-control" name="newMemberPw" id="newMemberPw_id"
+                                placeholder="비밀번호 변경을 희망하시면 입력하세요">
                             </div>
 
                             <div class="sign-nameHeader">
                                 <label for="passwordConfirm">새 비밀번호 재확인</label>
-                                <input type="password" class="form-control" name="memberPwConfirm">
+                                <input type="password" class="form-control" name="newMemberPwConfirm" id="newMemberPwConfirm_id"
+                                placeholder="새 비밀번호 재확인">
                             </div>
 
                             <div class="sign-nameHeader">
@@ -440,19 +467,22 @@ function memberUpdateZipSearch(name) { //우편번호 검색
                                 <div class="form-row">
                                     <div class="col">
                                         <select class="form-control" name="memberBirth_year" id="year">
-                                            <option value=""><%=memberBirth_year
+                                            <option value="<%=memberBirth_year
+                                            %>"><%=memberBirth_year
                                             %></option>
                                         </select>
                                     </div>
                                     <div class="col">
                                         <select class="form-control" name="memberBirth_month" id="month">
-                                            <option value=""><%=memberBirth_month
+                                            <option value="<%=memberBirth_month
+                                            %>"><%=memberBirth_month
                                             %></option>
                                         </select>
                                     </div>
                                     <div class="col">
                                         <select class="form-control" name="memberBirth_day" id="day">
-                                            <option value=""><%=memberBirth_day
+                                            <option value="<%=memberBirth_day
+                                            %>"><%=memberBirth_day
                                             %></option>
                                         </select>
                                         <input type="hidden" name="memberBirth" id="memberBirth">
@@ -498,8 +528,10 @@ function memberUpdateZipSearch(name) { //우편번호 검색
                             <div class="sign-nameHeader">
                                 <div class="form-row">
                                     <div class="col">
-                                        <select class="form-control" name="businessName">
-                                            <option value=""><%=macMgr.getBusinessName(mbean.getBusinessNum()) %></option>
+                                        <select class="form-control" name="businessNum"
+                                        onChange="javascript:getBusinessNum(this.form.businessNum.value)">
+                                            <option value=<%=mbean.getBusinessNum() %>>
+                                            <%=macMgr.getBusinessName(mbean.getBusinessNum()) %></option>
                                              <%
                                                     for (int i = 0; i < vBusiness.size(); i++) {
                                                         BusinessBean bBean = vBusiness.get(i);
@@ -513,8 +545,10 @@ function memberUpdateZipSearch(name) { //우편번호 검색
                                         </select>
                                     </div>
                                     <div class="col">
-                                        <select class="form-control" name="taskName">
-                                            <option value=""><%=macMgr.getTaskName(mbean.getTaskNum()) %></option>
+                                        <select class="form-control" name="taskNum"
+                                        onChange="javascript:getTaskNum(this.form.taskNum.value)">
+                                            <option value="<%=mbean.getTaskNum()%>">
+                                            <%=macMgr.getTaskName(mbean.getTaskNum()) %></option>
                                                  <%
                                                     for (int i = 0; i < vTask.size(); i++) {
                                                         TaskBean taBean = vTask.get(i);
@@ -528,8 +562,10 @@ function memberUpdateZipSearch(name) { //우편번호 검색
                                         </select>
                                     </div>
                                     <div class="col">
-                                        <select class="form-control" id="themName">
-                                            <option value=""><%=macMgr.getThemeName(mbean.getThemeNum()) %></option>
+                                        <select class="form-control" name="themeNum"
+                                        onChange="javascript:getThemeNum(this.form.themeNum.value)">
+                                            <option value="<%=mbean.getThemeNum()%>">
+                                            <%=macMgr.getThemeName(mbean.getThemeNum()) %></option>
                                              <%
                                                     for (int i = 0; i < vTheme.size(); i++) {
                                                         ThemeBean thBean = vTheme.get(i);
@@ -545,7 +581,7 @@ function memberUpdateZipSearch(name) { //우편번호 검색
                                 </div>
                             </div>
                             <div class="sign-nameHeader">
-                                <label>성별</label>
+                                <label for="memberSex">성별</label>
                                 <br>
                             </div>
                             <div style="text-align: center;">
@@ -574,8 +610,9 @@ function memberUpdateZipSearch(name) { //우편번호 검색
                                 <br>
                             </div>
                             <div class="col">
-                                <select class="form-control" id="categoryName">
-                                    <option value=""><%=cMgr.categoryName(mbean.getCategoryNum()) %></option>
+                                <select class="form-control" id="categoryNum" name="categoryNum"
+                                onChange="javascript:getCategoryNum(this.form.categoryNum.value)">
+                                    <option value="<%=mbean.getCategoryNum() %>"><%=cMgr.categoryName(mbean.getCategoryNum()) %></option>
                                                          <%
                                             for (int i = 0; i < vCategory.size(); i++) {
                                                 MoimCategoryBean mcBean = vCategory.get(i);
@@ -632,17 +669,18 @@ function memberUpdateZipSearch(name) { //우편번호 검색
                             </div>
                             <input type="button" value="수정하기" class="btn btn-pill text-white btn-block"
                                 style="background-color: pink;"
-                                onclick="memberPwNowCheck()">
+                                onclick="memberPwCheck()">
 
                         </div>
                 </div>
                 </form>
-                  <form method="GET" name="hiddenFrm">
+                  <form method="POST" name="hiddenFrm">
                         <input type="hidden" name="memberLikeArea_area1">
                         <input type="hidden" name="memberName" value="<%=memberName%>">
                         <input type="hidden" name="memberId" value="<%=memberId%>">
                         <input type="hidden" name="memberPw" value="<%=memberPw%>">
-                        <input type="hidden" name="memberPwConfirm" value="<%=memberPwConfirm%>">
+                        <input type="hidden" name="newMemberPw" value="<%=newMemberPw%>">
+                        <input type="hidden" name="newMemberPwConfirm" value="<%=newMemberPwConfirm%>">
                         <input type="hidden" name="memberTel" value="<%=memberTel%>">
 
                         <input type="hidden" name="memberAddrZipcode" value="<%=memberAddrZipcode%>">

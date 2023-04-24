@@ -53,7 +53,7 @@
              <div class="member-wrapper">
                 <div class="member-dropdown">
                  <img class="member-img" src="/bigmoim/image/<%= mbean.getMemberImg()%>" onclick="toggleDropdown()" 
-                 style = "padding-right: 20px; width: 45px; height: 45px; border-radius: 50%; "/>
+                 style = " width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;"/>
                  <!-- 이미지 스타일 값은 이미지 받아오고 수정해봅니다. -->
                  <div class="member-dropdown-content">
                      <a href="/bigmoim/view/login/memberupdate.jsp">내 정보 수정</a>

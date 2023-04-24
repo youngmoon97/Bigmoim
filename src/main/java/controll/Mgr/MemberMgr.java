@@ -282,8 +282,8 @@ public class MemberMgr {
 			con = pool.getConnection();
 			sql = "update member "
 				+ "set memberPw=?,memberName=?,memberTel =?,memberImg =?,memberProfile =?,"
-				+ "memberAddr =?, memberJobAddr =?, memberLikeArea =?, categoryNum=?,"
-				+ "businessNum =?, taskNum =?,themeNum =?  "
+				+ "memberAddr =?, memberJobAddr =?, memberLikeArea =?, categoryNum=?, "
+				+ "businessNum =?, taskNum =?,themeNum =?, memberBirth=?, memberSex=?   "
 				+ "where memberid = ?;";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, bean.getMemberPw());
@@ -298,7 +298,9 @@ public class MemberMgr {
 			pstmt.setInt(10, bean.getBusinessNum());
 			pstmt.setInt(11, bean.getTaskNum());
 			pstmt.setInt(12, bean.getThemeNum());	
-			pstmt.setString(13, bean.getMemberId());			
+			pstmt.setString(13, bean.getMemberBirth());
+			pstmt.setInt(14, bean.getMemberSex());
+			pstmt.setString(15, bean.getMemberId());	
 			if(pstmt.executeUpdate()==1)
 				flag = true;
 		} catch (Exception e) {

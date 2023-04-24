@@ -5,6 +5,15 @@ body {
   margin: 0 auto; /* 가운데 정렬 */
 }
 
+a{
+   text-decoration: none;
+   color: black;
+}
+
+a:hover {
+   color: pink;
+}
+
 header {
   display: flex;
   justify-content: space-between;
