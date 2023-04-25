@@ -275,7 +275,7 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
                                     </div>
                            
                                     <div class="sign-nameHeader">
-                                        <label for="memberTel">전화번호(필수)</label>
+                                        <label for="memberTel">전화번호(필수 *숫자만 입력하세요)</label>
                                         <div class="input-button-wrapper">
                                             <input type="text" class="form-control" name="memberTel" 
                                             placeholder="전화번호를 입력해주세요."  value= "<%=memberTel%>">
@@ -291,15 +291,14 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
                                                 <label for="memberAddr">집주소</label>
                                             </div>
                                             <div>
-                                              <input name="memberAddrZipcode" size="5" readonly style="height: 40px;"
-                                              value = "135-888">
+                                              <input name="memberAddrZipcode" size="5" readonly style="height: 40px;">
                                               <input type="button" name ="memberAddrBtn" value="우편번호찾기" onClick="zipSearch(this.name)"
                                                style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; height: 40px;">
                                             </div>
                                              <div class="sign-nameHeader">
                                               <br>
-                                              <input name="memberAddrArea1" size="5" value="서울" readonly>
-                                              <input name="memberAddrArea2" size="13" value="은평구" readonly>
+                                              <input name="memberAddrArea1" size="5"  readonly>
+                                              <input name="memberAddrArea2" size="13"  readonly>
                                                  <input type="hidden" name="memberAddr" id="memberAddr">
                                             </div>
                                          </div>

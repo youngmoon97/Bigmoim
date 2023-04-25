@@ -89,6 +89,8 @@
         <p class = "join-text"> 로그인을 하시면 더 많은 정보를 보실 수 있습니다~</p>
       </div>
     </article>
+    
+    <div class="card-group">
     <% 
     		for(int i=0;i<allMoim.size();i++){
     			MoimBean moimbean = allMoim.get(i);
@@ -120,8 +122,11 @@
         </a>
     		</article>
 
-    		<%}//--for
-    }//-else %>    <!-- 하단 -->
+    		<%}//--for%>
+    		</div><!--card-group-->
+    <%}//--if-else    %>
+    
+    <!-- 하단 -->
     <footer>
       <ul>
         <li><a href="#">이용약관</a></li>

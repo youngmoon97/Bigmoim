@@ -1,3 +1,5 @@
+<%@page import="model.Bean.MoimScheduleBean"%>
+<%@page import="model.Bean.ScheduleJoinBean"%>
 <%@page import="model.Bean.MoimBean"%>
 <%@page import="model.Bean.MoimCategoryBean"%>
 <%@page import="java.util.Vector"%>
@@ -5,16 +7,32 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <jsp:useBean id="moimMgr" class="controll.Mgr.MoimMgr"/>
 <jsp:useBean id="cateMgr" class="controll.Mgr.CategoryMgr"/>
+<jsp:useBean id="sjMgr" class="controll.Mgr.ScheduleJoinMgr"/>
 
 <%
+	//moimNum받아옴.
 	int no = Integer.parseInt(request.getParameter("num"));
 	System.out.print(no);
-	
+	//모임상세 mgr 가져옴
 	MoimBean moimbean = moimMgr.moimDetail(no);
 	String img = "/bigmoim/image/"+moimbean.getMoimImg();
 	System.out.print("img : " + img);
-	
+	//moimnum을 받아서 해당 카테고리 이미지 가져옴.
 	MoimCategoryBean cabean = cateMgr.categoryImg(no);
+	//모임일정테이블에서 값들 가져오기
+	Vector<MoimScheduleBean> msvlist = sjMgr.moimScheduleList(no);
+	//모임일정에서 일만 가져오기
+	String mjDay = sjMgr.moimScheduleDay(no);
+	//모임일정에서 월만 가져오기
+	String mmDay = sjMgr.moimScheduleMon(no);
+	//모임일정에서 요일로 추출해서 가져오기
+	String mjDayName = sjMgr.moimScheduleDayName(no);
+	//일정 참여한 멤버 이름,소개,프로필 가져오기
+	Vector<MemberBean> moimschvlist = sjMgr.moimScheduleImg(no);
+	//모임에서 가입한 전체 멤버 이름,소개,프로필사진 가져오기
+	Vector<MemberBean> moimAllMemvlist = sjMgr.moimScheduleAllMember(no);
+	
+	
 %>
 
 
@@ -24,7 +42,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title name="moimName"><%=moimbean.getMoimName()%></title>
-    <link type="text/css" rel="stylesheet" href="/bigmoim/view/css/clubdetail.css">
+    <link type="text/css" rel="stylesheet" href="../css/clubdetail.css">
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
     </style>
@@ -79,15 +97,25 @@
         <div class="clubdetail-schedule">
           <h2>모임일정</h2>
           <ul class="meeting_list">
+          	<%
+          		if(msvlist.isEmpty()){
+          	%>
+          	<li>
+          		<h4>일정이 없습니다.</h4>
+          	</li>
+          	<%}else{
+          		for(int i=0;i<msvlist.size();i++){
+          			MoimScheduleBean msbean = msvlist.get(i);
+          		%>
 		  	<li>
-				<h2 name="msTitle">건강한 찐 산책</h2>
+				<h2 name="msTitle"><%=msbean.getMsTitle() %></h2>
 				<ul class="mlist_in">
-					<li class="date" name="msTime">금요일<span>21</span></li>
+					<li class="date" name="msTime"><%=mjDayName%><span><%=mjDay %></span></li>
 					<li>
 						<ul class="in_cont">
-							<li class="ico calendar" name="msTime"><%=moimbean.getMoimDate() %></li>
-							<li class="ico place" name="msArea">시민공원</li>
-							<li class="ico cost" name="">커피값만.</li>
+							<li class="ico calendar" name="msTime"><%=msbean.getMsTime()%></li>
+							<li class="ico place" name="msArea"><%=msbean.getMsArea()%></li>
+							<li class="ico cost" name="">없음</li>
 						</ul>
 					</li>
 					<li class="btn">
@@ -98,92 +126,101 @@
 					</li>
 				</ul>
 				<div class="member" id="cont_1">
-					<h4 name="msNCount">참여 멤버(10/20)</h4>
-          <div class="container">
-            <div>
-              <img src="./images/profile.jpg"/>
-            </div>            <div>
-              <img src="./images/profile.jpg"/>
-            </div>            <div>
-              <img src="./images/profile.jpg"/>
-            </div>            <div>
-              <img src="./images/profile.jpg"/>
-            </div>            <div>
-              <img src="./images/profile.jpg"/>
-            </div>            <div>
-              <img src="./images/profile.jpg"/>
-            </div>            <div>
-              <img src="./images/profile.jpg"/>
-            </div>            <div>
-              <img src="./images/profile.jpg"/>
-            </div>            <div>
-              <img src="./images/profile.jpg"/>
-            </div>
-          </div>
-        </div>
+					<h4 name="msNCount">참여 멤버(<%=msbean.getMsNCount()%>/<%=msbean.getMsHCount() %>)</h4>
+		            <div class="container">
+		              <%
+		              	if(moimschvlist.isEmpty()){
+		              %>
+			              <div>
+			              	<h4>참여 멤버가 없습니다.</h4>
+			              </div>
+		              <%}else{
+		            	  for(int j=0;j<moimschvlist.size();j++){
+		            		//MemberBean memberBean = moimschvlist.get(j);
+		          			MemberBean memberbean = moimschvlist.get(j);
+		              %>
+	              		<div>
+	              			<img src="/bigmoim/image/<%=memberbean.getMemberImg()%>"/>
+	           	  		</div>
+	              	  <%}%><!-- for -->
+		            <%}%><!-- if else -->
+		          </div>
+        	<%}%><!-- for -->
+        <%} %><!-- if else -->
 			</li>	
-			<li>
-				<h2 name="msTitle">건강한 찐 산책</h2>
-				<ul class="mlist_in">
-					<li class="date" name="msTime">금요일<span>21</span></li>
-					<li>
-						<ul class="in_cont">
-							<li class="ico calendar" name="msTime">5월 21일</li>
-							<li class="ico place" name="msArea">시민공원</li>
-							<li class="ico cost" name="">커피값만.</li>
-						</ul>
-					</li>
-					<li class="btn">
-						<a href="#" class="share">
-							친구에게<br />
-							공유하기
-						</a>
-					</li>
-					
-				</ul>
-				<div class="member">
-					<h4>참여 멤버(10/20)</h4>
-					<ul class="member_in" name="msNCount">
-						<li><img src="./images/profile.jpg" /></li>
-						<li><img src="./images/profile.jpg" /></li>
-						<li><img src="./images/profile.jpg" /></li>
-						<li><img src="./images/profile.jpg" /></li>
-						<li><img src="./images/profile.jpg" /></li>
-						<li><img src="./images/profile.jpg" /></li>
-						<li><img src="./images/profile.jpg" /></li>
-						<li><img src="./images/profile.jpg" /></li>
-						<li><img src="./images/profile.jpg" /></li>
-						<li><img src="./images/profile.jpg" /></li>
-					</ul>
-				</div>
-			</li>
 		  </ul>
       <div class="tab">
-        <ul class="tabnav">
-          <li class="tab-link current" name="msTime" data-tab="tab1"><a href="#tab01">4월21일</a></li>
-          <li class="tab-link" name="msTime" data-tab="tab2"><a href="#tab02">5월21일</a></li>
-        </ul>
-        <div class="tabcontent">
-          <h3 name="msNCount">모임멤버(20명)</h3>
-          <ul class="tabcontent-list">
-            <li class="tabcontent-list-img" name="memberImg"><img src="./images/profile.jpg" /></li>
-            <li>
-              <ul class="tabcontent-list-detail">
-                <li class="tabcontent-list-name" name="memberName">서지우</li>
-                <li class="tabcontent-list-hello" name="memberProfile">안녕하세요</li>
+      	<%
+      		if(moimAllMemvlist!=null){		
+      	%>
+      		<ul class="tabnav">
+	          <li class="tab-link current" name="msTime" onclick="change(1)"><a href="javascript:void(0)">전체멤버</a></li>
+	          <%
+	          	if(msvlist!=null){
+	          		for(int i=0;i<msvlist.size();i++){
+	          			MoimScheduleBean msbean = msvlist.get(i);
+	          %>
+	          	<li class="tab-link current" name="msTime" onclick="change(2)"><a href="javascript:void(0)"><%=mmDay%>월<%=mjDay%>일</a></li>
+	          	<%} %><!-- for -->
+	          <%} %><!-- if -->
+	          
+	        </ul>
+	        <div class="tabcontent tab1">
+	          <h3 name="msNCount">모임멤버(<%=moimbean.getMoimNCount() %>)</h3>
+	          <%
+	      		for(int i=0;i<moimAllMemvlist.size();i++){
+	      			MemberBean membean = moimAllMemvlist.get(i);
+	       	  %>
+	          <ul class="tabcontent-list">
+	            <li class="tabcontent-list-img" name="memberImg"><img src="/bigmoim/image/<%=moimAllMemvlist.get(i).getMemberImg()%>" /></li>
+	            <li>
+	              <ul class="tabcontent-list-detail">
+	                <li class="tabcontent-list-name" name="memberName"><%=moimAllMemvlist.get(i).getMemberName() %></li>
+	                <li class="tabcontent-list-hello" name="memberProfile"><%=moimAllMemvlist.get(i).getMemberProfile() %></li>
+	              </ul>
+	            </li> 
+	          </ul>
+	          <%} %>  
+	        </div>
+	        <div class="tabcontent tab2" style="display: none">
+		      <%
+		      	for(int i=0;i<msvlist.size();i++){
+		      		MoimScheduleBean moimschebean = msvlist.get(i);
+		      %>
+	          <h3 name="msNCount">모임멤버(<%=moimschebean.getMsNCount()%>)</h3>
+	          <%} %>
+	          <ul class="tabcontent-list">
+	          <%
+	          	if(moimschvlist.isEmpty()){
+	          %>
+	          	<li><h3>참여멤버가 없습니다.</h3></h4></li>
+	          <%}else{ 
+            	  for(int j=0;j<moimschvlist.size();j++){
+            		//MemberBean memberBean = moimschvlist.get(j);
+          			MemberBean memberBean = moimschvlist.get(j);
+	          %>
+	            <li class="tabcontent-list-img" name="memberImg"><img src="/bigmoim/image/<%=memberBean.getMemberImg()%>" /></li>
+	            <li>
+	              <ul class="tabcontent-list-detail">
+	                <li class="tabcontent-list-name" name="memberName"><%=memberBean.getMemberName() %></li>
+	                <li class="tabcontent-list-hello" name="memberProfile"><%=memberBean.getMemberProfile() %></li>
+	              </ul>
+	            </li>
+	            <%} %> 
+	          </ul>
+	          <%} %>  
+	        </div>
+      	
+     	<%}else {%>
+	      	<ul class="tabnav">
+	          <li class="tab-link current" name="msTime" data-tab="tab1"><a href="#tab01">전체멤버</a></li>
+	        </ul>
+	        <div class="tabcontent">
+              <ul class="tabcontent-list">
+                <li>가입된 멤버가 없습니다.</li>
               </ul>
-            </li> 
-          </ul>
-          <ul class="tabcontent-list">
-            <li class="tabcontent-list-img" name="memberImg"><img src="./images/profile.jpg" /></li>
-            <li>
-              <ul class="tabcontent-list-detail">
-                <li class="tabcontent-list-name" name="memberName">서지우</li>
-                <li class="tabcontent-list-hello" name="memberProfile">안녕하세요</li>
-              </ul>
-            </li> 
-          </ul>
-        </div>
+	        </div>
+      <%} %>
       </div>  
       </main>
       <!-- 하단 -->
@@ -199,37 +236,15 @@
       </footer>
 
       <script>
-        function row_scroll(){
-          $(".container div").on('mousewheel',function(e){
-            var wheelDelta = e.originalEvent.wheelDelta;
-            if(wheelDelta > 0){
-              $(this).scrollLeft(-wheelDelta + $(this).scrollLeft());
-            } else{
-              $(this).scrollLeft(-wheelDelta + $(this).scrollLeft());
-            }
-          });
-        }
-        row_scroll();
 
-        $(function(){
-          $('.tabcontent-list > ul').hide();
-          $('.tabnav a').click(function () {
-            $('.tabcontent-list > ul').hide().filter(this.hash).fadeIn();
-            $('.tabnav a').removeClass('active');
-            $(this).addClass('active');
-            return false;
-          }).filter(':eq(0)').click();
-        });
-
-        $(document).ready(function(){
-          $('ul.tabnav li').click(function(){
-            var tab_id = $(this).attr('data-tab');
-            $('ul.tabnav li').removeClass('current');
-            $('.tab-content').removeClass('current');
-            $(this).addClass('current');
-            $("#"+tab_id).addClass('current');
-          })
-        })
+        
+        const change = (num) =>{
+        	const tabList = document.querySelectorAll(".tabcontent");
+        	tabList.forEach((el) => (el.style.display = "none"));
+        	const nowTab = document.querySelector(".tab"+ num);
+        	nowTab.style.display = "block";
+        };
+  
       </script>
     </div>
   </body>

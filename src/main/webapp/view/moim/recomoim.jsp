@@ -93,6 +93,8 @@
         <p class = "join-text"> 로그인을 하시면 더 많은 정보를 보실 수 있습니다~</p>
       </div>
     </article>
+    
+    <div class="card-group">
     <% 
     		for(int i=0;i<allMoim.size();i++){
     			MoimBean moimbean = allMoim.get(i);
@@ -125,7 +127,8 @@
     		</article>
 
     		<%}//--for
-    }//-else %>
+    }//else %> 
+	</div><!--card-group-->
     
     
     <!-- 하단 -->

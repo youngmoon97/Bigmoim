@@ -215,6 +215,9 @@ public class MemberMgr {
 			pstmt.setString(3, bean.getMemberName());
 			pstmt.setString(4, bean.getMemberTel());
 			pstmt.setString(5, bean.getMemberBirth());
+			if(bean.getMemberImg() == null) {
+				bean.setMemberImg("defaultuser.png");
+			}
 			pstmt.setString(6, bean.getMemberImg());
 			pstmt.setString(7, bean.getMemberProfile());
 			pstmt.setInt(8, bean.getMemberSex());

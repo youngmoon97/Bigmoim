@@ -233,7 +233,6 @@
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
         	</a>
     		</article>
-    		<hr>
     		
 
     		<%}%><!--for-->
