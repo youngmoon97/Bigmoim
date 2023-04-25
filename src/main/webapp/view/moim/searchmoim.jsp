@@ -1,9 +1,18 @@
 <%@page import="model.Bean.MoimBean"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
-<jsp:useBean id="moimMgr" class="controll.Mgr.MoimMgr"></jsp:useBean>
 <%@ include file = "/view/top.jsp" %>
+<jsp:useBean id="moimMgr" class="controll.Mgr.MoimMgr"/>
+
 <%
-	Vector<MoimBean> classList = moimMgr.classList();
+	String str = request.getParameter("searchText").trim();
+	String searchText = "";
+	for(int i = 0; i < str.length(); i++) {
+				if(str.charAt(i) != ' ')
+					searchText += str.charAt(i);
+	}
+	//System.out.println("trim : "+str);
+	//out.print(str);
+	Vector<MoimBean> searchMoim = moimMgr.searchMoimList(searchText);
 %>
 <!DOCTYPE html>
 <html lang="kr">
@@ -28,27 +37,27 @@
 	if(memberId==null){ 
     	memberId = "방문자";
     }
-	if(classList.isEmpty()){
+	if(searchMoim.isEmpty()){
     %>
     <article>
       <div class = "text">
         <!-- class 이름 알잘딱깔센으로 적어보시길... -->
-        <p class = "join-text"> <%=memberId %>님 주변 클래스 모임이 아직 없습니다 ㅠ</p>
+        <p class = "join-text"> <%=memberId %>님 해당 검색 모임이 없습니다ㅠ</p>
       </div>
     </article>
-    <!-- 클래스 리스트 -->
+    <!-- 검색 별 모임 리스트 -->
     		<%
     }else{//--if-else %>
     		<article>
       			<div class = "text">
-		        <p class = "join-text"> <%=memberId %>님! 클래스 모임입니다</p>
+		        <p class = "join-text"> <%=memberId %>님! 해당 검색 모임입니다</p>
  	     		</div>
     		</article>
     		
     		<div class="card-group">
     		<% 
-    		for(int i=0;i<classList.size();i++){
-    			MoimBean moimbean = classList.get(i);
+    		for(int i=0;i<searchMoim.size();i++){
+    			MoimBean moimbean = searchMoim.get(i);
     			String cName = cMgr.categoryName(moimbean.getCategoryNum());
     		%>
     		
@@ -80,7 +89,6 @@
 </div><!--card-group-->
 <%}//--if-else 
 %>
-
     
     
     <!-- 하단 -->
@@ -102,4 +110,3 @@
     </div>
   </body>
 </html>
-        

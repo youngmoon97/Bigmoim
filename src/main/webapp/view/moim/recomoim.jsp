@@ -5,6 +5,7 @@
 <%	
 	// top에 있는 멤버 데이터 가져와서 주소값가져오기
 	String address = mbean.getMemberAddr();
+	System.out.println("addr = "+address);
 	Vector<MoimBean> addrMoim = moimMgr.areaMoimList(address);
 	Vector<MoimBean> allMoim = moimMgr.moimAllList();
 	
@@ -52,7 +53,7 @@
     		for(int i=0;i<addrMoim.size();i++){
     			MoimBean moimbean = addrMoim.get(i);
     			String cName = cMgr.categoryName(moimbean.getCategoryNum());
-
+				
     		%>
     		
       		<article class="card">

@@ -28,7 +28,6 @@
            dropdown.style.display = "none";
          }
        }
-
 </script>
 
     
@@ -41,10 +40,11 @@
         <a href="/bigmoim/view/main/main.jsp"><img src="/bigmoim/image/logo.png" alt="대모임 로고" width="130px" height="130px" /></a>
       </div>
       <div class="search-area">
-        <form>
-          <button type="submit" class="search-btn"><img src="/bigmoim/image/search.png" alt="검색" style="width: 30px; height: 30px;">
+        <form name=searchFrm action="/bigmoim/view/moim/searchmoim.jsp">
+          <button type="submit" class="search-btn" >
+          	<img src="/bigmoim/image/search.png" alt="검색" style="width: 30px; height: 30px;">
           </button>
-          <input type="text" />
+          <input type="text" name=searchText value="" placeholder="모임 이름으로 검색하세요!"/>
         </form>
       </div>
         <div class="header-function">

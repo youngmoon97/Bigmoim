@@ -4,6 +4,24 @@ body {
   margin: 0 auto; /* 가운데 정렬 */
 }
 
+a{
+   text-decoration: none;
+   color: black;
+}
+
+a:hover {
+   color: pink;
+}
+
+p {
+	text-decoration: none;
+   	color: black;
+}
+
+p:hover {
+   color: pink;
+}
+
 ul, li {
   list-style:none;
   padding: 0px;

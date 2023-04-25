@@ -14,6 +14,15 @@ a:hover {
    color: pink;
 }
 
+p{
+	text-decoration: none;
+   color: black;
+}
+
+p:hover {
+   color: pink;
+}
+
 header {
   display: flex;
   justify-content: space-between;
