@@ -9,6 +9,7 @@ import java.util.Vector;
 import controll.DBConnectionMgr;
 import model.Bean.MemberBean;
 import model.Bean.MoimScheduleBean;
+import model.Bean.ScheduleJoinBean;
 
 public class ScheduleJoinMgr {
    
@@ -147,7 +148,7 @@ public class ScheduleJoinMgr {
        Vector<MemberBean> moimschvlist = new Vector<MemberBean>();
        try {
           con = pool.getConnection();
-          sql = "select member.memberImg, member.memberName, member.memberProfile "
+          sql = "select member.memberImg, member.memberName, member.memberProfile, member.memberId "
           		+ "from member inner join schedulejoin on member.memberId = schedulejoin.memberId "
           		+ "where schedulejoin.moimNum = ?";
           pstmt = con.prepareStatement(sql);
@@ -158,6 +159,7 @@ public class ScheduleJoinMgr {
              mbean.setMemberImg(rs.getString(1));
              mbean.setMemberName(rs.getString(2));
              mbean.setMemberProfile(rs.getString(3));
+             mbean.setMemberId(rs.getString(4));
              moimschvlist.addElement(mbean);
           }
        } catch (Exception e) {
@@ -197,5 +199,37 @@ public class ScheduleJoinMgr {
        }
        return moimAllMemvlist;
     }
+    
+    //같은 모임에서 다른 스케줄일때 구별해서 가져오기
+    public Vector<ScheduleJoinBean> scheduleJoinMsvList(int moimNum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		Vector<ScheduleJoinBean> scheduleJoinMsvList = new Vector<ScheduleJoinBean>();
+		try {
+			con = pool.getConnection();
+			sql = "select * "
+				+ "from schedulejoin "
+				+ "where moimNum = ? ";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, moimNum);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ScheduleJoinBean bean = new ScheduleJoinBean();
+				bean.setSjNum(rs.getInt(1));
+				bean.setMsNum(rs.getInt(2));
+				bean.setMemberid(rs.getString(3));
+				bean.setMoimNum(rs.getInt(4));
+				System.out.println("test " + bean.getMemberid());
+				scheduleJoinMsvList.addElement(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return scheduleJoinMsvList;
+	}
    
 }

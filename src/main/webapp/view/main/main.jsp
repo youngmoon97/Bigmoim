@@ -67,7 +67,7 @@
           onclick="likeBtnChange(<%=moimbean.getMoimNum()%>)" style="bgcolor: white;">
   			<i id="heart<%=moimbean.getMoimNum() %>" class="far fa-heart"></i>
 			</button>
-		</form>
+		</form>a
         </div>
         <h4><%=moimbean.getMoimName() %></h4>
         <div class="card-nav">

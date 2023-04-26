@@ -1,3 +1,4 @@
+<%@page import="java.util.stream.Collectors"%>
 <%@page import="model.Bean.MoimScheduleBean"%>
 <%@page import="model.Bean.ScheduleJoinBean"%>
 <%@page import="model.Bean.MoimBean"%>
@@ -31,6 +32,10 @@
 	Vector<MemberBean> moimschvlist = sjMgr.moimScheduleImg(no);
 	//모임에서 가입한 전체 멤버 이름,소개,프로필사진 가져오기
 	Vector<MemberBean> moimAllMemvlist = sjMgr.moimScheduleAllMember(no);
+	
+	Vector<ScheduleJoinBean> scheduleJoinMsvList = sjMgr.scheduleJoinMsvList(no);
+	
+	
 	
 	
 %>
@@ -126,7 +131,7 @@
 					</li>
 				</ul>
 				<div class="member" id="cont_1">
-					<h4 name="msNCount">참여 멤버(<%=msbean.getMsNCount()%>/<%=msbean.getMsHCount() %>)</h4>
+					<h4 name="msNCount">참여 멤버(<%=moimschvlist.size() %>/<%=msbean.getMsHCount() %>)</h4>
 		            <div class="container">
 		              <%
 		              	if(moimschvlist.isEmpty()){
@@ -154,19 +159,19 @@
       		if(moimAllMemvlist!=null){		
       	%>
       		<ul class="tabnav">
-	          <li class="tab-link current" name="msTime" onclick="change(1)"><a href="javascript:void(0)">전체멤버</a></li>
+	          <li class="tab-link current" name="msTime" onclick="change(0)"><a href="javascript:void(0)">전체멤버</a></li>
 	          <%
 	          	if(msvlist!=null){
 	          		for(int i=0;i<msvlist.size();i++){
 	          			MoimScheduleBean msbean = msvlist.get(i);
 	          %>
-	          	<li class="tab-link current" name="msTime" onclick="change(2)"><a href="javascript:void(0)"><%=mmDay%>월<%=mjDay%>일</a></li>
+	          	<li class="tab-link current" name="msTime" onclick="change(<%=msbean.getMsNum() %>)"><a href="javascript:void(0)"><%=mmDay%>월<%=mjDay%>일</a></li>
 	          	<%} %><!-- for -->
 	          <%} %><!-- if -->
-	          
+
 	        </ul>
-	        <div class="tabcontent tab1">
-	          <h3 name="msNCount">모임멤버(<%=moimbean.getMoimNCount() %>)</h3>
+	        <div class="tabcontent tab0">
+	          <h3 name="msNCount">모임멤버(<%=scheduleJoinMsvList.size() %>)</h3>
 	          <%
 	      		for(int i=0;i<moimAllMemvlist.size();i++){
 	      			MemberBean membean = moimAllMemvlist.get(i);
@@ -182,35 +187,49 @@
 	          </ul>
 	          <%} %>  
 	        </div>
-	        <div class="tabcontent tab2" style="display: none">
-		      <%
-		      	for(int i=0;i<msvlist.size();i++){
-		      		MoimScheduleBean moimschebean = msvlist.get(i);
-		      %>
-	          <h3 name="msNCount">모임멤버(<%=moimschebean.getMsNCount()%>)</h3>
-	          <%} %>
-	          <ul class="tabcontent-list">
+			<% 
+			for(int z=0;z<msvlist.size();z++){
+				MoimScheduleBean moimScheduleBean = msvlist.get(z);
+				// Vector<ScheduleJoinBean> filteredList = scheduleJoinMsvList.stream().filter(item -> item.getMsNum() == moimScheduleBean.getMsNum()).collect(Collectors.toCollection(Vector::new));
+				Vector<ScheduleJoinBean> filteredList = new Vector<ScheduleJoinBean>();
+				for(ScheduleJoinBean bean : scheduleJoinMsvList){
+					if(bean.getMsNum() == moimScheduleBean.getMsNum()){
+						filteredList.addElement(bean);
+					}
+				}				
+			%>
+			<div class="tabcontent tab<%=moimScheduleBean.getMsNum() %>" style="display: none" >
+	          <h3 name="msNCount">모임멤버(<%=filteredList.size() %>)</h3>
 	          <%
 	          	if(moimschvlist.isEmpty()){
 	          %>
-	          	<li><h3>참여멤버가 없습니다.</h3></h4></li>
+	          	<li><h3>참여멤버가 없습니다.</h3></li>
 	          <%}else{ 
             	  for(int j=0;j<moimschvlist.size();j++){
-            		//MemberBean memberBean = moimschvlist.get(j);
-          			MemberBean memberBean = moimschvlist.get(j);
+            		  MemberBean memberBean = moimschvlist.get(j);
+            		  
+            		  // filteredList.stream().filter(item -> item.getMemberid().equals(memberBean.getMemberId())).count() > 0
+            		  Vector<ScheduleJoinBean> memberFilteredList = new Vector<ScheduleJoinBean>();
+      				for(ScheduleJoinBean bean : filteredList){
+    					if(bean.getMemberid().equals(memberBean.getMemberId())){
+    						memberFilteredList.addElement(bean);
+    					}
+    				}	
+					if(memberFilteredList.size() > 0){
 	          %>
-	            <li class="tabcontent-list-img" name="memberImg"><img src="/bigmoim/image/<%=memberBean.getMemberImg()%>" /></li>
-	            <li>
-	              <ul class="tabcontent-list-detail">
-	                <li class="tabcontent-list-name" name="memberName"><%=memberBean.getMemberName() %></li>
-	                <li class="tabcontent-list-hello" name="memberProfile"><%=memberBean.getMemberProfile() %></li>
-	              </ul>
-	            </li>
-	            <%} %> 
-	          </ul>
+	          	<ul class="tabcontent-list">
+		            <li class="tabcontent-list-img" name="memberImg"><img src="/bigmoim/image/<%=memberBean.getMemberImg()%>" /></li>
+		            <li>
+		              <ul class="tabcontent-list-detail">
+		                <li class="tabcontent-list-name" name="memberName"><%=memberBean.getMemberName() %></li>
+		                <li class="tabcontent-list-hello" name="memberProfile"><%=memberBean.getMemberProfile() %></li>
+		              </ul>
+		            </li>
+	            </ul>
+	            <% } } %> 
 	          <%} %>  
 	        </div>
-      	
+	        <%} %>  
      	<%}else {%>
 	      	<ul class="tabnav">
 	          <li class="tab-link current" name="msTime" data-tab="tab1"><a href="#tab01">전체멤버</a></li>

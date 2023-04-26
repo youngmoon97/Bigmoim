@@ -188,13 +188,13 @@
                         <br>
                         <br>
                         <button type="button" class="btn btn-primary mr-2 btn-col" id = "moimBtn" value ="1"
-                        style="background-color: pink; border: none; width: 250px;" >모임 개설</button>
+                        style="background-color: pink; border: none; width: 250px;" onclick="change('모임')">모임 개설</button>
                     
                         <button type="button" class="btn btn-primary btn-col" id = "classBtn" value = "2"
-                                style="background-color: pink; border: none; width: 250px;" >클래스 개설</button>
+                                style="background-color: pink; border: none; width: 250px;" onclick="change('클래스')">클래스 개설</button>
                     </div>
 
-                     <form action="makemoimProc.jsp" method="post" name="frm">
+                     <form action="makemoimProc.jsp" method="post" name="frm" id = "frm">
                      	<input type="hidden" id="moimtype" value="2" name = "moimtype">
                         <div style="width: 500px; font-size: 16px;">
                             <div class="image-preview-container">
@@ -394,7 +394,7 @@
             document.hiddenFrm.submit();
         }
         
-        /*모임데표사진 불러오기*/
+        /*모임대표사진 불러오기*/
         function showPreviewImage(input) {
             var previewImage = document.getElementById('preview-image');
             var fileInput = document.getElementById('profile-image');
@@ -418,7 +418,7 @@
         
         moimBtn.addEventListener("click", () =>{
         	const addHtml = document.querySelector("#addHtml");
-        	alert("모임개설");
+        	//alert("모임개설");
         	while(addHtml.hasChildNodes()){
         		addHtml.removeChild(addHtml.lastChild);
         	}
@@ -444,9 +444,24 @@
         
         addHtml.insertAdjacentHTML(
         		"beforeend",
-        		"<lable>가격</lable><br><input id='aa' type='text' placeholder='2번' name = 'classprice'>"
+        		"<lable>클래스 회비</lable><br><textarea class = 'form-control' id='classprice' row = '2' name = 'classprice' >"
         	);
         });
+      
+            
+        const change = (name) => {
+        	const content = document.querySelector("#frm");
+        	const labelList = content.querySelectorAll("label");
+        	for(const el of labelList){
+        		if(name == "클래스"){
+        			console.log(1);
+        			el.innerText = el.innerText.replace("모임", "클래스");
+        		}else if(name == "모임"){
+        			el.innerText = el.innerText.replace("클래스", "모임");
+        			console.log(1);
+        		}
+        	}
+        }
         
     </script>
 </html>
