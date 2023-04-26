@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.Vector;
 
 import controll.DBConnectionMgr;
+import model.Bean.JjimListBean;
 import model.Bean.MemberBean;
 import model.Bean.MoimBean;
 import model.Bean.MoimJoinBean;
@@ -730,4 +731,30 @@ public class MoimMgr {
 			}
 			return vlist;
 		}
+		//찜리스트 insert
+				public boolean jjimInsert(JjimListBean bean) {
+					Connection con = null;
+					PreparedStatement pstmt = null;
+					String sql = null;
+					boolean flag = false;
+					try {
+						con = pool.getConnection();
+						sql = "insert into jjimlist(memberId, moimNum, classNum) "
+								+ "values (?, ?, ?)";
+						pstmt = con.prepareStatement(sql);
+						//pstmt.setInt(1, bean.getJjimNum());
+						pstmt.setString(1, bean.getMemberId());
+						pstmt.setInt(2, bean.getMoimNum());
+						pstmt.setInt(3, bean.getClassNum());
+						if(pstmt.executeUpdate()==1) {
+							flag = true;
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+					} finally {
+						pool.freeConnection(con, pstmt);
+					}
+					return flag;
+				}
+		
 }

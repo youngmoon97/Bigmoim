@@ -1,4 +1,4 @@
-body {
+fbody {
   font-family: 'Heebo', sans-serif;
   background-color: #F2F2F2;
   width: 100%;
@@ -11,15 +11,6 @@ a{
 }
 
 a:hover {
-   color: pink;
-}
-
-p{
-	text-decoration: none;
-   color: black;
-}
-
-p:hover {
    color: pink;
 }
 
@@ -432,17 +423,13 @@ background-color: pink;
   transform: translate(0, -50%);
 }
 
-.like-btn i {
-  color: gray;
-}
+  .like-btn {
+    color: gray;
+  }
 
-.like-btn i.fas.fa-heart {
-  color: red;
-}
-
-.like-btn.clicked {
-  color: red;
-}
+  .like-btn.liked {
+    color: red;
+  }
 
 
 /* Style for the card image */

@@ -147,7 +147,7 @@ public class ScheduleJoinMgr {
        Vector<MemberBean> moimschvlist = new Vector<MemberBean>();
        try {
           con = pool.getConnection();
-          sql = "select member.memberImg member.memberName member.memberProfile "
+          sql = "select member.memberImg, member.memberName, member.memberProfile "
           		+ "from member inner join schedulejoin on member.memberId = schedulejoin.memberId "
           		+ "where schedulejoin.moimNum = ?";
           pstmt = con.prepareStatement(sql);

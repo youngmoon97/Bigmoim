@@ -3,7 +3,7 @@ package model.Bean;
 public class JjimListBean {
 	private int jjimNum;
 	private String memberId;
-	private int moiomNum;
+	private int moimNum;
 	private int classNum;
 	public int getJjimNum() {
 		return jjimNum;
@@ -17,11 +17,11 @@ public class JjimListBean {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-	public int getMoiomNum() {
-		return moiomNum;
+	public int getMoimNum() {
+		return moimNum;
 	}
-	public void setMoiomNum(int moiomNum) {
-		this.moiomNum = moiomNum;
+	public void setMoimNum(int moimNum) {
+		this.moimNum = moimNum;
 	}
 	public int getClassNum() {
 		return classNum;

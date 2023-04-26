@@ -53,6 +53,8 @@
     		%>
     		
       		<article class="card">
+      		  
+      		
       		<a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
     		<div class="card-wrapper">
           <% 
@@ -60,11 +62,12 @@
     			System.out.println("img : "+img);
     		%>
           <img src=<%=img %> alt="Image">
-
-          <button class="like-btn">
-  			<i class="far fa-heart"></i>
+		<form name="jjimFrm" action="jjimProc.jsp" method="get">
+         <button class="like-btn" id="like-btn-<%=moimbean.getMoimNum()%>"
+          onclick="likeBtnChange(<%=moimbean.getMoimNum()%>)" style="bgcolor: white;">
+  			<i id="heart<%=moimbean.getMoimNum() %>" class="far fa-heart"></i>
 			</button>
-			
+		</form>
         </div>
         <h4><%=moimbean.getMoimName() %></h4>
         <div class="card-nav">
@@ -75,14 +78,15 @@
         <p class="moimProfile" name="moimProfile" value="" style="margin-top: 0; color: black; text-decoration: none;"><%=moimbean.getMoimProfile() %></p>
         </a>
     		</article>
-    		
     		<%}%><!--for-->
+    		<input type="hidden" name ="jjimNum" value="">
+    		<input type="hidden" name ="memberId" value="">
+    		<input type="hidden" name ="moimNum" value="">
+    		<input type="hidden" name ="classNum" value="">
 </div><!--card-group-->
 <%}//--if-else 
 %>
 
-    
-    
     <!-- 하단 -->
     <footer>
       <ul>

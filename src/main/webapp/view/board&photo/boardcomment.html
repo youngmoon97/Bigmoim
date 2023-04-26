@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        /* 사진 추가용 스타일 */
+        .image-preview-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .file-input-container {
+            margin-right: 10px;
+        }
+
+        #preview-image {
+            max-width: 200px;
+            max-height: 200px;
+        }
+
+        /*  모임참여 인원 한줄에 다 나오도록하는 css */
+        /* 이미지가 한 줄에 나열되도록 Flexbox 사용 */
+        .here {
+            display: flex;
+            flex-wrap: nowrap;
+            /* 넘치는 이미지를 줄바꿈하지 않고 한 줄에 나열 */
+            overflow-x: auto;
+            /* 가로로 넘치는 이미지를 스크롤로 볼 수 있도록 설정 */
+        }
+
+        /* 각 이미지의 공간 설정 */
+        .here img {
+            flex: 0 0 auto;
+            /* 이미지가 컨테이너 크기에 따라 자동으로 조절되도록 설정 */
+            max-width: 100px;
+            max-height: 100px;
+            margin-right: 9px;
+            /* 이미지 사이에 간격 추가 */
+        }
+
+        /* 가로 스크롤바 스타일링 */
+        ::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #999;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #777;
+        }
+
+        /*폼 스타일*/
+        .main-container {
+            padding: 50px;
+            background-color: rgb(255, 231, 235);
+            min-width: min-content;
+            /* 내용 최소너비를 유지 */
+        }
+
+        .main-wrapper {
+            max-width: 1300px;
+            /* 전체적인 크기를 1300px로 제한 */
+            margin: 0 auto;
+            /* 가운데 정렬 */
+        }
+
+        .category {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px 56px;
+            align-content: center;
+        }
+
+        .main-merge {
+            max-width: 900px;
+            margin: 0 auto;
+            /* 가운데 정렬을 위한 margin 설정 */
+            width: 85%;
+            /* 예시 값 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+            background-color: white;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /*리스트의 테두리 제거*/
+        li.list-group-item {
+            border: none;
+        }
+
+                /*게시글용 css*/
+                            .post-container {
+            width: 80%;
+            max-width: 80%;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            
+            }
+
+            .profile-info {
+            display: flex;
+            align-items: center;
+            }
+
+            .profile-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+            }
+
+            .author-name {
+            font-weight: bold;
+            font-size: 16px;
+            }
+
+            .post-time {
+            margin-top: 2em;
+            font-size: 12px;
+            }
+
+            .post-body {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            }
+
+            .post-content {
+            width: 60%;
+            }
+
+            .post-image {
+            width: 40%;
+            text-align: right;
+            }
+
+            .post-image img {
+            max-width: 100%;
+            height: auto;
+            }
+
+            .post-footer {
+            padding: 10px;
+            }
+
+            .post-actions {
+            text-align: left;
+            }
+
+            .show-comments {
+            background-color: #fff;
+            border: none;
+            color: black;
+            text-decoration: underline;
+            cursor: pointer;
+            }
+
+            /*댓글 등록 관련 css*/
+            .comments {
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+            }
+
+            .comments ul {
+            list-style: none;
+            padding-left: 0;
+            }
+
+            .comments li {
+            margin-bottom: 20px;
+            }
+
+            .comment-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            }
+
+            .comment-info img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+            }
+
+            .comment-author {
+            font-weight: bold;
+            margin-right: 10px;
+            }
+
+            .comment-date {
+            font-size: 12px;
+            color: #aaa;
+            }
+
+            .comment-text {
+            margin-left: 40px;
+            }
+
+            .comment-form {
+            margin-top: 20px;
+            overflow: auto;
+            }
+
+            .comment-form label {
+            display: block;
+            margin-bottom: 5px;
+            }
+
+            .comment-form input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            }
+
+            .comment-form button[type="submit"] {
+            background-color: pink;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            float: right; /* 작성 버튼을 오른쪽으로 이동 */
+
+            }
+
+    </style>
+
+    <title>게시판</title>
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+        <div class="main-container">
+          <div class="category">
+            <div class="main-merge">
+                <div class="post-container">
+                    <div class="post-header">
+                      <div class="profile-info">
+                        <img src="../images/samplememberImg.png" alt="작성자 이름">
+                        <p class="author-name" style="margin-top: 1em;">양한솔</p>
+                      </div>
+                      <div class="post-time">
+                        <p>4월 22일 오후 10:00</p>
+                      </div>
+                    </div>
+                    <div class="post-body">
+                      <div class="post-content">
+                        <p>게시글 내용</p>
+                      </div>
+                      <div class="post-image">
+                        <img src="../images/moimsampleImg1.png" alt="게시글 이미지">
+                      </div>
+                    </div>
+                    <hr>
+                    <!--댓글 라인-->
+                    <div class="post-footer">
+                      <div class="post-actions">
+                        <button class="show-comments">댓글보기</button>
+                      </div>
+                      <div class="comments" style="display: none;">
+                        <ul>
+                          <li>
+                            <div class="comment-info">
+                              <p class="comment-author" id="memberId">작성자 아이디</p>
+                              <p class="comment-date" id ="bcDate">작성일자</p>
+                            </div>
+                            <p class="comment-text" id="bcContent">댓글 내용</p>
+                          </li>
+                          <li>
+                            <div class="comment-info">
+                              <p class="comment-author" id="memberId">작성자 아이디</p>
+                              <p class="comment-date" id ="bcDate">작성일자</p>
+                            </div>
+                            <p class="comment-text" id="bcContent">댓글 내용</p>
+                          </li>
+                        </ul>
+                        <form class="comment-form">
+                          <label for="comment-input">댓글 작성:</label>
+                          <input type="text" id="comment-input" name="comment-input">
+                          <button type="submit" >작성</button>
+                        </form>
+                      </div>
+                    
+                    </div>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>
