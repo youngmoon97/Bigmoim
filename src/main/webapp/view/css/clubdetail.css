@@ -1,5 +1,6 @@
-body {
+fbody {
   font-family: 'Heebo', sans-serif;
+  background-color: #F2F2F2;
   width: 100%;
   margin: 0 auto; /* 가운데 정렬 */
 }
@@ -13,35 +14,24 @@ a:hover {
    color: pink;
 }
 
-p {
-	text-decoration: none;
-   	color: black;
-}
-
-p:hover {
-   color: pink;
-}
-
-ul, li {
-  list-style:none;
-  padding: 0px;
-}
-
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 */
 }
 
-.logo{
-  display: flex;
-  padding-top: 10px;
-}
-
-.logo h5{
-  font-size: 20px;
+.join-text {
+font-size: 28px;
+font-weight: bold;
+text-align: left;
+margin: 30px auto;
+padding: 20px;
+color: black;
+background-color: transparent;
+border-radius: 5px;
 }
 
 .main-container {
@@ -57,7 +47,7 @@ header {
 
 .main-wrapper .search-area {
   margin-right: 4px;
-}
+  }
 
 .search-area {
   width: calc(100% - 800px); /* 5px 크기 증가 */
@@ -69,6 +59,7 @@ header {
 
 form {
   display: flex;
+  margin-bottom: 0;
 }
 
 /* 모든 텍스트 박스에 적용 */
@@ -114,12 +105,6 @@ button {
   margin-right: 10px;
 }
 
-.notification img{
-  width: 30px;
-  height: 30px;
-  padding-top: 10px;
-}
-
 nav {
   display: flex;
   justify-content: center;
@@ -135,7 +120,6 @@ nav ul {
 
 nav li {
   margin-right: 30px;
-
 }
 
 nav li:last-child {
@@ -199,6 +183,7 @@ nav a:hover {
   padding-right: 50px;
 }
 
+
 .clubdetail{
   display: flex;
   justify-content: center;
@@ -215,7 +200,7 @@ nav a:hover {
 }
 
 .category .image-wrapper img{
-  padding-left: 10px;
+  padding: 25px;
   width: 100px;
   height: 100px;
 }
@@ -512,6 +497,7 @@ margin-right: 7px;
   color: #999;
 }
 
+
 /* 하단 */
 footer {
 display: flex;
@@ -521,6 +507,7 @@ padding: 20px;
 background-color: pink;
 color: white;
 font-size: 16px;
+width: 700px;
 }
 
 .social-media {

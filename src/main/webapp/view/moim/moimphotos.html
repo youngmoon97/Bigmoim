@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../fonts/icomoon/style.css">
+
+    <link rel="stylesheet" href="../css/owl.carousel.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- Style -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        /*폼 스타일*/
+        .main-container {
+            padding: 50px;
+            background-color: rgb(255, 231, 235);
+            min-width: min-content;
+            /* 내용 최소너비를 유지 */
+        }
+
+        .main-wrapper {
+            max-width: 1300px;
+            /* 전체적인 크기를 1300px로 제한 */
+            margin: 0 auto;
+            /* 가운데 정렬 */
+        }
+
+        .category {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px 56px;
+            align-content: center;
+        }
+
+        .main-merge {
+            max-width: 900px;
+            margin: 0 auto;
+            /* 가운데 정렬을 위한 margin 설정 */
+            width: 85%;
+            /* 예시 값 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+            background-color: white;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+
+        /*사진 이미지*/
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .image-box {
+            width: calc(33.33% - 20px);
+            /* 각 이미지 박스의 너비값을 조정합니다. */
+            margin-bottom: 20px;
+            /* 이미지 박스 아래 여백을 설정합니다. */
+        }
+
+        .image-box img {
+            width: 100%;
+            /* 이미지의 너비를 100%로 설정하여 이미지 박스에 맞춥니다. */
+        }
+
+        .image-box h2 {
+            margin-top: 10px;
+            /* 제목과 이미지 사이에 여백을 추가합니다. */
+            font-size: 18px;
+            /* 제목의 글자 크기를 조정합니다. */
+            text-align: center;
+            /* 제목을 가운데 정렬합니다. */
+        }
+
+        .upload {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .upload button {
+            /* 버튼에 대한 스타일 */
+            margin-bottom: 1em;
+            ;
+        }
+    </style>
+    <script>
+        /*이미지 클릭시 상세 페이지로 넘어가도록 하는 기능*/
+        function showDetail(imageUrl) {
+      window.location.href = "photodetail.html?image=" + encodeURIComponent(imageUrl);
+    }
+  
+    </script>
+
+    <title>사진첩</title>
+</head>
+
+<body>
+
+    <div class="main-wrapper">
+        <div class="main-container">
+            <div class="category">
+                <div class="main-merge">
+                    <div>
+                        <div class="upload">
+
+                            <button onclick="registerPhoto()"
+                                style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">사진등록</button>
+                            </button>
+                        </div>
+                        <br>
+                        <script>
+                            function registerPhoto() {
+                                var w = 500; // 창 너비
+                                var h = 750; // 창 높이
+                                var left = (screen.width / 2) - (w / 2); // 중앙에서부터 창의 왼쪽 위치 계산
+                                var top = (screen.height / 2) - (h / 2); // 중앙에서부터 창의 위쪽 위치 계산
+                                window.open("uploadphotos.html", "새창 이름", "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left);
+                            }
+                        </script>
+                        <div class="image-container">
+
+                            <div class="image-box" onclick="showDetail('image1.jpg')" >
+                              <img src="../images/moimsampleImg1.png" id="photo" name="photo">
+                              <h2>제목 1</h2>
+                            </div>
+                            <div class="image-box" onclick="showDetail('image2.jpg')">
+                                <img src="../images/moimsampleImg2.png" id="photo" name="photo">
+                                <h2>제목 2</h2>
+                            </div>
+                            <div class="image-box" onclick="showDetail('image3.jpg')">
+                                <img src="../images/moimsampleImg3.png" id="photo" name="photo">
+                                <h2>제목 3</h2>
+                            </div>
+                            <div class="image-box">
+                                <img src="../images/moimsampleImg1.png" id="photo">
+                                <h2>제목 4</h2>
+                            </div>
+                            <div class="image-box">
+                                <img src="../images/moimsampleImg1.png" id="photo">
+                                <h2>제목 5</h2>
+                            </div>
+                            <div class="image-box">
+                                <img src="../images/moimsampleImg1.png" id="photo">
+                                <h2>제목 6</h2>
+                            </div>
+                            <div class="image-box">
+                                <img src="../images/moimsampleImg1.png" id="photo">
+                                <h2>제목 7</h2>
+                            </div>
+                            <div class="image-box">
+                                <img src="../images/moimsampleImg1.png" id="photo">
+                                <h2>제목 8</h2>
+                            </div>
+                            <div class="image-box">
+                                <img src="../images/moimsampleImg1.png" id="photo">
+                                <h2>제목 9</h2>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="../js/popper.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+
+</html>

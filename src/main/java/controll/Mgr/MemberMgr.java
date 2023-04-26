@@ -1,11 +1,16 @@
 package controll.Mgr;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.mysql.cj.protocol.a.result.ResultsetRowsStatic;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import controll.DBConnectionMgr;
 import model.Bean.MemberBean;
@@ -15,6 +20,9 @@ import model.Bean.ZipcodeBean;
 
 public class MemberMgr {
 	DBConnectionMgr pool;
+	public static final String SAVEFOLDER = "C:/Jsp/bigmoim/src/main/webapp/image/";	
+	public static final String ENCODING = "UTF-8";
+	public static final int MAXSIZE = 1024*1024*20;	//20MB
 	public MemberMgr() {
 		pool = DBConnectionMgr.getInstance();
 	}
@@ -200,34 +208,61 @@ public class MemberMgr {
 	      return mpw;
 	   }
 	//회원가입
-	public boolean insertMember(MemberBean bean) {
+	public boolean insertMember(HttpServletRequest req) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
 		boolean flag = false;
 		try {
+			File dir = new File(SAVEFOLDER);
+			if(!dir.exists()/*존재하지 않으면*/) {
+				dir.mkdirs();	// mkdirs는 상위폴더가 없어도 생성
+				// mkdir은 상위폴더가 없으면 생성 불가
+			}
+			MultipartRequest multi = 
+					new MultipartRequest(req, SAVEFOLDER, MAXSIZE, ENCODING
+							,new DefaultFileRenamePolicy());
+			String memberImg = null;
+			if(multi.getFilesystemName("memberImg")!=null) {
+				memberImg = multi.getFilesystemName("memberImg");
+			}
+			//File f = new File(memberImg);
+			String memberId = multi.getParameter("memberId");
+			String memberPw = multi.getParameter("memberPw");
+			String memberName = multi.getParameter("memberName");
+			String memberTel = multi.getParameter("memberTel");
+			String memberBirth = multi.getParameter("memberBirth");
+			String memberProfile = multi.getParameter("memberProfile");
+			String memberAddr = multi.getParameter("memberAddr");
+			String memberJobAddr = multi.getParameter("memberJobAddr");
+			String memberLikeArea = multi.getParameter("memberLikeArea");
+			int categoryNum = Integer.parseInt(multi.getParameter("categoryNum"));
+			int businessNum = Integer.parseInt(multi.getParameter("businessNum"));
+			int taskNum = Integer.parseInt(multi.getParameter("taskNum"));
+			int themeNum = Integer.parseInt(multi.getParameter("themeNum"));
+			int memberSex = Integer.parseInt(multi.getParameter("memberSex"));
 			con = pool.getConnection();
 			sql = "insert into member  "
 				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, bean.getMemberId());
-			pstmt.setString(2, bean.getMemberPw());
-			pstmt.setString(3, bean.getMemberName());
-			pstmt.setString(4, bean.getMemberTel());
-			pstmt.setString(5, bean.getMemberBirth());
-			if(bean.getMemberImg() == null) {
-				bean.setMemberImg("defaultuser.png");
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, memberPw);
+			pstmt.setString(3, memberName);
+			pstmt.setString(4, memberTel);
+			pstmt.setString(5, memberBirth);
+			if(memberImg == null) {
+				memberImg = "defaultuser.png";
 			}
-			pstmt.setString(6, bean.getMemberImg());
-			pstmt.setString(7, bean.getMemberProfile());
-			pstmt.setInt(8, bean.getMemberSex());
-			pstmt.setString(9, bean.getMemberAddr());
-			pstmt.setString(10, bean.getMemberJobAddr());
-			pstmt.setString(11, bean.getMemberLikeArea());
-			pstmt.setInt(12, bean.getCategoryNum());
-			pstmt.setInt(13, bean.getBusinessNum());
-			pstmt.setInt(14, bean.getTaskNum());
-			pstmt.setInt(15, bean.getThemeNum());	
+			pstmt.setString(6, memberImg);
+			pstmt.setString(7, memberProfile);
+			pstmt.setInt(8, memberSex);
+			pstmt.setString(9, memberAddr);
+			pstmt.setString(10, memberJobAddr);
+			pstmt.setString(11, memberLikeArea);
+			pstmt.setInt(12, categoryNum);
+			pstmt.setInt(13, businessNum);
+			pstmt.setInt(14, taskNum);
+			pstmt.setInt(15, themeNum);	
 			if(pstmt.executeUpdate()==1) { //정상
 				flag=true;
 			}

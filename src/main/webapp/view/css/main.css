@@ -758,5 +758,41 @@ background-color: #f1f1f1;
   font-size: 12px;
   }
   
+  /* 화면 폭이 768px 이하일 때 */
+@media (max-width: 768px) {
+  .search-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .search-btn {
+    margin-top: 10px;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+  }
+}
+
+/* 화면 폭이 768px보다 클 때 */
+@media (min-width: 769px) {
+  .search-area {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  
+  .search-btn {
+    margin-left: 10px;
+  }
+  
+  input[type="text"] {
+    width: 200px;
+  }
+}
+
+  
+  
   }
   

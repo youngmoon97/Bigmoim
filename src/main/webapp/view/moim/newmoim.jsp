@@ -8,6 +8,9 @@
 	Vector<MoimBean> newMoimList = moimMgr.newMoimList(address);
 	Vector<MoimBean> newMoimListnoaddr = moimMgr.newMoimList();
 	Vector<MoimBean> allMoim = moimMgr.moimAllList();
+	if(memberId==null){ 
+    	memberId = "방문자";
+    }
 %>
 <!DOCTYPE html>
 <html lang="kr">
@@ -56,16 +59,24 @@
     		
       		<article class="card">
       		<a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
-    		<div class="image-wrapper">
+    		<div class="card-wrapper">
           <% 
     			img = "/bigmoim/image/"+moimbean.getMoimImg();
     			System.out.println("img : "+img);
     		%>
           <img src=<%=img %> alt="Image">
 
-          <button class="like-btn">
-  			<i class="far fa-heart"></i>
+     	<form name="jjimFrm" action="../main/jjimProc.jsp" method="get">
+			<%if (memberId!="방문자"){%> 
+         <button class="like-btn" id="like-btn-<%=moimbean.getMoimNum()%>"
+          onclick="likeBtnChange(<%=moimbean.getMoimNum()%>)" style="color:red; bgcolor: white;">
+  			<i id="heart<%=moimbean.getMoimNum() %>"
+  			<%if(moimMgr.jjimCheck(memberId, moimbean.getMoimNum())){ %>
+  			class = "fas fa-heart"<% } else{%>
+  			class = "far fa-heart"
+  			<%}%>></i>
 			</button>
+			<%} %>
 			
         </div>
         <h4><%=moimbean.getMoimName() %></h4>
@@ -76,9 +87,13 @@
       </div>
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
         </a>
-    		</article>
-    		
+    		</article>		
     		<%}//--for%>
+    		 <input type="hidden" name ="jjimNum" value="">
+    		<input type="hidden" name ="memberId" value="<%=memberId %>">
+    		<input type="hidden" name ="moimNum" value="">
+    		<input type="hidden" name ="classNum" value="">
+    		</form>
     		</div><!--card-group-->
     <%}//--if-else 
     	}else{
@@ -107,9 +122,6 @@
     		%>
           <img src=<%=img %> alt="Image">
 
-          <button class="like-btn">
-  			<i class="far fa-heart"></i>
-			</button>
 			
         </div>
         <h4><%=moimbean.getMoimName() %></h4>
@@ -121,7 +133,6 @@
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
         </a>
     		</article>
-
     		<%}//--for%>
     		</div><!--card-group-->
     <%}//--if-else    %>
@@ -139,7 +150,23 @@
     </footer>
 
     <script>
-
+    function likeBtnChange(num) {
+    	//Proc에 보내기
+    	//document.jjimFrm.submit();
+    	//alert(num)
+    	let jjimFrm = document.forms["jjimFrm"];
+    	jjimFrm.moimNum.value = num;
+        jjimFrm.submit();
+    	//$("#jjimFrm").submit();
+    	
+    	//색상 변경
+		let likeBtn = document.getElementById("heart"+ num)
+		if(likeBtn.className == "far fa-heart"){//빈 하트면
+			likeBtn.className = "fas fa-heart" //꽉찬 하트로
+		}else if(likeBtn.className == "fas fa-heart"){//꽉찬 하트면
+			likeBtn.className = "far fa-heart"//빈 하트로
+		}
+	}     	
       	
     </script>
     </div>

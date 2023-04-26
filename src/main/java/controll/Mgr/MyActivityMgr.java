@@ -42,6 +42,42 @@ public class MyActivityMgr {
 		}
 		return vlist;
 	}
+	//
+	//최근본 모임 리스트 출력
+			public Vector<MoimBean> rsList(String memberId){
+				Connection con = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				String sql = null;
+				Vector<MoimBean> vlist = new Vector<MoimBean>();
+				try {
+					con = pool.getConnection();
+					sql = "select m.moimName ,m.moimImg,m.moimArea, "
+						+ "m.moimNCount ,m.categoryNum, m.moimProfile, m.categoryNum "
+						+ "from moim m ,recentseen r "
+						+ "where m.moimNum = r.moimNum and "
+						+ "r.memberId = ? ";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, memberId);
+					rs = pstmt.executeQuery();
+					while(rs.next()) {
+						MoimBean bean = new MoimBean();
+						bean.setMoimName(rs.getString("moimName"));
+						bean.setMoimImg(rs.getString("moimImg"));
+						bean.setMoimArea(rs.getString("moimArea"));
+						bean.setMoimNCount(rs.getInt("moimNCount"));
+						bean.setCategoryNum(rs.getInt("categoryNum"));
+						bean.setMoimProfile(rs.getString("moimProfile"));
+						bean.setCategoryNum(rs.getInt("categoryNum"));
+						vlist.addElement(bean);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					pool.freeConnection(con, pstmt, rs);
+				}
+				return vlist;
+			}
 	//business(업종) 리스트
 	public Vector<TaskBean> taskList(){
 		Connection con = null;
@@ -199,65 +235,6 @@ public class MyActivityMgr {
 			return vlist;
 		}
 		
-	/////////////////////////////////////////	
-	//recentseenInsert(최근 본 모임 추가)
-		public boolean rsInsert(String memberId, int moimNum) {
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			String sql = null;
-			boolean flag = false;
-			try {
-				con = pool.getConnection();
-				sql = "insert into recentseen(memberId,moimNum) "
-					+ "values (?,?)";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, memberId);
-				pstmt.setInt(1, moimNum);
-				if(pstmt.executeUpdate()==1) {
-					flag=true;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				pool.freeConnection(con, pstmt);
-			}
-			return flag;
-		}
-	//최근본 모임 리스트 출력
-		public Vector<MoimBean> rsList(String memberId){
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			String sql = null;
-			Vector<MoimBean> vlist = new Vector<MoimBean>();
-			try {
-				con = pool.getConnection();
-				sql = "select m.moimName ,m.moimImg,m.moimArea, "
-					+ "m.moimNCount ,m.categoryNum, m.moimProfile, m.categoryNum "
-					+ "from moim m ,recentseen r "
-					+ "where m.moimNum = r.moimNum and "
-					+ "r.memberId = ? ";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, memberId);
-				rs = pstmt.executeQuery();
-				while(rs.next()) {
-					MoimBean bean = new MoimBean();
-					bean.setMoimName(rs.getString("moimName"));
-					bean.setMoimImg(rs.getString("moimImg"));
-					bean.setMoimArea(rs.getString("moimArea"));
-					bean.setMoimNCount(rs.getInt("moimNCount"));
-					bean.setCategoryNum(rs.getInt("categoryNum"));
-					bean.setMoimProfile(rs.getString("moimProfile"));
-					bean.setCategoryNum(rs.getInt(8));
-					vlist.addElement(bean);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				pool.freeConnection(con, pstmt, rs);
-			}
-			return vlist;
-		}
 	// 찜 목록 추가
 	public boolean jjimInsert(String memberId, int moimNum) {
 		Connection con = null;

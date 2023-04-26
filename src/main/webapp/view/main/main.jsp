@@ -7,6 +7,7 @@
 %>
 <!DOCTYPE html>
 <html lang="kr">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -59,15 +60,22 @@
     		<div class="card-wrapper">
           <% 
     			img = "/bigmoim/image/"+moimbean.getMoimImg();
-    			System.out.println("img : "+img);
+    			//System.out.println("img : "+img);
     		%>
+    		
           <img src=<%=img %> alt="Image">
 		<form name="jjimFrm" action="jjimProc.jsp" method="get">
+			<%if (memberId!="방문자"){%> 
          <button class="like-btn" id="like-btn-<%=moimbean.getMoimNum()%>"
-          onclick="likeBtnChange(<%=moimbean.getMoimNum()%>)" style="bgcolor: white;">
-  			<i id="heart<%=moimbean.getMoimNum() %>" class="far fa-heart"></i>
+          onclick="likeBtnChange(<%=moimbean.getMoimNum()%>)" style="color:red; bgcolor: white;">
+  			<i id="heart<%=moimbean.getMoimNum() %>"
+  			<%if(moimMgr.jjimCheck(memberId, moimbean.getMoimNum())){ %>
+  			class = "fas fa-heart"<% } else{%>
+  			class = "far fa-heart"
+  			<%}%>></i>
 			</button>
-		</form>a
+			<%} %>
+				
         </div>
         <h4><%=moimbean.getMoimName() %></h4>
         <div class="card-nav">
@@ -80,9 +88,11 @@
     		</article>
     		<%}%><!--for-->
     		<input type="hidden" name ="jjimNum" value="">
-    		<input type="hidden" name ="memberId" value="">
+    		<input type="hidden" name ="memberId" value="<%=memberId %>">
     		<input type="hidden" name ="moimNum" value="">
     		<input type="hidden" name ="classNum" value="">
+    		</form>
+ 
 </div><!--card-group-->
 <%}//--if-else 
 %>
@@ -99,10 +109,26 @@
       <p>&copy; 2023 대모임</p>
     </footer>
 
-    <script>
-
-      	
-    </script>
+<script>
+    function likeBtnChange(num) {
+    	//Proc에 보내기
+    	//document.jjimFrm.submit();
+    	//alert(num)
+    	let jjimFrm = document.forms["jjimFrm"];
+    	jjimFrm.moimNum.value = num;
+        jjimFrm.submit();
+    	//$("#jjimFrm").submit();
+    	
+    	//색상 변경
+		let likeBtn = document.getElementById("heart"+ num)
+		if(likeBtn.className == "far fa-heart"){//빈 하트면
+			likeBtn.className = "fas fa-heart" //꽉찬 하트로
+		}else if(likeBtn.className == "fas fa-heart"){//꽉찬 하트면
+			likeBtn.className = "far fa-heart"//빈 하트로
+		}
+    	
+	}
+</script>
     </div>
   </body>
 </html>

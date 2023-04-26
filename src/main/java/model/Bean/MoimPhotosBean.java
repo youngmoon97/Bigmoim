@@ -5,7 +5,14 @@ public class MoimPhotosBean {
 	private int moimNum;
 	private String photo;
 	private String upDate;
-	private int memberId;
+	private String memberId;
+	
+	public String getMemberId() {
+		return memberId;
+	}
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
 	public int getPhotoNum() {
 		return photoNum;
 	}
@@ -30,12 +37,7 @@ public class MoimPhotosBean {
 	public void setUpDate(String upDate) {
 		this.upDate = upDate;
 	}
-	public int getMemberId() {
-		return memberId;
-	}
-	public void setMemberId(int memberId) {
-		this.memberId = memberId;
-	}
+
 
 	
 }

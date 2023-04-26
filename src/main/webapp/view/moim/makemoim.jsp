@@ -13,7 +13,6 @@
 <jsp:useBean id="cMgr" class="controll.Mgr.CategoryMgr"/>
 
 <%
-
    Vector<ZipcodeBean> vCity = mMgr.cityList(); //area1 시
    String area1 = "서울"; //시
    String moimName = "";
@@ -194,7 +193,7 @@
                                 style="background-color: pink; border: none; width: 250px;" onclick="change('클래스')">클래스 개설</button>
                     </div>
 
-                     <form action="makemoimProc.jsp" method="post" name="frm" id = "frm">
+                     <form action="makemoimProc.jsp" method="post" name="frm" id = "frm" enctype="multipart/form-data">
                      	<input type="hidden" id="moimtype" value="2" name = "moimtype">
                         <div style="width: 500px; font-size: 16px;">
                             <div class="image-preview-container">
@@ -238,7 +237,7 @@
                                     <label >모임 종류</label>
                                     <select class="form-control" name="categoryNum"
                                         onchange="javascript:getCategoryNum(this.form.categoryNum.value)">
-                                        <option value="">관심사 선택</option>
+                                        <option value="0">관심사 선택</option>
                                         <% for (int i=0; i < vCategory.size(); i++) { MoimCategoryBean
                                             mcBean=vCategory.get(i); %>
                                             <option value="<%=mcBean.getCategoryNum()%>">
@@ -249,7 +248,7 @@
                                     <br>
                                     <select class="form-control" name="businessNum"
                                         onChange="javascript:getBusinessNum(this.form.businessNum.value)">
-                                        <option value="">업종</option>
+                                        <option value="0">업종</option>
                                         <% for (int i=0; i < vBusiness.size(); i++) { BusinessBean
                                             bBean=vBusiness.get(i); %>
                                             <option value="<%=bBean.getBusinessNum()%>">
@@ -260,7 +259,7 @@
                                     <br>
                                     <select class="form-control" name="taskNum"
                                         onchange="javascript:getTaskNum(this.form.taskNum.value)">
-                                        <option value="">직무</option>
+                                        <option value="0">직무</option>
                                         <% for (int i=0; i < vTask.size(); i++) { TaskBean taBean=vTask.get(i); %>
                                             <option value="<%=taBean.getTaskNum()%>">
                                                 <%=taBean.getTaskName()%>
@@ -270,7 +269,7 @@
                                     <br>
                                     <select class="form-control" name="themeNum"
                                         onchange="javascript:getThemeNum(this.form.themeNum.value)">
-                                        <option value="">테마</option>
+                                        <option value="0">테마</option>
                                         <% for (int i=0; i < vTheme.size(); i++) { ThemeBean thBean=vTheme.get(i); %>
                                             <option value="<%=thBean.getThemeNum()%>">
                                                 <%=thBean.getThemeName()%>
@@ -308,7 +307,7 @@
                                     <input type="button" value="모임 만들기" class="btn btn-pill text-white btn-block"
                                         style="background-color: pink;" onclick="abc()">
                                         <br>
-                                   
+                                   <input type="hidden" name="memberId" value="<%=memberId %>">
 					</div>
                     </form>
                    

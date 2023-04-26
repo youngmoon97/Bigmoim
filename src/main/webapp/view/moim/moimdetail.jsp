@@ -1,4 +1,3 @@
-<%@page import="java.util.stream.Collectors"%>
 <%@page import="model.Bean.MoimScheduleBean"%>
 <%@page import="model.Bean.ScheduleJoinBean"%>
 <%@page import="model.Bean.MoimBean"%>
@@ -13,11 +12,11 @@
 <%
 	//moimNum받아옴.
 	int no = Integer.parseInt(request.getParameter("num"));
-	System.out.print(no);
+	//System.out.print(no);
 	//모임상세 mgr 가져옴
 	MoimBean moimbean = moimMgr.moimDetail(no);
 	String img = "/bigmoim/image/"+moimbean.getMoimImg();
-	System.out.print("img : " + img);
+	//System.out.print("img : " + img);
 	//moimnum을 받아서 해당 카테고리 이미지 가져옴.
 	MoimCategoryBean cabean = cateMgr.categoryImg(no);
 	//모임일정테이블에서 값들 가져오기
@@ -33,11 +32,9 @@
 	//모임에서 가입한 전체 멤버 이름,소개,프로필사진 가져오기
 	Vector<MemberBean> moimAllMemvlist = sjMgr.moimScheduleAllMember(no);
 	
-	Vector<ScheduleJoinBean> scheduleJoinMsvList = sjMgr.scheduleJoinMsvList(no);
-	
-	
-	
-	
+	if(memberId==null){ 
+    	memberId = "방문자";
+    }
 %>
 
 
@@ -48,7 +45,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title name="moimName"><%=moimbean.getMoimName()%></title>
     <link type="text/css" rel="stylesheet" href="../css/clubdetail.css">
-    <style>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />    <style>
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
     </style>
   </head>
@@ -82,7 +79,30 @@
               </li>
               <li class="moimarea-line">|</li>
               <li class="clubdetail-membercount" name="moimNCount">멤버&nbsp;<%=moimbean.getMoimNCount() %></li>
-              <li><img class="clubdetail-jjim" src="./img_icon/heart.png" name="jjim" /></li>
+              <li>
+	         <form name="jjimFrm" action="../main/jjimProc.jsp" method="get">
+	         <button  id="detailjjim"
+	          onclick="likeBtnChange(<%=moimbean.getMoimNum()%>)" 
+	          style="color : red;  
+	          background-color: transparent;
+			  border: none;
+			  font-size: 24px;
+			  cursor: pointer;
+			  width: 30px;
+			  height: 30px;">
+	  			<i id="heart<%=moimbean.getMoimNum() %>"
+	  			<%if(moimMgr.jjimCheck(memberId, moimbean.getMoimNum())){ %>
+	  			class = "fas fa-heart" style="display: inline-block; width: 100%; height: 100%;"<% } else{%>
+	  			class = "far fa-heart" style="display: inline-block; width: 100%; height: 100%;"
+	  			<%}%>
+	  			></i>
+			</button>
+			<input type="hidden" name ="jjimNum" value="">
+    		<input type="hidden" name ="memberId" value="<%=memberId %>">
+    		<input type="hidden" name ="moimNum" value="">
+    		<input type="hidden" name ="classNum" value="">
+    	</form>
+			</li>
             </ul>
           </div>
         </div>
@@ -131,7 +151,7 @@
 					</li>
 				</ul>
 				<div class="member" id="cont_1">
-					<h4 name="msNCount">참여 멤버(<%=moimschvlist.size() %>/<%=msbean.getMsHCount() %>)</h4>
+					<h4 name="msNCount">참여 멤버(<%=msbean.getMsNCount()%>/<%=msbean.getMsHCount() %>)</h4>
 		            <div class="container">
 		              <%
 		              	if(moimschvlist.isEmpty()){
@@ -159,19 +179,19 @@
       		if(moimAllMemvlist!=null){		
       	%>
       		<ul class="tabnav">
-	          <li class="tab-link current" name="msTime" onclick="change(0)"><a href="javascript:void(0)">전체멤버</a></li>
+	          <li class="tab-link current" name="msTime" onclick="change(1)"><a href="javascript:void(0)">전체멤버</a></li>
 	          <%
 	          	if(msvlist!=null){
 	          		for(int i=0;i<msvlist.size();i++){
 	          			MoimScheduleBean msbean = msvlist.get(i);
 	          %>
-	          	<li class="tab-link current" name="msTime" onclick="change(<%=msbean.getMsNum() %>)"><a href="javascript:void(0)"><%=mmDay%>월<%=mjDay%>일</a></li>
+	          	<li class="tab-link current" name="msTime" onclick="change(2)"><a href="javascript:void(0)"><%=mmDay%>월<%=mjDay%>일</a></li>
 	          	<%} %><!-- for -->
 	          <%} %><!-- if -->
-
+	          
 	        </ul>
-	        <div class="tabcontent tab0">
-	          <h3 name="msNCount">모임멤버(<%=scheduleJoinMsvList.size() %>)</h3>
+	        <div class="tabcontent tab1">
+	          <h3 name="msNCount">모임멤버(<%=moimbean.getMoimNCount() %>)</h3>
 	          <%
 	      		for(int i=0;i<moimAllMemvlist.size();i++){
 	      			MemberBean membean = moimAllMemvlist.get(i);
@@ -187,49 +207,35 @@
 	          </ul>
 	          <%} %>  
 	        </div>
-			<% 
-			for(int z=0;z<msvlist.size();z++){
-				MoimScheduleBean moimScheduleBean = msvlist.get(z);
-				// Vector<ScheduleJoinBean> filteredList = scheduleJoinMsvList.stream().filter(item -> item.getMsNum() == moimScheduleBean.getMsNum()).collect(Collectors.toCollection(Vector::new));
-				Vector<ScheduleJoinBean> filteredList = new Vector<ScheduleJoinBean>();
-				for(ScheduleJoinBean bean : scheduleJoinMsvList){
-					if(bean.getMsNum() == moimScheduleBean.getMsNum()){
-						filteredList.addElement(bean);
-					}
-				}				
-			%>
-			<div class="tabcontent tab<%=moimScheduleBean.getMsNum() %>" style="display: none" >
-	          <h3 name="msNCount">모임멤버(<%=filteredList.size() %>)</h3>
+	        <div class="tabcontent tab2" style="display: none">
+		      <%
+		      	for(int i=0;i<msvlist.size();i++){
+		      		MoimScheduleBean moimschebean = msvlist.get(i);
+		      %>
+	          <h3 name="msNCount">모임멤버(<%=moimschebean.getMsNCount()%>)</h3>
+	          <%} %>
+	          <ul class="tabcontent-list">
 	          <%
 	          	if(moimschvlist.isEmpty()){
 	          %>
-	          	<li><h3>참여멤버가 없습니다.</h3></li>
+	          	<li><h3>참여멤버가 없습니다.</h3></h4></li>
 	          <%}else{ 
             	  for(int j=0;j<moimschvlist.size();j++){
-            		  MemberBean memberBean = moimschvlist.get(j);
-            		  
-            		  // filteredList.stream().filter(item -> item.getMemberid().equals(memberBean.getMemberId())).count() > 0
-            		  Vector<ScheduleJoinBean> memberFilteredList = new Vector<ScheduleJoinBean>();
-      				for(ScheduleJoinBean bean : filteredList){
-    					if(bean.getMemberid().equals(memberBean.getMemberId())){
-    						memberFilteredList.addElement(bean);
-    					}
-    				}	
-					if(memberFilteredList.size() > 0){
+            		//MemberBean memberBean = moimschvlist.get(j);
+          			MemberBean memberBean = moimschvlist.get(j);
 	          %>
-	          	<ul class="tabcontent-list">
-		            <li class="tabcontent-list-img" name="memberImg"><img src="/bigmoim/image/<%=memberBean.getMemberImg()%>" /></li>
-		            <li>
-		              <ul class="tabcontent-list-detail">
-		                <li class="tabcontent-list-name" name="memberName"><%=memberBean.getMemberName() %></li>
-		                <li class="tabcontent-list-hello" name="memberProfile"><%=memberBean.getMemberProfile() %></li>
-		              </ul>
-		            </li>
-	            </ul>
-	            <% } } %> 
+	            <li class="tabcontent-list-img" name="memberImg"><img src="/bigmoim/image/<%=memberBean.getMemberImg()%>" /></li>
+	            <li>
+	              <ul class="tabcontent-list-detail">
+	                <li class="tabcontent-list-name" name="memberName"><%=memberBean.getMemberName() %></li>
+	                <li class="tabcontent-list-hello" name="memberProfile"><%=memberBean.getMemberProfile() %></li>
+	              </ul>
+	            </li>
+	            <%} %> 
+	          </ul>
 	          <%} %>  
 	        </div>
-	        <%} %>  
+      	
      	<%}else {%>
 	      	<ul class="tabnav">
 	          <li class="tab-link current" name="msTime" data-tab="tab1"><a href="#tab01">전체멤버</a></li>
@@ -256,7 +262,6 @@
 
       <script>
 
-        
         const change = (num) =>{
         	const tabList = document.querySelectorAll(".tabcontent");
         	tabList.forEach((el) => (el.style.display = "none"));
@@ -264,6 +269,23 @@
         	nowTab.style.display = "block";
         };
   
+        function likeBtnChange(num) {
+        	//Proc에 보내기
+        	//document.jjimFrm.submit();
+        	//alert(num)
+        	let jjimFrm = document.forms["jjimFrm"];
+        	jjimFrm.moimNum.value = num;
+            jjimFrm.submit();
+        	//$("#jjimFrm").submit();
+        	
+        	//색상 변경
+    		let likeBtn = document.getElementById("heart"+ num)
+    		if(likeBtn.className == "far fa-heart"){//빈 하트면
+    			likeBtn.className = "fas fa-heart" //꽉찬 하트로
+    		}else if(likeBtn.className == "fas fa-heart"){//꽉찬 하트면
+    			likeBtn.className = "far fa-heart"//빈 하트로
+    		}
+    	}  
       </script>
     </div>
   </body>

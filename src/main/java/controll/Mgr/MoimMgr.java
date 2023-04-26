@@ -1,9 +1,15 @@
 package controll.Mgr;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Vector;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import controll.DBConnectionMgr;
 import model.Bean.JjimListBean;
@@ -15,6 +21,13 @@ import model.Bean.MoimScheduleBean;
 
 public class MoimMgr {
 	DBConnectionMgr pool;
+	//업로드 파일 저장 위치
+	public static final String SAVEFOLDER = "C:/Jsp/bigmoim/src/main/webapp/image/";
+	//업로드 파일명 인코딩
+	public static final String ENCODING = "UTF-8";
+	//업로드 파일 크기
+	public static final int MAXSIZE = 1024*1024*20;	//20MB
+		
 	public MoimMgr() {
 		pool = DBConnectionMgr.getInstance();
 	}
@@ -41,41 +54,67 @@ public class MoimMgr {
 			return flag;
 		}
 	//모임 생성
-	public boolean moimInsert(MoimBean bean) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		String sql = null;
-		boolean flag = false;
-		try {
-			con = pool.getConnection();
-			sql = " insert into moim(moimName,moimArea,moimHCount,memberId,moimKakao, "
-					+ "categoryNum,moimImg,moimProfile,moimDate,themeNum,taskNum,businessNum, "
-					+ "classprice, moimOrclass)  "
-					+ "  values (?,?,?,?,?,?,?,?,now(),?,?,?,?,?);";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, bean.getMoimName());
-			pstmt.setString(2, bean.getMoimArea());
-			pstmt.setInt(3, bean.getMoimHCount());
-			pstmt.setString(4, bean.getMemberId());
-			pstmt.setString(5, bean.getMoimKakao());
-			pstmt.setInt(6, bean.getCategoryNum());
-			pstmt.setString(7, bean.getMoimImg());
-			pstmt.setString(8, bean.getMoimProfile());
-			pstmt.setInt(9, bean.getThemeNum());
-			pstmt.setInt(10, bean.getTaskNum());
-			pstmt.setInt(11, bean.getBusinessNum());
-			pstmt.setString(12, bean.getClassprice());
-			pstmt.setInt(14, bean.getMoimOrclass());
-			if(pstmt.executeUpdate()==1) {
-				flag=true;
+		public boolean moimInsert(HttpServletRequest req) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			String sql = null;
+			boolean flag = false;
+			try {
+				File dir = new File(SAVEFOLDER);
+				if(!dir.exists()/*존재하지 않으면*/) {
+					dir.mkdirs();	// mkdirs는 상위폴더가 없어도 생성
+					// mkdir은 상위폴더가 없으면 생성 불가
+				}
+				MultipartRequest multi = 
+						new MultipartRequest(req, SAVEFOLDER, MAXSIZE, ENCODING
+								,new DefaultFileRenamePolicy());
+				String moimImg = null;
+				if(multi.getFilesystemName("moimImg")!=null) {
+					moimImg = multi.getFilesystemName("moimImg");
+				}
+				//File f = new File(memberImg);
+				String moimName = multi.getParameter("moimName");
+				String moimArea = multi.getParameter("moimArea");
+				int moimHCount = Integer.parseInt(multi.getParameter("moimHCount"));
+				String memberId = multi.getParameter("memberId");
+				String moimKakao = multi.getParameter("moimKakao");
+				String moimProfile = multi.getParameter("moimProfile");
+				String moimDate = multi.getParameter("moimDate");
+				String classprice = multi.getParameter("classprice");
+				int categoryNum = Integer.parseInt(multi.getParameter("categoryNum"));
+				int businessNum = Integer.parseInt(multi.getParameter("businessNum"));
+				int taskNum = Integer.parseInt(multi.getParameter("taskNum"));
+				int themeNum = Integer.parseInt(multi.getParameter("themeNum"));
+				int moimOrclass = Integer.parseInt(multi.getParameter("moimtype"));
+				con = pool.getConnection();
+				sql = " insert into moim(moimName,moimArea,moimHCount,memberId,moimKakao, "
+						+ "categoryNum,moimImg,moimProfile,moimDate,themeNum,taskNum,businessNum, "
+						+ "classprice, moimOrclass)  "
+						+ "  values (?,?,?,?,?,?,?,?,now(),?,?,?,?,?);";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, moimName);
+				pstmt.setString(2, moimArea);
+				pstmt.setInt(3, moimHCount);
+				pstmt.setString(4, memberId);
+				pstmt.setString(5, moimKakao);
+				pstmt.setInt(6, categoryNum);
+				pstmt.setString(7, moimImg);
+				pstmt.setString(8, moimProfile);
+				pstmt.setInt(9, themeNum);
+				pstmt.setInt(10, themeNum);
+				pstmt.setInt(11, businessNum);
+				pstmt.setString(12, classprice);
+				pstmt.setInt(13, moimOrclass);
+				if(pstmt.executeUpdate()==1) {
+					flag=true;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				pool.freeConnection(con, pstmt);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			pool.freeConnection(con, pstmt);
+			return flag;
 		}
-		return flag;
-	}
 	//모임 수정
 	public boolean moimUpdate(MoimBean bean) {
 		Connection con = null;
@@ -650,6 +689,56 @@ public class MoimMgr {
 		}
 		return vlist;
 	}
+	// 최근본모임 있으면 시간 업데이트 
+	public boolean rsUpdate(String memberId, int moimNum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		if(memberId==null) {
+			return flag;
+		}
+		try {
+			con = pool.getConnection();
+			sql = "update recentseen set rsDate = now() "
+				+ "where memberId = ? and moimNum = ? ";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, moimNum);
+			if(pstmt.executeUpdate() == 1) {
+				flag = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
+	// 최근본모임 
+	public boolean rsInsert(String memberId, int moimNum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "insert into recentseen(memberId, moimNum, rsDate) "
+				+ "values(?, ?, now());";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, moimNum);
+			if(pstmt.executeUpdate() == 1) {
+				flag = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
+	
 	//전체 모임+클래스 리스트
 		public Vector<MoimBean> moimAllList(){
 			Connection con = null;
@@ -732,15 +821,15 @@ public class MoimMgr {
 			return vlist;
 		}
 		//찜리스트 insert
-				public boolean jjimInsert(JjimListBean bean) {
-					Connection con = null;
-					PreparedStatement pstmt = null;
-					String sql = null;
-					boolean flag = false;
+			public boolean jjimInsert(JjimListBean bean) {
+				Connection con = null;
+				PreparedStatement pstmt = null;
+				String sql = null;
+				boolean flag = false;
 					try {
 						con = pool.getConnection();
 						sql = "insert into jjimlist(memberId, moimNum, classNum) "
-								+ "values (?, ?, ?)";
+							+ "values (?, ?, ?)";
 						pstmt = con.prepareStatement(sql);
 						//pstmt.setInt(1, bean.getJjimNum());
 						pstmt.setString(1, bean.getMemberId());
@@ -755,6 +844,118 @@ public class MoimMgr {
 						pool.freeConnection(con, pstmt);
 					}
 					return flag;
+			}
+		//멤버아이디, 모임번호로 찜 여부 검사
+		public boolean jjimCheck(String memberId, int moimNum) {
+		        Connection con = null;
+		         PreparedStatement pstmt = null;
+		         ResultSet rs = null;
+		         String sql = null;
+		         boolean flag = false;
+		         try {
+		            con = pool.getConnection();
+		            sql = "select * from jjimlist where memberId = ? and moimNum = ?";
+		            pstmt = con.prepareStatement(sql);
+			        pstmt.setString(1, memberId);
+			        pstmt.setInt(2, moimNum);
+			           rs = pstmt.executeQuery();
+			        if(rs.next()) {
+		              flag = true;
+			           }
+			        } catch (Exception e) {
+			           e.printStackTrace();
+			        } finally {
+			           pool.freeConnection(con, pstmt, rs);
+			        }
+			        return flag;      
+		      }
+		      
+		//찜 삭제
+		public boolean jjimDelete(String memberId, int moimNum) {
+			Connection con = null;
+	        PreparedStatement pstmt = null;
+	        String sql = null;
+	        boolean flag=false;
+		         try {
+		            con = pool.getConnection();
+		            sql = "delete from jjimlist where memberId=? and moimNum=?";
+		            pstmt = con.prepareStatement(sql);
+		            pstmt.setString(1, memberId);
+		            pstmt.setInt(2, moimNum);
+		            if(pstmt.executeUpdate()==1) {
+		               flag=true;
+		            }
+		         } catch (Exception e) {
+		            e.printStackTrace();
+		         } finally {
+		            pool.freeConnection(con, pstmt);
+		         }
+		         return flag;
+		      }
+		      
+	      //한 모임의 찜 개수 확인
+		      public int jjimCount(int moimNum) {
+		         Connection con = null;
+		         PreparedStatement pstmt = null;
+		         ResultSet rs = null;
+		         String sql = null;
+		         int jjimcount = 0;
+		         try {
+		            con = pool.getConnection();
+		            sql = "select count(*) from jjimlist where moimNum = ?";
+		            pstmt = con.prepareStatement(sql);
+		            pstmt.setInt(1, moimNum);
+		            rs = pstmt.executeQuery();
+		            while(rs.next()) {
+		               jjimcount = jjimcount + 1;
+		            }
+		         } catch (Exception e) {
+		            e.printStackTrace();
+		         } finally {
+		            pool.freeConnection(con, pstmt, rs);
+		         }
+		         return jjimcount;
+		      }
+		//찜목록리스트 출력
+		      public Vector<MoimBean> jjimList(String memberId){
+		    	Connection con = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				String sql = null;
+				Vector<MoimBean> vlist = new Vector<MoimBean>();
+				try {
+					con = pool.getConnection();
+					sql = "select m.* from jjimlist j, moim m "
+							+ "where j.moimNum = m.moimNum and j.memberId = ? ";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, memberId);
+					rs = pstmt.executeQuery();
+					while(rs.next()) {
+						MoimBean bean = new MoimBean();
+						bean.setMoimNum(rs.getInt("moimNum"));
+						bean.setMoimName(rs.getString("moimName"));
+						bean.setMoimArea(rs.getString("moimArea"));
+						bean.setMoimHCount(rs.getInt("moimHCount"));
+						bean.setMoimNCount(rs.getInt("moimNCount"));
+						bean.setMemberId(rs.getString("memberId"));
+						bean.setMoimKakao(rs.getString("moimKakao"));
+						bean.setMoimImg(rs.getString("moimImg"));
+						bean.setCategoryNum(rs.getInt("categoryNum"));
+						bean.setMoimProfile(rs.getString("moimProfile"));
+						bean.setMoimDate(rs.getString("moimDate"));
+						bean.setBusinessNum(rs.getInt("businessNum"));
+						bean.setTaskNum(rs.getInt("taskNum"));
+						bean.setThemeNum(rs.getInt("themeNum"));
+						bean.setClassprice(rs.getString("classprice"));
+						bean.setClassLike(rs.getInt("classLike"));
+						bean.setMoimOrclass(rs.getInt("moimOrclass"));
+						vlist.addElement(bean);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					pool.freeConnection(con, pstmt, rs);
 				}
-		
+				return vlist;
+		      }
 }

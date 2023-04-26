@@ -237,7 +237,7 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
                         </a>    
                         <h3 style="margin-left: -7.5em"><strong>회원가입</strong></h3>
                      </div>                    
-                        <form name="signFrm" action="signProc.jsp" method="POST">
+                        <form name="signFrm" action="signProc.jsp" method="POST" enctype="multipart/form-data">
                            <div style="width: 500px; font-size: 16px;">
                                    
                              <div class="sign-nameHeader">
@@ -288,7 +288,7 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="sign-nameHeader">
-                                                <label for="memberAddr">집주소</label>
+                                                <label for="memberAddr">집주소(필수)</label>
                                             </div>
                                             <div>
                                               <input name="memberAddrZipcode" size="5" readonly style="height: 40px;">
@@ -367,7 +367,7 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
                            <input type="hidden" name="memberLikeArea">
                            
                                     <div class="sign-nameHeader">
-                                        <label for="memberBirth">생일</label>
+                                        <label for="memberBirth">생일(필수)</label>
                                         <br>
 
                                     </div>
@@ -435,7 +435,7 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
                                             <div class="col">
                                                 <select class="form-control" name="businessNum"
                                                 onChange="javascript:getBusinessNum(this.form.businessNum.value)">
-                                                    <option value="">업종</option>
+                                                    <option value="0">업종</option>
                                                       <%
                                                     for (int i = 0; i < vBusiness.size(); i++) {
                                                         BusinessBean bBean = vBusiness.get(i);
@@ -451,7 +451,7 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
                                             <div class="col">
                                                 <select class="form-control" name="taskNum"
                                                 onchange="javascript:getTaskNum(this.form.taskNum.value)">
-                                                    <option value="">직무</option>
+                                                    <option value="0">직무</option>
                                                      <%
                                                     for (int i = 0; i < vTask.size(); i++) {
                                                         TaskBean taBean = vTask.get(i);
@@ -467,7 +467,7 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
                                             <div class="col">
                                                 <select class="form-control" name="themeNum"
                                                 onchange="javascript:getThemeNum(this.form.themeNum.value)">
-                                                    <option value="">테마</option>
+                                                    <option value="0">테마</option>
                                                     <%
                                                     for (int i = 0; i < vTheme.size(); i++) {
                                                         ThemeBean thBean = vTheme.get(i);
@@ -483,7 +483,7 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
                                         </div>
                                     </div>
                                     <div class="sign-nameHeader">
-                                        <label for="memberSex">성별</label>
+                                        <label for="memberSex">성별(필수)</label>
                                         <br>
                                     </div>
                                     <div style="text-align: center;">
@@ -508,7 +508,7 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
                                     <div class="col">
                                         <select class="form-control" name="categoryNum" 
                                         onchange="javascript:getCategoryNum(this.form.categoryNum.value)">
-                                            <option value="">관심사 선택</option>
+                                            <option value="0">관심사 선택</option>
                                                          <%
                                             for (int i = 0; i < vCategory.size(); i++) {
                                                 MoimCategoryBean mcBean = vCategory.get(i);
