@@ -24,6 +24,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
+    	
+    	footer ul {
+  			padding-left: 9cm;
+		}
+
+		footer p {
+			padding-right: 10cm;
+		}
+		
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>

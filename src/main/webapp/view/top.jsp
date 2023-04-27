@@ -1,12 +1,16 @@
+<%@page import="model.Bean.NotificationBean"%>
+<%@page import="java.util.Vector"%>
 <%@page import="model.Bean.MemberBean"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <jsp:useBean id="mMgr" class="controll.Mgr.MemberMgr"/>
 <%
       String memberId = (String)session.getAttribute("idKey");
       MemberBean mbean = mMgr.getMember(memberId);
-      System.out.println(memberId);
-      System.out.println("main.jsp:memberId= "+ mbean.getMemberName());
-      System.out.println(mbean.getMemberImg());
+      int notiCount = mMgr.notiCount(memberId);
+      Vector<NotificationBean> notiList = mMgr.notiList(memberId);
+      //System.out.println(memberId);
+      //System.out.println("main.jsp:memberId= "+ mbean.getMemberName());
+      //System.out.println(mbean.getMemberImg());
 
 %>
 <!DOCTYPE html>
@@ -99,15 +103,31 @@
            <img src="/bigmoim/image/bell.png" alt="알림" style="width: 25px; height: 25px;">
            
            <!-- 알람 개수 -->
-           <span class="badge">3</span>
+           <span class="badge"><%=notiCount %></span>
            
            <!-- 드롭 다운으로 만들어 봄. -->
            <div class="notification-dropdown" style = "top: 110px;">
            <!-- 새로운 알람이 있는 곳으로 링크 타면 될 듯 합니다? -->
-             <a href="#">새로운 알림이 있습니다.</a>
-             <!-- 뭐 무슨 가입 신청, 가입 신청한거 완료한거 여기다가 뜨게 하면 되겠죠? maybe? -->
-             <a href="#">새로운 메시지가 있습니다.</a>
-
+           <%if(notiList.isEmpty()){ %>
+             <a href="#">새로운 알림이 없습니다.</a>
+           <%}else{ 
+           		for(int i=0;i<notiList.size();i++){
+           			NotificationBean bean = notiList.get(i);
+           			//게시판에 새글, 모임사진첩에 새 사진, 새로운 모임일정
+           			if(bean.getPhotoNum()!=0){
+           	%>
+					<a href="#">모임에 새로운 사진이 추가되었습니다.</a>
+           	<% }else if(bean.getMbNum()!=0){%>
+           			<a href="#">모임에 새로운 게시글이 추가되었습니다.</a>
+           	<% }else if(bean.getMsNum()!=0){ %>
+           			<a href="#">모임에 새로운 일정이 추가되었습니다.</a>
+           	<% }//--else if %>
+             	<!-- 뭐 무슨 가입 신청, 가입 신청한거 완료한거 여기다가 뜨게 하면 되겠죠? maybe? -->
+             	<a href="#">새로운 메시지가 있습니다.</a>
+             	
+           <%	}//-for
+           	}//--if-else %>
+             
 </button>
 
         </div>

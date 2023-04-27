@@ -16,6 +16,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
+    	
+    	footer ul {
+  			padding-left: 9cm;
+		}
+
+		footer p {
+			padding-right: 10cm;
+		}
     </style>
   </head>
   <body>
@@ -100,17 +108,7 @@
 <%}//--if-else 
 %>
 
-    <!-- 하단 -->
-    <footer>
-      <ul>
-        <li><a href="#">이용약관</a></li>
-        <li><a href="#">개인정보처리방침</a></li>
-        <li><a href="#">고객센터</a></li>
-        <li><a href="#">대모임 소개</a></li>
-        <li><a href="#">대모임 인재채용</a></li>
-      </ul>
-      <p>&copy; 2023 대모임</p>
-    </footer>
+   
 
 <script>
     function likeBtnChange(num) {
@@ -133,6 +131,18 @@
 	}
 </script>
     </div>
+     <!-- 하단 -->
+    <footer>
+      <ul>
+        <li><a href="#">이용약관</a></li>
+        <li><a href="#">개인정보처리방침</a></li>
+        <li><a href="#">고객센터</a></li>
+        <li><a href="#">대모임 소개</a></li>
+        <li><a href="#">대모임 인재채용</a></li>
+      </ul>
+      <p>&copy; 2023 대모임</p>
+    </footer>
+    
   </body>
 </html>
         

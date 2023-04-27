@@ -10,8 +10,21 @@ public class MoimScheduleBean {
 	private int msNCount;
 	private String msTitle;
 	private String msContent;
+	private String msDate;
+	private String moimImg;
 	
-	
+	public String getMoimImg() {
+		return moimImg;
+	}
+	public void setMoimImg(String moimImg) {
+		this.moimImg = moimImg;
+	}
+	public String getMsDate() {
+		return msDate;
+	}
+	public void setMsDate(String msDate) {
+		this.msDate = msDate;
+	}
 	public int getMsNCount() {
 		return msNCount;
 	}

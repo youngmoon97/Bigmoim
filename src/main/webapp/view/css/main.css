@@ -340,6 +340,17 @@ cursor: pointer;
 background-color: pink;
 }
 
+.moim-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.moim-info h4,
+.moim-info h5 {
+  margin: 0;
+}
+
+
 /* 카드 */
 
 /* Style for the card group */
@@ -578,16 +589,6 @@ background-color: pink;
   filter: brightness(0.8);
   }
 
-/* 하단 */
-footer {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 20px;
-background-color: pink;
-color: white;
-font-size: 16px;
-}
 
 .social-media {
 display: flex;
@@ -609,6 +610,26 @@ text-decoration: none;
 .social-media a:hover {
 background-color: pink;
 color: white;
+}
+
+/* 하단 */
+footer {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+padding: 20px;
+background-color: pink;
+color: white;
+font-size: 16px;
+}
+
+footer ul {
+  padding-left: 15cm;
+}
+
+footer p {
+	padding-right: 10cm;
 }
 
 @media (max-width: 768px) {

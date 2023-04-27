@@ -2,11 +2,19 @@ package model.Bean;
 
 public class MoimPhotosBean {
 	private int photoNum;
+	private String photoName;
 	private int moimNum;
 	private String photo;
 	private String upDate;
 	private String memberId;
 	
+	
+	public String getPhotoName() {
+		return photoName;
+	}
+	public void setPhotoName(String photoName) {
+		this.photoName = photoName;
+	}
 	public String getMemberId() {
 		return memberId;
 	}

@@ -5,7 +5,7 @@
 <%
 		
 		//System.out.println("멤버업데이트프로세스:테마넘="+mBean.getThemeNum());
-		boolean result = mMgr.updateMember(mBean);
+		boolean result = mMgr.updateMember(request);
 		if(result){ //수정성공
 %>
 		<script>

@@ -332,7 +332,7 @@ function memberPwCheck(){//현재 비밀번호 검사(DB의 비밀번호와 같�
                         </a>
                         <h3 style="margin-left: -7.5em"><strong>프로필 수정</strong></h3>
                     </div>
-                    <form name="memberUpdateFrm" action="memberupdateProc.jsp" method="POST">
+                    <form name="memberUpdateFrm" action="memberupdateProc.jsp" method="POST" enctype="multipart/form-data">
                         <div style="width: 500px; font-size: 16px;">
                             <div class="sign-nameHeader">
                                 <br>

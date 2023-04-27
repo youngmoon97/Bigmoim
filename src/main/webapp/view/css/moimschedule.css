@@ -1,0 +1,83 @@
+/* 전체 컨테이너 */
+.container {
+width: 900px;
+height: 500px;
+}     
+
+.wrapper {
+display: flex;
+flex-direction: row;
+align-items: center;
+background-color: #f5f5f5;
+border-radius: 8px;
+padding: 20px;
+box-shadow: 0px 3px 6px rgba(0,0,0,0.16);
+}
+
+/* 이미지 */
+.wrapper img {
+width: 150px;
+height: 150px;
+object-fit: cover;
+border-radius: 50%;
+margin-right: 40px;
+}
+
+/* 정보 */
+.info {
+display: flex;
+flex-direction: column;
+}
+
+.info h2 {
+margin: 0;
+font-size: 36px;
+font-weight: bold;
+color: #333;
+margin-bottom: 10px;
+}
+
+.info p {
+margin: 0;
+font-size: 18px;
+color: #777;
+margin-bottom: 20px;
+}
+
+/* 멤버 리스트 */
+.members {
+margin-top: 20px;
+}
+
+.member-list {
+display: flex;
+align-items: center;
+margin-bottom: 10px;
+}
+
+.member-list img {
+width: 35px;
+height: 35px;
+object-fit: cover;
+border-radius: 50%;
+margin-right: 10px;
+}
+
+.member-count {
+font-size: 16px;
+color: #999;
+margin-left: 5px;
+}
+
+/* 미디어 쿼리 */
+@media screen and (max-width: 768px) {
+.wrapper {
+flex-direction: column;
+text-align: center;
+}
+
+.wrapper img {
+margin-right: 0;
+margin-bottom: 20px;
+}
+}

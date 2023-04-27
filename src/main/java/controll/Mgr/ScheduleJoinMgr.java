@@ -18,9 +18,45 @@ public class ScheduleJoinMgr {
    public ScheduleJoinMgr() {
       pool = DBConnectionMgr.getInstance();
    }
-   
+   //모든 모임일정가져오기
+   public Vector<MoimScheduleBean> allmoimScheduleList() {
+	      Connection con = null;
+	      PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      String sql = null;
+	      Vector<MoimScheduleBean> msvlist = new Vector<MoimScheduleBean>();
+	      try {
+	         con = pool.getConnection();
+	         sql = "select m.*, m2.moimImg "
+	         	+ "from moimschedule m , moim m2 "
+	         	+ "where  m.moimNum =m2.moimNum "
+	        	+ "order by m.msDate;  ";
+	         pstmt = con.prepareStatement(sql);
+	         rs = pstmt.executeQuery();
+	         while(rs.next()) {
+	            MoimScheduleBean bean = new MoimScheduleBean();
+	            bean.setMsNum(rs.getInt(1));
+	            bean.setMsTime(rs.getString(2));
+	            bean.setMsArea(rs.getString(3));
+	            bean.setMoimNum(rs.getInt(4));
+	            bean.setMsHCount(rs.getInt(5));
+	            bean.setMemberId(rs.getString(6));
+	            bean.setMsNCount(rs.getInt(7));
+	            bean.setMsTitle(rs.getString(8));
+	            bean.setMsContent(rs.getString(9));
+	            bean.setMsDate(rs.getString(10));
+	            bean.setMoimImg(rs.getString(11));
+	            msvlist.addElement(bean);
+	         }
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         pool.freeConnection(con, pstmt, rs);
+	      }
+	      return msvlist;
+	   }
    //모임스케줄가져오기
-   public Vector<MoimScheduleBean> moimScheduleList(int num) {
+   public Vector<MoimScheduleBean> moimScheduleList(int msNum) {
       Connection con = null;
       PreparedStatement pstmt = null;
       ResultSet rs = null;
@@ -30,7 +66,7 @@ public class ScheduleJoinMgr {
          con = pool.getConnection();
          sql = "select * from moimschedule where moimnum = ?";
          pstmt = con.prepareStatement(sql);
-         pstmt.setInt(1, num);
+         pstmt.setInt(1, msNum);
          rs = pstmt.executeQuery();
          while(rs.next()) {
             MoimScheduleBean bean = new MoimScheduleBean();

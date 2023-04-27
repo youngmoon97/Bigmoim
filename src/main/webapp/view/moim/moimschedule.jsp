@@ -1,4 +1,94 @@
+<%@page import="model.Bean.MoimScheduleBean"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page import="model.Bean.MoimBean"%>	
+<jsp:useBean id="moimMgr" class="controll.Mgr.MoimMgr"/>
+<jsp:useBean id="scMgr" class="controll.Mgr.ScheduleJoinMgr"/>
+<%@ include file = "/view/top.jsp" %>
 <%
-		
+	Vector<MoimScheduleBean> scheduleList = scMgr.allmoimScheduleList();
+	
 %>
+
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>대모임에 오신걸 환영합니다!</title>
+    <link type="text/css" rel="stylesheet" href="/bigmoim/view/css/moimschedule.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
+    	
+    	footer ul {
+  			padding-left: 9cm;
+		}
+
+		footer p {
+			padding-right: 10cm;
+		}
+		
+    </style>
+  </head>
+  <body>
+
+
+	 <!-- 카테고리 -->
+    <%@ include file = "/view/category.jsp" %>
+    
+    <div class="container">
+    	<%if(scheduleList.isEmpty()){ %>
+    		<article>
+      		<div class = "text">
+        	<p class = "join-text"> 모임 일정이 없습니다. </p>
+      		</div>
+    		</article>
+    	<%}else{ %>
+    		<article>
+      		<div class = "text">
+        	<p class = "join-text"> 모임 일정입니다. </p>
+      		</div>
+    		</article>
+    		<%
+    		for(int i=0;i<scheduleList.size();i++){
+    			MoimScheduleBean bean = scheduleList.get(i);
+    		%>
+    			<div class="wrapper">
+    			<img src="/bigmoim/image/<%=bean.getMoimImg() %>" alt="모임 이미지" />
+    			<div class="info">
+      				<h2></h2>
+            		<p class="msTitle"><%=bean.getMsTitle() %></p>	
+      				<p class="msArea"><%=bean.getMsArea() %></p>
+      				<p class="msDate"><%=bean.getMsDate() %></p>
+      				<p class="msContent"><%=bean.getMsContent() %></p>
+      				<div class="members">
+        				<div class="member-list">
+    				<% 
+    				Vector<MemberBean> joinmember = scMgr.moimScheduleImg(bean.getMsNum());
+    				for(int j=0;j<joinmember.size();j++){
+    					mbean = joinmember.get(i);
+    				%>	
+          					<img src="/bigmoim/image/<%=mbean.getMemberImg() %>" alt="멤버 이미지1" />
+    		<%		}%>
+							<span class="member-count"></span>
+        				</div>
+      				</div>
+      				</div>
+  				</div>
+    			<% }//--for 
+    		}//--if-else %>
+  	</div>
+      
+    <!-- 하단 -->
+<footer>
+      <ul>
+        <li><a href="#">이용약관</a></li>
+        <li><a href="#">개인정보처리방침</a></li>
+        <li><a href="#">고객센터</a></li>
+        <li><a href="#">대모임 소개</a></li>
+        <li><a href="#">대모임 인재채용</a></li>
+      </ul>
+      <p>&copy; 2023 대모임</p>
+    </footer>
+  </body>
+</html>

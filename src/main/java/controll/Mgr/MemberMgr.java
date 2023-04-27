@@ -14,6 +14,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import controll.DBConnectionMgr;
 import model.Bean.MemberBean;
+import model.Bean.NotificationBean;
 import model.Bean.ZipcodeBean;
 
 
@@ -26,6 +27,25 @@ public class MemberMgr {
 	public MemberMgr() {
 		pool = DBConnectionMgr.getInstance();
 	}
+	//회원탈퇴(삭제)
+		public void deleteMember(String memberId) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			String sql = null;
+			boolean flag = false;
+			
+			try {
+				con = pool.getConnection();
+				sql = "delete from member where memberId = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, memberId);
+				pstmt.executeUpdate();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				pool.freeConnection(con, pstmt);
+			}
+		}
 	//로그인
 	public boolean loginMember(String memberId, String memberPw) {
 		Connection con = null;
@@ -311,34 +331,65 @@ public class MemberMgr {
 			return bean;
 		}
 	//회원정보 수정
-	public boolean updateMember(MemberBean bean) {
+	public boolean updateMember(HttpServletRequest req) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
 		boolean flag = false;
 		try {
+			File dir = new File(SAVEFOLDER);
+			if(!dir.exists()/*존재하지 않으면*/) {
+				dir.mkdirs();	// mkdirs는 상위폴더가 없어도 생성
+				// mkdir은 상위폴더가 없으면 생성 불가
+			}
+			MultipartRequest multi = 
+					new MultipartRequest(req, SAVEFOLDER, MAXSIZE, ENCODING
+							,new DefaultFileRenamePolicy());
+			String memberImg = null;
+			if(multi.getFilesystemName("memberImg")!=null) {
+				memberImg = multi.getFilesystemName("memberImg");
+			}
+			//File f = new File(memberImg);
+			String memberId = multi.getParameter("memberId");
+			String memberPw = multi.getParameter("memberPw");
+			String memberName = multi.getParameter("memberName");
+			String memberTel = multi.getParameter("memberTel");
+			String memberBirth = multi.getParameter("memberBirth");
+			String memberProfile = multi.getParameter("memberProfile");
+			String memberAddr = multi.getParameter("memberAddr");
+			String memberJobAddr = multi.getParameter("memberJobAddr");
+			String memberLikeArea = multi.getParameter("memberLikeArea");
+			int categoryNum = Integer.parseInt(multi.getParameter("categoryNum"));
+			int businessNum = Integer.parseInt(multi.getParameter("businessNum"));
+			int taskNum = Integer.parseInt(multi.getParameter("taskNum"));
+			int themeNum = Integer.parseInt(multi.getParameter("themeNum"));
+			int memberSex = Integer.parseInt(multi.getParameter("memberSex"));
 			con = pool.getConnection();
 			sql = "update member "
-				+ "set memberPw=?,memberName=?,memberTel =?,memberImg =?,memberProfile =?,"
+				+ "set memberPw=?,memberName=?,memberTel =?,memberImg =?,memberProfile =?, "
 				+ "memberAddr =?, memberJobAddr =?, memberLikeArea =?, categoryNum=?, "
 				+ "businessNum =?, taskNum =?,themeNum =?, memberBirth=?, memberSex=?   "
 				+ "where memberid = ?;";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, bean.getMemberPw());
-			pstmt.setString(2, bean.getMemberName());
-			pstmt.setString(3, bean.getMemberTel());
-			pstmt.setString(4, bean.getMemberImg());
-			pstmt.setString(5, bean.getMemberProfile());
-			pstmt.setString(6, bean.getMemberAddr());
-			pstmt.setString(7, bean.getMemberJobAddr());
-			pstmt.setString(8, bean.getMemberLikeArea());
-			pstmt.setInt(9, bean.getCategoryNum());
-			pstmt.setInt(10, bean.getBusinessNum());
-			pstmt.setInt(11, bean.getTaskNum());
-			pstmt.setInt(12, bean.getThemeNum());	
-			pstmt.setString(13, bean.getMemberBirth());
-			pstmt.setInt(14, bean.getMemberSex());
-			pstmt.setString(15, bean.getMemberId());	
+			pstmt.setString(1, memberPw);
+			pstmt.setString(2, memberName);
+			pstmt.setString(3, memberTel);
+			
+			if(memberImg == null) {
+				memberImg = "defaultuser.png";
+			}
+			pstmt.setString(4, memberImg);
+			pstmt.setString(5, memberProfile);
+			pstmt.setString(6, memberAddr);
+			pstmt.setString(7, memberJobAddr);
+			pstmt.setString(8, memberLikeArea);
+			pstmt.setInt(9, categoryNum);
+			pstmt.setInt(10, businessNum);
+			pstmt.setInt(11, taskNum);
+			pstmt.setInt(12, themeNum);	
+			pstmt.setString(13, memberBirth);
+			pstmt.setInt(14, memberSex);
+			pstmt.setString(15, memberId);
 			if(pstmt.executeUpdate()==1)
 				flag = true;
 		} catch (Exception e) {
@@ -410,6 +461,108 @@ public class MemberMgr {
 			}
 			return flag;
 		}
-		
+	// 알림 추가 - MoimMgr.mmList로 모임의 멤버아이디 전부 가져와서 포문으로 넣어줘야함
+	//mb=memberBoard, ms=moimschedule, bc=BoardComment
+	public boolean notiInsert(String memberId, int photoNum, int mbNum, int msNum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "insert into notification (memberId, photoNum, mbNum, msNum) "
+				+ "value(?,?,?,?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, photoNum);
+			pstmt.setInt(3, mbNum);
+			pstmt.setInt(4, msNum);
+			if(pstmt.executeUpdate()==1){
+				flag=true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
+	//알람 카운트 멤버별로
+	public int notiCount(String memberId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int count = 0;
+		try {
+			con = pool.getConnection();
+			sql = "select count(*) from notification  "
+				+ "where memberId = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rs = pstmt.executeQuery();
+			while(rs.next()){
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return count;
+	}
+	//알람 리스트 멤버별로
+	public Vector<NotificationBean> notiList(String memberId){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		Vector<NotificationBean> vlist = new Vector<NotificationBean>();
+		try {
+			con = pool.getConnection();
+			sql = "select * from notification  "
+				+ "where memberId = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				NotificationBean bean = new NotificationBean();
+				bean.setNotiNum(rs.getInt(1));
+				bean.setMemberId(rs.getString(2));
+				bean.setPhotoNum(rs.getInt(3));
+				bean.setMbNum(rs.getInt(4));
+				bean.setMsNum(rs.getInt(5));
+				bean.setRead(rs.getInt(6));				
+				vlist.addElement(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return vlist;
+	}
+	//알람 읽기
+	public boolean notiRead(String memberId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "update notification set read = 1"
+				+ "where memberId =?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			if(pstmt.executeUpdate()==1) {
+				flag=true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
 		
 }

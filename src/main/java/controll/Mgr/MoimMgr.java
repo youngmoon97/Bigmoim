@@ -17,6 +17,7 @@ import model.Bean.MemberBean;
 import model.Bean.MoimBean;
 import model.Bean.MoimJoinBean;
 import model.Bean.MoimMemberBean;
+import model.Bean.MoimPhotosBean;
 import model.Bean.MoimScheduleBean;
 
 public class MoimMgr {
@@ -116,30 +117,59 @@ public class MoimMgr {
 			return flag;
 		}
 	//모임 수정
-	public boolean moimUpdate(MoimBean bean) {
+	public boolean moimUpdate(HttpServletRequest req) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
 		boolean flag=false;
 		try {
+			File dir = new File(SAVEFOLDER);
+			if(!dir.exists()/*존재하지 않으면*/) {
+				dir.mkdirs();	// mkdirs는 상위폴더가 없어도 생성
+				// mkdir은 상위폴더가 없으면 생성 불가
+			}
+			MultipartRequest multi = 
+					new MultipartRequest(req, SAVEFOLDER, MAXSIZE, ENCODING
+							,new DefaultFileRenamePolicy());
+			String moimImg = null;
+			if(multi.getFilesystemName("moimImg")!=null) {
+				moimImg = multi.getFilesystemName("moimImg");
+			}
+			//File f = new File(memberImg);
+			int moimNum = Integer.parseInt(multi.getParameter("moimNum"));
+			String moimName = multi.getParameter("moimName");
+			String moimArea = multi.getParameter("moimArea");
+			int moimHCount = Integer.parseInt(multi.getParameter("moimHCount"));
+			String memberId = multi.getParameter("memberId");
+			String moimKakao = multi.getParameter("moimKakao");
+			String moimProfile = multi.getParameter("moimProfile");
+			String moimDate = multi.getParameter("moimDate");
+			String classprice = multi.getParameter("classprice");
+			int categoryNum = Integer.parseInt(multi.getParameter("categoryNum"));
+			int businessNum = Integer.parseInt(multi.getParameter("businessNum"));
+			int taskNum = Integer.parseInt(multi.getParameter("taskNum"));
+			int themeNum = Integer.parseInt(multi.getParameter("themeNum"));
+			int moimOrclass = Integer.parseInt(multi.getParameter("moimtype"));
 			con = pool.getConnection();
 			sql = "update moim"
 				+ "set moinName= ?, moimArea=?, moimKakao=?, categoruNum=?,"
-				+ " moimImg=?, moimProfile=?, themeNum=?, taskNum=?, "
+				+ " moimImg=?, moimProfile=?, themeNum=?, taskNum=?, moimHCount =?"
 				+ "businessNum=?, classprice=?, moimOrclass = ?"
 				+ "where moimNum= ? ";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, bean.getMoimName());
-			pstmt.setString(2, bean.getMoimArea());
-			pstmt.setString(3, bean.getMoimKakao());
-			pstmt.setInt(4, bean.getCategoryNum());
-			pstmt.setString(5, bean.getMoimImg());
-			pstmt.setString(6, bean.getMoimProfile());
-			pstmt.setInt(7, bean.getThemeNum());
-			pstmt.setInt(8, bean.getTaskNum());
-			pstmt.setInt(9, bean.getBusinessNum());
-			pstmt.setString(10, bean.getClassprice());
-			pstmt.setInt(11, bean.getMoimOrclass());
+			pstmt.setString(1, moimName);
+			pstmt.setString(2, moimArea);
+			pstmt.setString(3, moimKakao);
+			pstmt.setInt(4, categoryNum);
+			pstmt.setString(5, moimImg);
+			pstmt.setString(6, moimProfile);
+			pstmt.setInt(7, themeNum);
+			pstmt.setInt(8, themeNum);
+			pstmt.setInt(9, moimHCount);
+			pstmt.setInt(10, businessNum);
+			pstmt.setString(11, classprice);
+			pstmt.setInt(12, moimOrclass);
+			pstmt.setInt(13, moimNum);
 			if(pstmt.executeUpdate()==1) {
 				flag=true;
 			}
@@ -958,4 +988,85 @@ public class MoimMgr {
 				}
 				return vlist;
 		      }
+		      //모임 사진 추가
+	            public boolean moimAddPhoto(MoimPhotosBean bean) {
+	               Connection con = null;
+	               PreparedStatement pstmt = null;
+	               String sql = null;
+	               boolean flag = false;
+	               try {
+	                  con = pool.getConnection();
+	                  sql = "insert into moimphotos(moimNum, photo,`upDate`,memberId,photoName)"
+	                        + "values(?,?,now(),?,?)";
+	                  pstmt = con.prepareStatement(sql);
+	                  pstmt.setInt(1, bean.getMoimNum());
+	                  pstmt.setString(2, bean.getPhoto());
+	                  pstmt.setString(3, bean.getMemberId());
+	                  pstmt.setString(4, bean.getPhotoName());
+	                  
+	                  if(pstmt.executeUpdate()==1) {
+	                     flag = true;
+	                  };
+	               } catch (Exception e) {
+	                  e.printStackTrace();
+	               } finally {
+	                  pool.freeConnection(con, pstmt);
+	               }
+	               return flag;
+	            }
+	            
+	      // 모임 사진 리스트 
+	         public Vector<MoimPhotosBean> getmoimImgList(int moimNum){
+	            Connection con = null;
+	            PreparedStatement pstmt = null;
+	            ResultSet rs = null;
+	            String sql = null;
+	            Vector<MoimPhotosBean> photovlist = new Vector<MoimPhotosBean>();
+	            try {
+	               con = pool.getConnection();
+	               sql = "select photo, photoName from moimphotos where moimNum = ?";
+	               pstmt = con.prepareStatement(sql);
+	               pstmt.setInt(1, moimNum);
+	               rs = pstmt.executeQuery();
+	               while(rs.next()) {
+	                  MoimPhotosBean bean = new MoimPhotosBean();
+	                  bean.setPhoto(rs.getString(1));
+	                  bean.setPhotoName(rs.getString(2));
+	                  photovlist.addElement(bean);
+	               }
+
+	            } catch (Exception e) {
+	               e.printStackTrace();
+	            } finally {
+	               pool.freeConnection(con, pstmt, rs);
+	            }
+	            return photovlist;
+	         }
+	         
+	         public boolean getMoimMemberId(String memberId, int moimNum) {
+	            Connection con = null;
+	            PreparedStatement pstmt = null;
+	            ResultSet rs = null;
+	            String sql = null;
+	            boolean flag = false;
+	            try {
+	               con = pool.getConnection();
+	               sql = "select memberId from Moim where memberId = ? and moimNum = ?";
+	               pstmt = con.prepareStatement(sql);
+	               pstmt.setString(1, memberId);
+	               pstmt.setInt(2, moimNum);
+	               rs = pstmt.executeQuery();
+	               
+	               if(rs.next()) {
+	                  flag = true;
+	               }
+	               
+	            
+	            } catch (Exception e) {
+	               e.printStackTrace();
+	            } finally {
+	               pool.freeConnection(con, pstmt, rs);
+	            }
+	            return flag;
+	         }
 }
