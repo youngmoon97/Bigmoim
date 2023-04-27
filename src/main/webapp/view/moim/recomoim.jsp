@@ -79,6 +79,8 @@
 			
         </div>
         <h4><%=moimbean.getMoimName() %></h4>
+        <h3><%=moimbean.getMoimNCount() %> / <%=moimbean.getMoimHCount() %></h3>
+        
         <div class="card-nav">
           <p class="moimArea" name="moimArea" value="" style="margin-top: 0;"><%=moimbean.getMoimArea() %></p>
           <p class="card-nav-line" style="margin-top: 0;" style="margin-top: 0;">&nbsp; | &nbsp;</p>
@@ -125,6 +127,7 @@
 			
         </div>
         <h4><%=moimbean.getMoimName() %></h4>
+		<h3><%=moimbean.getMoimNCount() %> / <%=moimbean.getMoimHCount() %></h3>
         <div class="card-nav">
           <p class="moimArea" name="moimArea" value="" style="margin-top: 0;"><%=moimbean.getMoimArea() %></p>
           <p class="card-nav-line" style="margin-top: 0;" style="margin-top: 0;">&nbsp; | &nbsp;</p>

@@ -28,6 +28,32 @@
            dropdown.style.display = "none";
          }
        }
+    
+    function toggleDropdown() {
+        var dropdown = document.querySelector(".notification-dropdown");
+        if (dropdown.style.display === "none" || dropdown.style.display === "") {
+            dropdown.style.display = "block";
+        } else {
+            dropdown.style.display = "none";
+        }
+    }
+
+    
+    function addNotification(message) {
+        var dropdown = document.querySelector(".notification-dropdown");
+        var link = document.createElement("a");
+        link.href = "#";
+        link.textContent = message;
+        dropdown.appendChild(link);
+    }
+
+    // TODO: 메시지가 도착했을 때 호출되는 함수를 작성해야된다...
+    function onNewMessage() {
+      addNotification("새로운 메시지가 도착했습니다.");
+    }
+
+
+
 </script>
 
     
@@ -42,7 +68,7 @@
       <div class="search-area">
         <form name=searchFrm action="/bigmoim/view/moim/searchmoim.jsp">
           <button type="submit" class="search-btn" >
-          	<img src="/bigmoim/image/search.png" alt="검색" style="width: 30px; height: 30px;">
+             <img src="/bigmoim/image/search.png" alt="검색" style="width: 30px; height: 30px;">
           </button>
           <input type="text" name=searchText value="" placeholder="모임 이름으로 검색하세요!"/>
         </form>
@@ -57,6 +83,7 @@
                  <!-- 이미지 스타일 값은 이미지 받아오고 수정해봅니다. -->
                  <div class="member-dropdown-content">
                      <a href="/bigmoim/view/login/memberupdate.jsp">내 정보 수정</a>
+                     <a href="/bigmoim/view/login/mymoim.jsp">내 모임 관리</a>
                      <a href="/bigmoim/view/moim/makemoim.jsp">모임개설</a>
                  </div>
                 </div>
@@ -68,7 +95,21 @@
              <button class="login-btn" onclick="location.href='/bigmoim/view/login/login.html'">로그인</button>
              <button class="signup-btn" onclick="location.href='/bigmoim/view/login/signup.jsp'">회원가입</button>
             <%}%>
-          <button class="notification"><img src="/bigmoim/image/bell.png" alt="알림" style="width: 25px; height: 25px;"></button>
+          <button class="notification" onclick="toggleDropdown()">
+           <img src="/bigmoim/image/bell.png" alt="알림" style="width: 25px; height: 25px;">
+           
+           <!-- 알람 개수 -->
+           <span class="badge">3</span>
+           
+           <!-- 드롭 다운으로 만들어 봄. -->
+           <div class="notification-dropdown" style = "top: 110px;">
+           <!-- 새로운 알람이 있는 곳으로 링크 타면 될 듯 합니다? -->
+             <a href="#">새로운 알림이 있습니다.</a>
+             <!-- 뭐 무슨 가입 신청, 가입 신청한거 완료한거 여기다가 뜨게 하면 되겠죠? maybe? -->
+             <a href="#">새로운 메시지가 있습니다.</a>
+
+</button>
+
         </div>
     </header>
 

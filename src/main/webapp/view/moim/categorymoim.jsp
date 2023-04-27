@@ -10,9 +10,10 @@
 <%
 	int no = Integer.parseInt(request.getParameter("num"));
 	Vector<MoimBean> mvlist = moimMgr.cateMoimList(no);
-	String categoryName = cateMgr.categoryName(no);
-	
+	String categoryName = cateMgr.categoryName(no);	
 %>
+
+    
 <!DOCTYPE html>
 <html lang="kr">
   <head>
@@ -25,10 +26,38 @@
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+    function likeBtnChange(num) {
+      	//Proc에 보내기
+      	//alert(num)
+      	let jjimFrm = document.forms["jjimFrm"];
+      	jjimFrm.moimNum.value = num;
+        jjimFrm.submit();
+
+      	//색상 변경
+  		let likeBtn = document.getElementById("heart"+ num)
+  		if(likeBtn.className == "far fa-heart"){//빈 하트면
+  			likeBtn.className = "fas fa-heart" //꽉찬 하트로
+  		}else if(likeBtn.className == "fas fa-heart"){//꽉찬 하트면
+  			likeBtn.className = "far fa-heart"//빈 하트로
+  		}
+    
+    	//더보기 버튼 누르면 카테고리 안보이던부분 확장되는 코드
+	      const moreBtn = document.querySelector(".more");
+	      const hiddenCategory = document.querySelector(".hidden-category");
+	
+	      moreBtn.addEventListener("click", function() {
+	        if (hiddenCategory.style.display === "none") {
+	        hiddenCategory.style.display = "flex";
+	      } else {
+	        hiddenCategory.style.display = "none";
+	      }
+	      });
+      }
+    </script>
   </head>
   <body>
 
-    
   <!-- 중단 -->
 <% 
 if(mvlist.isEmpty()){
@@ -58,7 +87,7 @@ if(mvlist.isEmpty()){
         //System.out.println("img : "+img);
       %>
       <img src=<%=img %> alt="Image"> 
-      <form name="jjimFrm" action="/bigmoim/view/main/jjimProc.jsp" method="get">
+      <form name="jjimFrm" action="../main/jjimProc.jsp" method="get">
 			<%if (memberId!=null){%> 
          <button class="like-btn" id="like-btn-<%=moimbean.getMoimNum()%>"
           onclick="likeBtnChange(<%=moimbean.getMoimNum()%>)" style="color:red; bgcolor: white;">
@@ -100,44 +129,6 @@ if(mvlist.isEmpty()){
         <li><a href="#">대모임 인재채용</a></li>
       </ul>
       <p>&copy; 2023 대모임</p>
-    </footer>
-
-    <script>
-      const moreBtn = document.querySelector(".more");
-      const hiddenCategory = document.querySelector(".hidden-category");
-
-      moreBtn.addEventListener("click", function() {
-        if (hiddenCategory.style.display === "none") {
-        hiddenCategory.style.display = "flex";
-      } else {
-        hiddenCategory.style.display = "none";
-      }
-      });
-      
-      //const likeBtns = document.querySelectorAll('.like-btn');
-      //likeBtns.forEach(btn => {
-        //btn.addEventListener('click', () => {
-        //  btn.classList.toggle('clicked');
-       // });
-      //});
-      
-      function likeBtnChange(num) {
-      	//Proc에 보내기
-      	//document.jjimFrm.submit();
-      	//alert(num)
-      	let jjimFrm = document.forms["jjimFrm"];
-      	jjimFrm.moimNum.value = num;
-          jjimFrm.submit();
-      	//$("#jjimFrm").submit();
-      	
-      	//색상 변경
-  		let likeBtn = document.getElementById("heart"+ num)
-  		if(likeBtn.className == "far fa-heart"){//빈 하트면
-  			likeBtn.className = "fas fa-heart" //꽉찬 하트로
-  		}else if(likeBtn.className == "fas fa-heart"){//꽉찬 하트면
-  			likeBtn.className = "far fa-heart"//빈 하트로
-  		}
-    </script>
-   
+    </footer>   
   </body>
   </html>

@@ -65,19 +65,22 @@
     		
           <img src=<%=img %> alt="Image">
 		<form name="jjimFrm" action="jjimProc.jsp" method="get">
-			<%if (memberId!="방문자"){%> 
+		
+		<%if (memberId!="방문자"){%> 
          <button class="like-btn" id="like-btn-<%=moimbean.getMoimNum()%>"
           onclick="likeBtnChange(<%=moimbean.getMoimNum()%>)" style="color:red; bgcolor: white;">
   			<i id="heart<%=moimbean.getMoimNum() %>"
   			<%if(moimMgr.jjimCheck(memberId, moimbean.getMoimNum())){ %>
-  			class = "fas fa-heart"<% } else{%>
+  			class = "fas fa-heart"
+  			<% } else{%>
   			class = "far fa-heart"
   			<%}%>></i>
-			</button>
-			<%} %>
+		</button>
+		<%} %>
 				
         </div>
         <h4><%=moimbean.getMoimName() %></h4>
+        <h3><%=moimbean.getMoimNCount() %> / <%=moimbean.getMoimHCount() %></h3>
         <div class="card-nav">
           <p class="moimArea" name="moimArea" value="" style="margin-top: 0; color: black; text-decoration: none;"><%=moimbean.getMoimArea() %></p>
           <p class="card-nav-line" style="margin-top: 0; color: black; text-decoration: none;">&nbsp; | &nbsp;</p>

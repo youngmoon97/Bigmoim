@@ -431,6 +431,29 @@ background-color: pink;
     color: red;
   }
 
+/* 알람 드롭다운 메뉴 */
+  .notification-dropdown {
+    display: none;
+    position: absolute;
+    top: 110px;
+    right: 150px;
+    width: 210px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  /* 알람 드롭다운 메뉴 내용 */
+  .notification-dropdown a {
+    display: block;
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* 알람 드롭다운 메뉴 열기 */
+  .notification-dropdown.show {
+    display: block;
+  }
 
 /* Style for the card image */
 .card img {
