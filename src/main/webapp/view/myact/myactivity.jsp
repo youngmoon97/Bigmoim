@@ -26,7 +26,8 @@
 	Vector<MoimBean> taskmoim = myactMgr.ptaskList(taskNum);
 	//테마별
 	Vector<MoimBean> thememoim = myactMgr.pthemeList(themeNum);
-	
+	//찜목록
+	Vector<MoimBean> jjimList = moimMgr.jjimList(memberId);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -103,7 +104,7 @@
 		        <p class = "join-text">가입한 모임</p>
  	     		</div>
     		</article>
-    		<hr>
+    	
     		
     		<div class="card-group">
     		<% 
@@ -149,7 +150,69 @@
     		</div> <!-- card-group -->
     <%}//--if-else %>
     <hr>
-   
+    
+   <!-- 찜목록 -->
+	<% 
+	if(jjimList.isEmpty()){
+    %>
+    <article>
+      <div class = "text">
+        <!-- class 이름 알잘딱깔센으로 적어보시길... -->
+        <p class = "join-text">찜한 모임이 아직 없습니다!</p>
+      </div>
+    </article>
+    
+    <%}else{//--if-else %>
+    		<article>
+      			<div class = "text">
+		        <p class = "join-text">찜 목록</p>
+ 	     		</div>
+    		</article>
+    	
+    		<div class="card-group">
+    		<% 
+    		for(int i=0;i<jjimList.size();i++){
+    			MoimBean moimbean = jjimList.get(i);
+    			int cNum = moimbean.getCategoryNum();
+    			String cName = cateMgr.categoryName(cNum);
+    			
+    		%>
+    		
+      		<article class="card">
+      		<a href="/bigmoim/view/moim/moimdetail.jsp?num=<%=moimbean.getMoimNum()%>">
+    		<div class="card-wrapper">
+          <% 
+    			img = "/bigmoim/image/"+moimbean.getMoimImg();
+    			//System.out.println("img : "+img);
+    		%>
+          <img src=<%=img %> alt="Image">
+          	    <form name="jjimFrm" action="../main/jjimProc.jsp" method="get">		
+         <button class="like-btn" id="joinMoim-like-btn-<%=moimbean.getMoimNum()%>"
+          onclick="likeBtnChange(<%=moimbean.getMoimNum()%>)" style="color:red; bgcolor: white;">
+  			<i id="heart<%=moimbean.getMoimNum() %>"
+  			<%if(moimMgr.jjimCheck(memberId, moimbean.getMoimNum())){ %>
+  			class = "fas fa-heart"<% } else{%>
+  			class = "far fa-heart"
+  			<%}%>></i>
+			</button>
+			
+			
+        </div>
+        <h4><%=moimbean.getMoimName() %></h4>
+        <div class="card-nav">
+          <p class="moimArea" name="moimArea" value="" style="margin-top: 0;"><%=moimbean.getMoimArea() %></p>
+          <p class="card-nav-line" style="margin-top: 0;">&nbsp; | &nbsp;</p>
+          <p class="categoryName" name="categoryName" value="" style="margin-top: 0;"><%=cName %></p>
+      </div>
+        <p class="moimProfile" name="moimProfile" value="" style="margin-top: 0;"><%=moimbean.getMoimProfile() %></p>
+        	</a>
+    		</article>
+    	
+    		
+    		<%}%> <!-- for -->
+    		</div> <!-- card-group -->
+    <%}//--if-else %>
+    <hr>
     <!-- 최근본모임 -->
     <% if(recentmoim.isEmpty()){
     %>
@@ -170,7 +233,7 @@
 		        <p class = "join-text">최근 본 모임</p>
  	     		</div>
     		</article>
-    		<hr>
+    		
     		
     		<div class="card-group">
     		<% 
@@ -321,6 +384,9 @@
 </div><!--card-group-->
 
 <%}//--if-else %>
+    
+    
+    <hr>
     
     <!-- 직무별 모임 -->
     <% if(taskmoim.isEmpty()){

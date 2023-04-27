@@ -52,7 +52,7 @@ public class MyActivityMgr {
 				Vector<MoimBean> vlist = new Vector<MoimBean>();
 				try {
 					con = pool.getConnection();
-					sql = "select m.moimName ,m.moimImg,m.moimArea, "
+					sql = "select m.moimNum, m.moimName ,m.moimImg,m.moimArea, "
 						+ "m.moimNCount ,m.categoryNum, m.moimProfile, m.categoryNum "
 						+ "from moim m ,recentseen r "
 						+ "where m.moimNum = r.moimNum and "
@@ -62,6 +62,7 @@ public class MyActivityMgr {
 					rs = pstmt.executeQuery();
 					while(rs.next()) {
 						MoimBean bean = new MoimBean();
+						bean.setMoimNum(rs.getInt("moimNum"));
 						bean.setMoimName(rs.getString("moimName"));
 						bean.setMoimImg(rs.getString("moimImg"));
 						bean.setMoimArea(rs.getString("moimArea"));
