@@ -130,19 +130,8 @@
     	
 	}
 </script>
-    </div>
-     <!-- 하단 -->
-    <footer>
-      <ul>
-        <li><a href="#">이용약관</a></li>
-        <li><a href="#">개인정보처리방침</a></li>
-        <li><a href="#">고객센터</a></li>
-        <li><a href="#">대모임 소개</a></li>
-        <li><a href="#">대모임 인재채용</a></li>
-      </ul>
-      <p>&copy; 2023 대모임</p>
-    </footer>
-    
+   <!-- bottom.jsp -->
+    <%@ include file = "/view/bottom.jsp" %>
   </body>
 </html>
         

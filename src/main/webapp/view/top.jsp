@@ -143,8 +143,8 @@
         <%if(memberId != null){ %>
            <li><a href="/bigmoim/view/myact/myactivity.jsp">내 활동</a></li>
         <% }%>
-        
       </ul>
+      
     </nav>
     
 </body>
