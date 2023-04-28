@@ -31,7 +31,7 @@
 		
     </style>
   </head>
-  <body>
+  <body style = "padding-top: 150px">
   
     <!-- 카테고리 -->
     <%@ include file = "/view/category.jsp" %>

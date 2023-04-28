@@ -184,7 +184,7 @@ public class BoardMgr {
 		MemberBoardBean bean = new MemberBoardBean();
 		try {
 			con = pool.getConnection();
-			sql = "select * from memberboard"
+			sql = "select * from memberboard "
 				+ "where mbNum = ? ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, mbNum);
@@ -194,9 +194,10 @@ public class BoardMgr {
 				bean.setMbTitle(rs.getString(2));
 				bean.setMbContent(rs.getString(3));
 				bean.setMbDate(rs.getString(4));
-				bean.setMbImg(rs.getString(5));
-				bean.setMoimNum(rs.getInt(6));				
-				bean.setBoardType(rs.getString(7));				
+				bean.setMemberId(rs.getString(5));
+				bean.setMbImg(rs.getString(6));
+				bean.setMoimNum(rs.getInt(7));				
+				bean.setBoardType(rs.getString(8));				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -54,6 +54,86 @@ public class MoimMgr {
 			}
 			return flag;
 		}
+		// 모임에서 멤버 추방
+		public boolean memberBan(String memberId) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			String sql = null;
+			boolean flag = false;
+			try {
+				con = pool.getConnection();
+				sql = "delete from moimmember where memberId=?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, memberId);
+				if(pstmt.executeUpdate()==1) {
+					flag = true;
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				pool.freeConnection(con, pstmt);
+			}
+			return flag;
+		}
+		//한 모임의 전체 멤버 정보 받아오기(회원아이디, 회원이미지, 회원이름 받아옴)
+		public Vector<MemberBean> getMemberList(int moimNum){
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String sql = null;
+			 Vector<MemberBean> vlist = new Vector<MemberBean>();
+			
+			try {
+				con = pool.getConnection();
+				sql = "	select member.memberId, memberImg, memberName "
+						+ "from member, moimMember where moimNum = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, moimNum);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					MemberBean bean = new MemberBean();
+					bean.setMemberId(rs.getString("memberId"));
+					bean.setMemberImg(rs.getString("memberImg"));
+					bean.setMemberName(rs.getString("memberName"));
+					vlist.addElement(bean);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				pool.freeConnection(con, pstmt, rs);
+			}
+			return vlist;
+		}
+		//회원가입 테이블에서 멤버 정보 받아오기
+		public Vector<MemberBean> mmList(int moimNum){
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			String sql = null;
+			Vector<MemberBean> vlist = new Vector<MemberBean>();
+			try {
+				con = pool.getConnection();
+				sql = "select m.memberId, m.memberImg ,m.memberProfile "
+						+ "from `member` m , moimjoin mj "
+						+ "where m.memberId = mj.memberId and "
+						+ "	mj.moimNum =? ";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, moimNum);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					MemberBean bean = new MemberBean();
+					bean.setMemberId("memberId");
+					bean.setMemberImg("memberImg");
+					bean.setMemberProfile("memberProfile");
+					vlist.addElement(bean);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				pool.freeConnection(con, pstmt, rs);
+			}
+			return vlist;
+		}
 	//모임 생성
 		public boolean moimInsert(HttpServletRequest req) {
 			Connection con = null;
@@ -546,43 +626,14 @@ public class MoimMgr {
 		}
 		return vlist;
 	}
-	//모임멤버리스트->멤버아이디 받아오기
-	public Vector<MemberBean> mmList(int moimNum){
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		String sql = null;
-		Vector<MemberBean> vlist = new Vector<MemberBean>();
-		try {
-			con = pool.getConnection();
-			sql = "select m.memberId, m.memberImg ,m.memberProfile "
-					+ "from `member` m , moimjoin mj "
-					+ "where m.memberId = mj.memberId and "
-					+ "	mj.moimNum =? ";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, moimNum);
-			rs = pstmt.executeQuery();
-			while(rs.next()) {
-				MemberBean bean = new MemberBean();
-				bean.setMemberId("memberId");
-				bean.setMemberImg("memberImg");
-				bean.setMemberProfile("memberProfile");
-				vlist.addElement(bean);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			pool.freeConnection(con, pstmt, rs);
-		}
-		return vlist;
-	}
+	
 	//모임일정생성
 	public boolean msInsert(MoimScheduleBean bean) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
 		boolean flag = false;
-		try {
+		try {		
 			con = pool.getConnection();
 			sql = "insert into moimschedule(msTime,msArea,moimNum,"
 				+ "msHCount,memberId,msTitle,msContent) "

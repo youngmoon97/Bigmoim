@@ -30,7 +30,7 @@
 		
     </style>
   </head>
-  <body>
+  <body style = "padding-top: 150px">
 
 
 	 <!-- 카테고리 -->

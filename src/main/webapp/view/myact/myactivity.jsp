@@ -51,7 +51,7 @@
 		
     </style>
   </head>
-  <body>
+  <body style = "padding-top: 150px">
     <!-- 상단 -->
     
     

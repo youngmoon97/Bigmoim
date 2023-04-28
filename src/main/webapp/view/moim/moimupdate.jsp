@@ -1,3 +1,5 @@
+<%@page import="controll.Mgr.MoimMgr"%>
+<%@page import="model.Bean.MemberBean"%>
 <%@page import="model.Bean.BusinessBean"%>
 <%@page import="java.util.Vector"%>
 <%@page import="model.Bean.ThemeBean"%>
@@ -37,9 +39,10 @@
 	Vector<TaskBean> vTask = macMgr.taskList(); //직무
 	Vector<ThemeBean> vTheme = macMgr.themeList(); //테마
 	Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
-
+	
+	Vector<MemberBean> vMoimMembers = moimMgr.getMemberList(moimNum);
 %>
-<<script type="text/javascript">
+<script type="text/javascript">
 function getCategoryNum(categoryNum){
     document.moimUpdateFrm.categoryNum.value=categoryNum;
  }
@@ -51,6 +54,12 @@ function getCategoryNum(categoryNum){
  }
  function getThemeNum(themeNum){
     document.moimUpdateFrm.themeNum.value=themeNum;
+ }
+ 
+ function memberBan(banMemberId){
+	 document.moimUpdateFrm.action = "memberBanProc.jsp";
+	 document.moimUpdateFrm.memberId.value=banMemberId;
+	 document.moimUpdateFrm.submit();	
  }
 </script>
 
@@ -309,66 +318,27 @@ function getCategoryNum(categoryNum){
                                 <!-- 예시로 더미 데이터를 사용 -->
                                 <ul id="memberList" class="list-group">
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <%for(int i=0;i<vMoimMembers.size();i++) {
+                                    MemberBean memberBean = vMoimMembers.get(i);
+                                    System.out.println("moimupdate.memberBean = "+memberBean.getMemberId());
+                                    
+                        			img = "/bigmoim/image/"+memberBean.getMemberImg();
+                                    %>
                                         <div class="d-flex align-items-center">
-                                            <img src="../images/samplememberImg.png" class="mr-3" width="50" height="50"
-                                                name="memberImg"> <!-- 프로필 사진 이미지 태그 -->
-                                            <span name="memberName">회원1</span> <!-- 회원 이름 텍스트 -->
+                                            <img src="<%=img%>" class="mr-3" width="50" height="50"
+                                                name="memberImg-<%=memberBean.getMemberId()%>"> <!-- 프로필 사진 이미지 태그 -->
+                                            <span name="memberId-<%=memberBean.getMemberId()%>"><%=memberBean.getMemberName() %></span> <!-- 회원 이름 텍스트 -->
                                         </div>
-                                        <button class="btn btn-danger" onclick="expelMember(1)">추방</button>
+                                        <button type="button" class="btn btn-danger" onclick="memberBan(<%=memberBean.getMemberId()%>)">추방</button>
                                     </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <div class="d-flex align-items-center">
-                                            <img src="../images/samplememberImg2.png" class="mr-3" width="50"
-                                                height="50" name="memberImg"> <!-- 프로필 사진 이미지 태그 -->
-                                            <span name="memberName">회원2</span> <!-- 회원 이름 텍스트 -->
-                                        </div>
-                                        <button class="btn btn-danger" onclick="expelMember(2)">추방</button>
-                                    </li>
+                                    <%} %>
                                 </ul>
-
-                                <!--
-                                자동으로 추가되고 추방버튼 클릭시 삭제되는 기능의 스크립트
+									<input type="hidden" name ="memberId" value="">
+								
                                 <script>
-                                // 예시 데이터
-                                var memberData = [
-                                { id: 1, name: '회원1', profilePic: 'profile1.jpg' },
-                                { id: 2, name: '회원2', profilePic: 'profile2.jpg' }
-                                ];
-
-                                // 회원 추가 함수
-                                function addMember(memberData) {
-                                // 회원 데이터를 받아와서 동적으로 회원을 추가하는 로직
-                                // 예시로는 memberData를 사용하여 회원을 추가하는 로직을 작성
-                                // ...
-
-                                // 추방 버튼을 생성하고 해당 버튼에 이벤트 리스너를 등록하는 로직
-                                var expelButton = document.createElement('button');
-                                expelButton.className = 'btn btn-danger';
-                                expelButton.textContent = '추방';
-                                expelButton.addEventListener('click', function() {
-                                // 추방 버튼 클릭 시 실행되는 로직
-                                // 추방할 회원의 아이디(또는 인덱스)를 사용하여 추방 로직을 작성
-                                // ...
-                                });
-
-                                // 회원 프로필 사진을 생성하는 로직
-                                var profilePic = document.createElement('img');
-                                profilePic.src = memberData.profilePic; // 회원의 프로필 사진 경로를 설정
-                                profilePic.className = 'profile-pic'; // 프로필 사진의 클래스를 설정
-
-                                // 회원을 추가하고 프로필 사진과 추방 버튼을 추가하는 로직
-                                var memberListItem = document.createElement('li');
-                                memberListItem.className = 'list-group-item d-flex justify-content-between align-items-center';
-                                memberListItem.appendChild(profilePic); // 프로필 사진을 추가
-                                memberListItem.textContent = memberData.name; // 회원의 이름을 텍스트로 추가
-                                memberListItem.appendChild(expelButton); // 추방 버튼을 추가
-                                document.getElementById('memberList').appendChild(memberListItem); // 회원 목록에 추가
-                                }
-
-                                // 예시 데이터를 사용하여 회원1을 추가
-                                addMember(memberData[0]);
+       							
                                 </script> 
-                            -->
+                      
                             </div>
 
                             <div class="mt-4 text-center">

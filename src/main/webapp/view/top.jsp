@@ -22,6 +22,38 @@
     <link type="text/css" rel="stylesheet" href="/bigmoim/view/css/main.css" />
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
+      
+      
+		.notification-dropdown:before {
+content: "";
+display: block;
+position: absolute;
+top: -20px;
+left: 50%;
+transform: translateX(-50%);
+border: 20px solid transparent;
+border-bottom-color: transparent;
+}
+
+.notification-dropdown:after {
+content: "";
+position: absolute;
+top: -40px;
+left: 30%;
+transform: translateX(-50%);
+border: 20px solid transparent;
+border-bottom-color: rgb(255, 231, 235);
+}
+
+.notification-dropdown {
+position: absolute;
+top: 105px;
+display: none;
+width: 210px;
+background-color: rgb(255, 231, 235);
+padding: 10px;
+}
+		
     </style>
     <script>
     function toggleDropdown() {
@@ -63,9 +95,16 @@
     
 </head>
 <body>
+
    <!-- 상단 -->
-    <div class = "main-wrapper">
-    <header>
+    <div class = "main-wrapper" >
+    <header id = "fix-area" style = 
+      	"
+      	position: fixed;
+  		top: 0;
+  		width: 33.35cm;
+  		z-index: 500;
+  		">
       <div class="logo">
         <a href="/bigmoim/view/main/main.jsp"><img src="/bigmoim/image/logo.png" alt="대모임 로고" width="130px" height="130px" /></a>
       </div>
@@ -106,7 +145,7 @@
            <span class="badge"><%=notiCount %></span>
            
            <!-- 드롭 다운으로 만들어 봄. -->
-           <div class="notification-dropdown" style = "top: 110px;">
+           <div class="notification-dropdown" style = "top: 125px; right: -103px;">
            <!-- 새로운 알람이 있는 곳으로 링크 타면 될 듯 합니다? -->
            <%if(notiList.isEmpty()){ %>
              <a href="#">새로운 알림이 없습니다.</a>
@@ -146,6 +185,7 @@
       </ul>
       
     </nav>
+    
     
 </body>
 </html>

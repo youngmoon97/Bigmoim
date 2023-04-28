@@ -65,7 +65,7 @@
       }
     </script>
   </head>
-  <body>
+  <body style = "padding-top: 150px">
 
   <!-- 중단 -->
 <% 

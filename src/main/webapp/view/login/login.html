@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>대모임 로그인 페이지</title>
     <link type="text/css" rel="stylesheet" href="login.css">
+    <script type="text/javascript" src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     <style>
+    
         @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap');
     </style>
         <script>
@@ -23,6 +25,40 @@
 		}
 		document.loginFrm.submit();
 	}
+	      /* 카카오 로그인 */
+	      Kakao.init('643edc1cbbeb20af837bf6151e68a9d0'); // 키값 저장
+	      function loginWithKakao() {
+	         Kakao.Auth.login({
+	          success: function (authObj) {
+	              console.log(authObj); // access토큰 값
+	              Kakao.Auth.setAccessToken(authObj.access_token); // access토큰값 저장
+	              getInfo();
+	          },
+	          fail: function (err) {
+	              console.log(err);
+	          }
+	         });
+	        }
+	      function getInfo() {
+	          Kakao.API.request({
+	              url: '/v2/user/me',
+	              success: function (res) {
+	                 var id = res.id;  
+	                 var email = res.kakao_account.email;      
+	                 var nickname = res.kakao_account.profile.nickname;
+	                 var gender = res.kakao_account.gender;
+	                 f = document.kakaologin;
+	                 f.id.value = id; 
+	                 f.email.value = email;
+	                 f.nickname.value = nickname;
+	                 f.gender.value = gender;
+	                 f.submit();
+	              },
+	              fail: function (error) {
+	                  alert('카카오 로그인에 실패했습니다. 관리자에게 문의하세요.' + JSON.stringify(error));
+	              }
+	          });
+	       }
 </script>
 </head>
 <body>
@@ -52,9 +88,9 @@
                     <p><a href="signup.jsp" class="join-msg" style="color: black">회원가입</a></p>
                 </div>
             </form>
-            <form class="easy-sgin-in-wrap">
+            <form type="hidden" class="easy-sgin-in-wrap" name="kakaologin" action="kakaologin.jsp">
                 <ui class="sign-button-list">
-                    <li><button class="kakao-btn"><span class="fas fa-kakao">KAKAO</span></button></li>
+                    <li><button class="kakao-btn" onclick="javascript:loginWithKakao()"><span class="fas fa-kakao">KAKAO</span></button></li>
                     <li><button class="facebook-btn"><span class="fab fa-facebook-square">FACEBOOK</span></button></li>
                     <li><button class="line-btn"><span class="fab fa-line">NAVER</span></button></li>
                 </ui>
