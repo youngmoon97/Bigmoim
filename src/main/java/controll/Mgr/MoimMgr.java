@@ -768,7 +768,47 @@ public class MoimMgr {
 		}
 		return flag;
 	}
-	
+	//멤버의 전체 모임+클래스 리스트
+			public Vector<MoimBean> mymoimList(String memberId){
+				Connection con = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				String sql = null;
+				Vector<MoimBean> vlist = new Vector<MoimBean>();
+				try {
+					con = pool.getConnection();
+					sql = "select * from moim where memberId = ?";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, memberId);
+					rs = pstmt.executeQuery();
+					while(rs.next()) {
+						MoimBean bean = new MoimBean();
+						bean.setMoimNum(rs.getInt("moimNum"));
+						bean.setMoimName(rs.getString("moimName"));
+						bean.setMoimArea(rs.getString("moimArea"));
+						bean.setMoimHCount(rs.getInt("moimHCount"));
+						bean.setMoimNCount(rs.getInt("moimNCount"));
+						bean.setMemberId(rs.getString("memberId"));
+						bean.setMoimKakao(rs.getString("moimKakao"));
+						bean.setMoimImg(rs.getString("moimImg"));
+						bean.setCategoryNum(rs.getInt("categoryNum"));
+						bean.setMoimProfile(rs.getString("moimProfile"));
+						bean.setMoimDate(rs.getString("moimDate"));
+						bean.setBusinessNum(rs.getInt("businessNum"));
+						bean.setTaskNum(rs.getInt("taskNum"));
+						bean.setThemeNum(rs.getInt("themeNum"));
+						bean.setClassprice(rs.getString("classprice"));
+						bean.setClassLike(rs.getInt("classLike"));
+						bean.setMoimOrclass(rs.getInt("moimOrclass"));
+						vlist.addElement(bean);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					pool.freeConnection(con, pstmt, rs);
+				}
+				return vlist;
+			}
 	//전체 모임+클래스 리스트
 		public Vector<MoimBean> moimAllList(){
 			Connection con = null;
@@ -989,21 +1029,36 @@ public class MoimMgr {
 				return vlist;
 		      }
 		      //모임 사진 추가
-	            public boolean moimAddPhoto(MoimPhotosBean bean) {
+	            public boolean moimAddPhoto(HttpServletRequest req) {
 	               Connection con = null;
 	               PreparedStatement pstmt = null;
 	               String sql = null;
 	               boolean flag = false;
 	               try {
+	            	   File dir = new File(SAVEFOLDER);
+	       			if(!dir.exists()/*존재하지 않으면*/) {
+	       				dir.mkdirs();	// mkdirs는 상위폴더가 없어도 생성
+	       				// mkdir은 상위폴더가 없으면 생성 불가
+	       			}
+	       			MultipartRequest multi = 
+	       					new MultipartRequest(req, SAVEFOLDER, MAXSIZE, ENCODING
+	       							,new DefaultFileRenamePolicy());
+	       			String photo = null;
+	       			if(multi.getFilesystemName("photo")!=null) {
+	       				photo = multi.getFilesystemName("photo");
+	       			}
+	       			int moimNum = Integer.parseInt(multi.getParameter("moimNum"));
+	       			String upDate = multi.getParameter("upDate");
+	       			String memberId = multi.getParameter("memberId");
+	       			String photoName = multi.getParameter("photoName");
 	                  con = pool.getConnection();
-	                  sql = "insert into moimphotos(moimNum, photo,`upDate`,memberId,photoName)"
+	                  sql = "insert into moimphotos(moimNum, photo,`upDate`,memberId, photoName)"
 	                        + "values(?,?,now(),?,?)";
 	                  pstmt = con.prepareStatement(sql);
-	                  pstmt.setInt(1, bean.getMoimNum());
-	                  pstmt.setString(2, bean.getPhoto());
-	                  pstmt.setString(3, bean.getMemberId());
-	                  pstmt.setString(4, bean.getPhotoName());
-	                  
+	                  pstmt.setInt(1, moimNum);
+	                  pstmt.setString(2, photo);
+	                  pstmt.setString(3, memberId);
+	                  pstmt.setString(4, photoName);
 	                  if(pstmt.executeUpdate()==1) {
 	                     flag = true;
 	                  };
@@ -1014,7 +1069,45 @@ public class MoimMgr {
 	               }
 	               return flag;
 	            }
-	            
+	          //모임 사진 수정
+	            public boolean moimUpdatePhoto(HttpServletRequest req) {
+	               Connection con = null;
+	               PreparedStatement pstmt = null;
+	               String sql = null;
+	               boolean flag = false;
+	               try {
+	            	   File dir = new File(SAVEFOLDER);
+	       			if(!dir.exists()/*존재하지 않으면*/) {
+	       				dir.mkdirs();	// mkdirs는 상위폴더가 없어도 생성
+	       				// mkdir은 상위폴더가 없으면 생성 불가
+	       			}
+	       			MultipartRequest multi = 
+	       					new MultipartRequest(req, SAVEFOLDER, MAXSIZE, ENCODING
+	       							,new DefaultFileRenamePolicy());
+	       			String photo = null;
+	       			if(multi.getFilesystemName("photo")!=null) {
+	       				photo = multi.getFilesystemName("photo");
+	       			}
+	       			int photonum = Integer.parseInt(multi.getParameter("photonum"));
+	       			String photoName = multi.getParameter("photoName");
+	                  con = pool.getConnection();
+	                  sql = "update moimphotos "
+	                  	+ "set photo=? , `update`=now(), photoName= ?  "
+	                  	+ "where photonum=?;";
+	                  pstmt = con.prepareStatement(sql);
+	                  pstmt.setString(1, photo);
+	                  pstmt.setString(2, photoName);
+	                  pstmt.setInt(3, photonum);
+	                  if(pstmt.executeUpdate()==1) {
+	                     flag = true;
+	                  };
+	               } catch (Exception e) {
+	                  e.printStackTrace();
+	               } finally {
+	                  pool.freeConnection(con, pstmt);
+	               }
+	               return flag;
+	            }
 	      // 모임 사진 리스트 
 	         public Vector<MoimPhotosBean> getmoimImgList(int moimNum){
 	            Connection con = null;

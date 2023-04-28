@@ -87,7 +87,7 @@
                  <!-- 이미지 스타일 값은 이미지 받아오고 수정해봅니다. -->
                  <div class="member-dropdown-content">
                      <a href="/bigmoim/view/login/memberupdate.jsp">내 정보 수정</a>
-                     <a href="/bigmoim/view/login/mymoim.jsp">내 모임 관리</a>
+                     <a href="/bigmoim/view/moim/mymoim.jsp">내 모임 관리</a>
                      <a href="/bigmoim/view/moim/makemoim.jsp">모임개설</a>
                  </div>
                 </div>

@@ -18,31 +18,45 @@
     
     
      <!-- 하단 -->
-    <footer>
-      <ul>
-        <li><a href="#">이용약관</a></li>
-        <li><a href="#">개인정보처리방침</a></li>
-        <li><a href="#">고객센터</a></li>
-        <li><a href="#">대모임 소개</a></li>
-        <li><a href="#">대모임 인재채용</a></li>
-      </ul>
-      <ul>
-      	<li>Creater</li>
-      	<a href="https://github.com/youngmoon97" target='_blank'>Young-Moon Cho</p>
-      	<a href="https://github.com/Lsm0823" target='_blank'>Sang-Mok Lee</p>
-      	<a href="https://github.com/LMoment" target='_blank'>Seo-Young Ha</p>
-      	<a href="https://github.com/oowij" target='_blank'>Ji-Woo Seo</p>
-      	<a href="https://github.com/Chaeso99" target='_blank'>Gi-Joo Chea</p>
-      	<a href="https://github.com/yangsol" target='_blank'>Han-Sol Yang</p>
-      </ul>
-      <ul>
-      	<li>Git</li>
-      	<a href="https://github.com/youngmoon97/Bigmoim" target='_blank'>
-      		<img src="/bigmoim/image/git.png" alt="깃주소" width="200" height="200">
-      	</a>
-      </ul>
-      <p>&copy; 2023 대모임</p>
-    </footer>
+<footer>
+  <div class="footer-section">
+    <ul>
+      <li><a href="#">이용약관</a></li>
+      <li><a href="#">개인정보처리방침</a></li>
+      <li><a href="#">고객센터</a></li>
+      <li><a href="#">대모임 소개</a></li>
+      <li><a href="#">대모임 인재채용</a></li>
+    </ul>
+  </div>
+  <div>
+    <ul class="Creater">
+      <li>Creater</li>
+      <li><a href="https://github.com/youngmoon97" target='_blank'>Young-Moon Cho</a></li>
+      <li><a href="https://github.com/Lsm0823" target='_blank'>Sang-Mok Lee</a></li>
+      <li><a href="https://github.com/LMoment" target='_blank'>Seo-Young Ha</a></li>
+      <li><a href="https://github.com/oowij" target='_blank'>Ji-Woo Seo</a></li>
+      <li><a href="https://github.com/Chaeso99" target='_blank'>Gi-Joo Chea</a></li>
+      <li><a href="https://github.com/yangsol" target='_blank'>Han-Sol Yang</a></li>
+    </ul>
+  </div>
+  <div class="footer-section">
+    <ul class="git">
+      <li style="margin-bottom: 10px;">Git</li>
+      <li style="list-style: none;">
+        <a href="https://github.com/youngmoon97/Bigmoim" target='_blank'>
+          <img src="/bigmoim/image/git.png" alt="깃주소" width="100" height="100">
+        </a>
+      </li>
+      <li style="margin-top: 2em;">
+      &copy; 2023 대모임
+      </li>
+    </ul>
+  </div>
+  <p>.</p>
+</footer>
+
+
+
     
   </body>
 </html>
