@@ -149,12 +149,12 @@ public class MoimMgr {
 			int businessNum = Integer.parseInt(multi.getParameter("businessNum"));
 			int taskNum = Integer.parseInt(multi.getParameter("taskNum"));
 			int themeNum = Integer.parseInt(multi.getParameter("themeNum"));
-			int moimOrclass = Integer.parseInt(multi.getParameter("moimtype"));
+			int moimOrclass = Integer.parseInt(multi.getParameter("moimOrclass"));
 			con = pool.getConnection();
-			sql = "update moim"
-				+ "set moinName= ?, moimArea=?, moimKakao=?, categoruNum=?,"
-				+ " moimImg=?, moimProfile=?, themeNum=?, taskNum=?, moimHCount =?"
-				+ "businessNum=?, classprice=?, moimOrclass = ?"
+			sql = "update moim  "
+				+ "set moimName= ?, moimArea=?, moimKakao=?, categoryNum=?, "
+				+ "moimImg=?, moimProfile=?, themeNum=?, taskNum=?, moimHCount =?, "
+				+ "businessNum=?, classprice=?, moimOrclass = ?  "
 				+ "where moimNum= ? ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, moimName);
@@ -164,7 +164,7 @@ public class MoimMgr {
 			pstmt.setString(5, moimImg);
 			pstmt.setString(6, moimProfile);
 			pstmt.setInt(7, themeNum);
-			pstmt.setInt(8, themeNum);
+			pstmt.setInt(8, taskNum);
 			pstmt.setInt(9, moimHCount);
 			pstmt.setInt(10, businessNum);
 			pstmt.setString(11, classprice);

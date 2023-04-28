@@ -105,10 +105,13 @@
 	  			class = "far fa-heart" style="display: inline-block; width: 100%; height: 100%;"
 	  			<%}%>
 	  			></i>
+	  			
 			</button>
+			<button type="button" onclick="moimUpdate()" 
+         name="moimUpdateBtn">모임관리</button>
 			<input type="hidden" name ="jjimNum" value="">
     		<input type="hidden" name ="memberId" value="<%=memberId %>">
-    		<input type="hidden" name ="moimNum" value="">
+    		<input type="hidden" name ="moimNum" value="<%=no %>">
     		<input type="hidden" name ="classNum" value="">
     	</form>
 			</li>
@@ -286,6 +289,10 @@
     			likeBtn.className = "far fa-heart"//빈 하트로
     		}
     	}  
+        function moimUpdate(){//모임정보 수정 페이지로 감
+            document.jjimFrm.action = "./moimupdate.jsp";
+            document.jjimFrm.submit();
+         }
       </script>
     </div>
   </body>

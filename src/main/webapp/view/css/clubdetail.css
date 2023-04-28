@@ -5,6 +5,7 @@ fbody {
   margin: 0 auto; /* 가운데 정렬 */
 }
 
+
 a{
    text-decoration: none;
    color: black;
@@ -155,6 +156,7 @@ nav a:hover {
   align-items: center;
   margin: 20px auto;
   font-size: 20px;
+  list-style: none;
 }
 
 .clubdetail-nav a{
@@ -221,6 +223,7 @@ nav a:hover {
 .clubdetail-area{
   display: flex;
   padding: 0;
+  list-style: none;
 }
 
 .moimarea-line{
@@ -234,6 +237,17 @@ nav a:hover {
 .clubdetail-jjim{
   width: 21px;
   height: 20px;
+}
+
+.moimEditorBtn{
+  background: #eee;
+  border-radius: 5px;
+  margin-left: 20px;
+  border-left-width: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom-width: 20px;
+  margin-bottom: 0px;
 }
 
 .clubdetail-photo{
@@ -266,6 +280,7 @@ nav a:hover {
   display: flex;
   flex-direction: column;
   padding: 0px;
+  list-style: none;
 }
 
 .clubdetail-schedule .meeting_list h2 {
@@ -284,6 +299,8 @@ nav a:hover {
   flex-direction: row;
   position: relative;
   margin-top: 10px;
+  list-style: none;
+  padding-left: 0px;
 }
 
 .clubdetail-schedule .meeting_list .mlist_in .date {
@@ -308,12 +325,14 @@ nav a:hover {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  list-style: none;
+  padding-left: 0px;
 }
 
 .clubdetail-schedule .meeting_list .mlist_in .in_cont .ico::before {
 content:"";
 display:inline-block;
-background:url('/img_icon/icon.png') no-repeat 0 0;
+background:url('/bigmoim/image/icon.png') no-repeat 0 0;
 width:25px;
 height:25px;
 vertical-align: middle;
@@ -370,13 +389,24 @@ margin-right: 7px;
   margin: -100px 0px; 
 }
 
-.container div{
+.noMemberTxt{
+  width: 230px;
+  -webkit-transform: rotate(90deg);
+}
+
+.memTxt{
+  margin-left: 50px;
+  margin-top: 20px;
+  padding-top: 70px;
+}
+
+.container .joinMemberImg{
   -webkit-transform: rotate(90deg);
   overflow: hidden;
   height: auto;
 }
 
-.container div img{
+.container .joinMemberImg img{
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -414,6 +444,8 @@ margin-right: 7px;
   font-size:0; 
   border:1px solid #ddd;
   border-bottom: none;
+  list-style: none;
+  padding-left: 0px;
 }
 
 .tabnav li{
@@ -462,10 +494,31 @@ margin-right: 7px;
   height: auto; 
   border:1px solid #ddd; 
   border-top:none;
+  list-style: none;
 }
+
+.tabcontent h3{
+  margin-bottom: 0px;
+} 
+
+.tab .tabcontent .manager {
+  content:"";
+  position: relative;
+  display:inline-block;
+  background:url('/bigmoim/image/왕관.png') no-repeat 0 0; 
+  width:30px;
+  height:25px;
+  vertical-align: middle;
+  background-size: cover;
+  z-index: 1;
+  transform: translateY(35px);
+}
+
 .tab .tabcontent .tabcontent-list {
   display: flex;
   height: auto;
+  padding-left: 0px;
+  list-style: none;
 }
 
 .tab .tabcontent .tabcontent-list .tabcontent-list-img {
@@ -474,7 +527,7 @@ margin-right: 7px;
   border-radius: 50px;
 }
 
-.tab .tabcontent .tabcontent-list li img {
+.tab .tabcontent .tabcontent-list li img{
   width: 100%;
   height: 100px;
   border-radius: 50%;
@@ -485,6 +538,7 @@ margin-right: 7px;
   display: flex;
   flex-direction: column;
   padding-top: 25px;
+  list-style: none;
 }
 
 .tab .tabcontent .tabcontent-list .tabcontent-list-detail .tabcontent-list-name{
@@ -507,7 +561,6 @@ padding: 20px;
 background-color: pink;
 color: white;
 font-size: 16px;
-width: 700px;
 }
 
 .social-media {

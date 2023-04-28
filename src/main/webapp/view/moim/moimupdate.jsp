@@ -1,17 +1,58 @@
+<%@page import="model.Bean.BusinessBean"%>
+<%@page import="java.util.Vector"%>
+<%@page import="model.Bean.ThemeBean"%>
+<%@page import="model.Bean.BusinessBean"%>
+<%@page import="model.Bean.TaskBean"%>
+<%@page import="model.Bean.MoimCategoryBean"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
-<%@ page import="model.Bean.MoimBean"%>	
+<%@ page import="model.Bean.MoimBean"%>
+<jsp:useBean id="cMgr" class="controll.Mgr.CategoryMgr"/>
+<jsp:useBean id="macMgr" class="controll.Mgr.MyActivityMgr"/>
+<jsp:useBean id="moimMgr" class="controll.Mgr.MoimMgr"/>
+	
 <%
+	//받아온 모임넘값
+	int moimNum = Integer.parseInt(request.getParameter("moimNum"));
+	//System.out.println("모임업데이트.jsp 모임넘 = "+moimNum);
+	MoimBean moimbean = moimMgr.moimDetail(moimNum);
 
-	String moimImg = request.getParameter("moimImg");
-	String moimName = request.getParameter("moimName");
-	String moimArea = request.getParameter("moimArea");
-	int moimHCount = Integer.parseInt(request.getParameter("moimHCount"));
-	int categoryNum = Integer.parseInt(request.getParameter("categoryNum"));
-	int businessNum = Integer.parseInt(request.getParameter("businessNum"));
-	int taskNum = Integer.parseInt(request.getParameter("taskNum"));
-	int themeNum = Integer.parseInt(request.getParameter("themeNum"));
-	String moimProfile = request.getParameter("moimProfile");
+	//String moimImg = moimbean.getMoimImg();
+	String moimName = moimbean.getMoimName();
+	String moimArea = moimbean.getMoimArea();
+	int moimHCount = moimbean.getMoimHCount();
+	int categoryNum = moimbean.getCategoryNum();
+	int taskNum = moimbean.getTaskNum();
+	int businessNum = moimbean.getBusinessNum();
+	int themeNum = moimbean.getThemeNum();
+	String moimProfile = moimbean.getMoimProfile();
+	int moimType = moimbean.getMoimOrclass();
+	//System.out.println("모임업데이트 모임타입 ="+moimType); //2 나옴
+	
+	String businessName = macMgr.getBusinessName(businessNum);
+	String taskName = macMgr.getTaskName(taskNum);
+	String themeName = macMgr.getThemeName(themeNum);
+	String categoryName = cMgr.categoryName(categoryNum);
+	
+	Vector<BusinessBean> vBusiness = macMgr.businessList(); //업종
+	Vector<TaskBean> vTask = macMgr.taskList(); //직무
+	Vector<ThemeBean> vTheme = macMgr.themeList(); //테마
+	Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
+
 %>
+<<script type="text/javascript">
+function getCategoryNum(categoryNum){
+    document.moimUpdateFrm.categoryNum.value=categoryNum;
+ }
+ function getBusinessNum(businessNum){
+    document.moimUpdateFrm.businessNum.value=businessNum;
+ }
+ function getTaskNum(taskNum){
+    document.moimUpdateFrm.taskNum.value=taskNum;
+ }
+ function getThemeNum(themeNum){
+    document.moimUpdateFrm.themeNum.value=themeNum;
+ }
+</script>
 
 <!DOCTYPE html>
 <html>
@@ -122,11 +163,11 @@
                     <div class="back-button" style="margin-top: 3em">
                         <!--a 태그에 메인 URL 입력해야함-->
                         <a href="#">
-                            <img src="../images/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
+                            <img src="../../image/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
                         </a>
                         <h3 style="margin-left: -7.5em"><strong>모임 관리하기</strong></h3>
                     </div>
-                    <form action="#" method="post">
+                    <form name="moimUpdateFrm" action="moimupdateProc.jsp" method="POST" enctype="multipart/form-data">
                         <div style="width: 500px; font-size: 16px;">
 
                             <div class="image-preview-container">
@@ -137,10 +178,14 @@
                                         <br>
                                     </label>
                                 </div>
-                                <img id="preview-image" src="" alt="Preview Image">
-                                <label for="profile-image" class="file-input-container" style="margin-top: 6em">사진 변경하기</label>
-                                <input type="file" class="form-control-file" id="profile-image" name="moimImg" value=<%= moimImg %>
-                                    onchange="showPreviewImage(this)" >
+                                    <% 
+    									String img = "/bigmoim/image/"+moimbean.getMoimImg();
+    								%>
+    							<div class="image-preview-container">
+                                <img id="preview-image" src="<%=img %>" alt="Preview Image">
+                                <label for="profile-image" class="file-input-container">사진 선택하기</label>
+                                <input type="file" class="form-control-file" id="profile-image" name="moimImg"
+                                    onchange="showPreviewImage(this)">
                             </div>
 
                             <script>
@@ -163,40 +208,85 @@
                                 <br>
                                 <label>모임 명</label>
                                 <textarea class="form-control" id="moimName" name="moimName" rows="1" maxlength="30"
-                                    value ="<%= moimName %>"></textarea>
+                                    value ="<%= moimName %>"><%=moimName %></textarea>
                                 <br>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label>지역</label>
+                                    <label>지역(도/시, 구/동 까지 입력)</label>
                                     <textarea class="form-control" id="moimArea" name="moimArea" rows="2" maxlength="30"
-                                        value=<%= moimArea %>></textarea>
+                                        value=<%= moimArea %>><%=moimArea %></textarea>
                                     <br>
 
                                     <label for="moimHCount">정원 (1~300)</label>
                                     <br>
                                     <textarea class="form-control" id="moimHCount" name="moimHCount" rows="2"
-                                        maxlength="3" value=<%= moimHCount %>></textarea>
+                                        maxlength="3" value=<%= moimHCount %>><%= moimHCount %></textarea>
 
                                 </div>
                                 <div class="col-md-6">
                                     <label>모임 종류</label>
-                                    <select class="form-control" name="categoryNum">
-                                        <option value=<%= categoryNum %>>카테고리</option>
-                                    </select>
+                                    <select class="form-control" name="categoryNum"
+                                    onChange="javascript:getCategoryNum(this.form.categoryNum.value)">
+                                        <option value=<%= categoryNum %>><%= categoryName %></option>
+										<%
+										for (int i = 0; i < vCategory.size(); i++) {
+																		MoimCategoryBean mcBean = vCategory.get(i);
+										%>
+										<option value="<%=mcBean.getCategoryNum()%>">
+											<%=mcBean.getCategoryName()%>
+											<%
+											}
+											%>
+									</select>
                                     <br>
-                                    <select class="form-control" name="businessNum">
-                                        <option value=<%= businessNum %>>업종</option>
+                                    
+                                    <select class="form-control" name="businessNum"
+                                    onChange="javascript:getBusinessNum(this.form.businessNum.value)">
+                                        <option value=<%= businessNum %>><%= businessName %></option>
+                                            <%
+                                                    for (int i = 0; i < vBusiness.size(); i++) {
+                                                        BusinessBean bBean = vBusiness.get(i);
+                                                %>
+                                                <option value="<%=bBean.getBusinessNum()%>">
+                                                    <%=bBean.getBusinessName()%>
+                                                </option>
+                                                <%
+                                                    }
+                                                %>
                                     </select>
                                     <br>
 
-                                    <select class="form-control" name="taskNum">
-                                        <option value=<%= taskNum %>>직무</option>
+                                    <select class="form-control" name="taskNum"  
+                                    onChange="javascript:getTaskNum(this.form.taskNum.value)">
+                                        <option value=<%= taskNum %>><%= taskName %></option>
+                                                <%
+                                                    for (int i = 0; i < vTask.size(); i++) {
+                                                        TaskBean taBean = vTask.get(i);
+                                                %>
+                                                <option value="<%=taBean.getTaskNum()%>">
+                                                    <%=taBean.getTaskName()%>
+                                                </option>
+                                                <%
+                                                    }
+                                                %>
                                     </select>
                                     <br>
-                                    <select class="form-control" name="themeNum">
-                                        <option value=<%= themeNum %>>테마</option>
+                                    
+                                    <select class="form-control" name="themeNum"
+                                     onChange="javascript:getThemeNum(this.form.themeNum.value)">
+                                        <option value=<%= themeNum %>><%= themeName %></option>
+                                                                                 <%
+                                                    for (int i = 0; i < vTheme.size(); i++) {
+                                                        ThemeBean thBean = vTheme.get(i);
+                                                %>
+                                                <option value="<%=thBean.getThemeNum()%>">
+                                                    <%=thBean.getThemeName()%>
+                                                </option>
+                                                <%
+                                                    }
+                                                %>
                                     </select>
                                     <br>
                                 </div>
@@ -209,12 +299,12 @@
                                 <label>모임 소개</label>
                                 <br>
                                 <textarea class="form-control" id="moimProfile" name="moimProfile" rows="5"
-                                    maxlength="500"  value=<%= moimProfile %>></textarea>
+                                    maxlength="500" value=<%= moimProfile %>><%= moimProfile %></textarea>
                             </div>
 
                             <div>
                                 <br>
-                                <label>모임 맴버</label>
+                                <label>모임 멤버</label>
                                 <!-- 회원 리스트를 서버에서 받아와서 동적으로 생성 -->
                                 <!-- 예시로 더미 데이터를 사용 -->
                                 <ul id="memberList" class="list-group">
@@ -286,6 +376,8 @@
                                     style="background-color: pink;">
 
                             </div>
+                            <input type="hidden" name ="moimNum" value=<%=moimNum%>>
+                            <input type="hidden" name ="moimOrclass" value=<%=moimType%>>                     
                     </form>
                 </div>
             </div>
@@ -296,7 +388,6 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="../js/jquery-3.6.0.min.js"></script>
     <script src="../js/popper.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
 </body>
 
 </html>
