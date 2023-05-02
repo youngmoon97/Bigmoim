@@ -113,7 +113,7 @@ padding: 10px;
           <button type="submit" class="search-btn" >
              <img src="/bigmoim/image/search.png" alt="검색" style="width: 30px; height: 30px;">
           </button>
-          <input type="text" name=searchText value="" placeholder="모임 이름으로 검색하세요!"/>
+          <input type="text" name=searchText value="" placeholder="모임 이름으로 검색하세요!" style="outline: none;"/>
         </form>
       </div>
         <div class="header-function">

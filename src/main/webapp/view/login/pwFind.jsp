@@ -43,14 +43,14 @@
                     <div>
                         <h3 class = "login-find-title"><label for = "id">아이디</label></h3>
                         <span class = "box string-id">
-                            <input type = "text" name = "memberId" class = "string" maxlength = "20">
+                            <input type = "text" name = "memberId" class = "string" maxlength = "20" style="width: 94%;">
                         </span>
                     </div>
                     <!-- 전화번호 -->
                     <div>
                         <h3 class = "login-find-title"><label for = "tel">전화번호</label></h3>
                         <span class = "box string-tel">
-                            <input type = "text" name = "memberTel" class = "string" maxlength = "16">
+                            <input type = "text" name = "memberTel" class = "string" maxlength = "16" style="width: 94%;">
                         </span>
                     </div>
                 </div>
