@@ -14,7 +14,7 @@
 	
 <%
 	//받아온 모임넘값
-	int moimNum = Integer.parseInt(request.getParameter("no"));
+	int moimNum = Integer.parseInt(request.getParameter("moimNum"));
 	//System.out.println("모임업데이트.jsp 모임넘 = "+moimNum);
 	MoimBean moimbean = moimMgr.moimDetail(moimNum);
 
@@ -177,7 +177,7 @@ function getCategoryNum(categoryNum){
                 <div class="main-merge"> <!--main page 간격-->
                     <div class="back-button" style="margin-top: 3em">
                         <!--a 태그에 메인 URL 입력해야함-->
-                        <a href="#">
+                        <a href="javascript:history.back();">
                             <img src="../../image/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
                         </a>
                         <h3 style="margin-left: -7.5em"><strong>모임 관리하기</strong></h3>

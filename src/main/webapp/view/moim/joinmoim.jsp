@@ -1,6 +1,11 @@
+<%@page import="model.Bean.MoimBean"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
+<jsp:useBean id="moimMgr" class="controll.Mgr.MoimMgr"/>
 <%
-	String moimName = request.getParameter("moimName");
+	String memberId = request.getParameter("memberId");
+	int moimNum = Integer.parseInt(request.getParameter("moimNum"));
+	MoimBean moimbean = moimMgr.moimDetail(moimNum);
+	
 %>
 <!doctype html>
 <html lang="en">
@@ -40,7 +45,7 @@
                                     <div>
                                         <label>모임 이름</label>
                                         <textarea class="form-control" id="moimName" name="moimName" rows="1"
-                                            maxlength="30" placeholder="<%=moimName %>" readonly></textarea>
+                                            maxlength="30" placeholder="<%=moimbean.getMoimName() %>" readonly></textarea>
                                     </div>
 
                                     <div>
@@ -65,6 +70,8 @@
                                         <br>
                                         <textarea class="form-control" id="mjContent" name="mjContent" rows="5"
                                             maxlength="500" placeholder="가입인사를 작성해 주세요"></textarea>
+                                        <input type="hidden" name="moimNum" value="<%=moimNum %>">
+                                        <input type="hidden" name="memberId" value="<%=memberId %>">
                                     </div>
 
 
@@ -72,7 +79,6 @@
                                     <div class="mt-4 text-center">
                                         <input type="submit" value="가입하기" class="btn btn-pill text-white btn-block"
                                             style="background-color: pink;">
-
                                     </div>
                                 </form>
                             </div>

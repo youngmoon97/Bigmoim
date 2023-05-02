@@ -70,6 +70,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title name="moimName"><%=moimbean.getMoimName()%></title>
     <link type="text/css" rel="stylesheet" href="../css/clubdetail.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />   
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
     	
@@ -103,11 +104,31 @@
               </li>
               <li class="moimarea-line">|</li>
               <li class="clubdetail-membercount" name="moimNCount">멤버&nbsp;<%=moimAllMemvlist.size() %></li>
-              <li><img class="clubdetail-jjim" src="/bigmoim/image/heart.png" name="jjim" /></li>
+               <form name="jjimFrm_class" action="../main/jjimProc.jsp" method="get">
+                 <button  id="detailjjim_class"
+	          onclick="likeBtnChange_class(<%=moimbean.getMoimNum()%>)" 
+	          style="color : red;  
+	          background-color: transparent;
+			  border: none;
+			  font-size: 24px;
+			  cursor: pointer;
+			  width: 30px;
+			  height: 30px;">
+	  			<i id="heart_class_<%=moimbean.getMoimNum() %>"
+	  			<%if(moimMgr.jjimCheck(memberId, moimbean.getMoimNum())){ %>
+	  			class = "fas fa-heart" style="display: inline-block; width: 100%; height: 100%;"<% } else{%>
+	  			class = "far fa-heart" style="display: inline-block; width: 100%; height: 100%;"
+	  			<%}%>
+	  			></i>
+			</button>
               <%if(memberId==null){ %>
               <%}else if(manngerBean.getMemberId().equals(memberId)){%>
-              <li><a href="/bigmoim/view/moim/moimupdate.jsp">수정하기</li>
+              <li><button type="button" class="moimEditorBtn" onclick="moimUpdate_class()">내클래스관리</button></li>
               <%}%>
+              	<input type="hidden" name ="jjimNum" value="">
+    			<input type="hidden" name ="memberId" value="<%=memberId %>">
+    			<input type="hidden" name ="moimNum" value="<%=no%>">
+    		</form>
             </ul>
           </div>
         </div>
@@ -354,8 +375,31 @@
               </li>
               <li class="moimarea-line">|</li>
               <li class="clubdetail-membercount" name="moimNCount">멤버&nbsp;<%=moimAllMemvlist.size() %></li>
-              <li><img class="clubdetail-jjim" src="/bigmoim/image/heart.png" name="jjim" /></li>
-              <li><a href="/bigmoim/view/moim/moimupdate.jsp">수정하기</li>
+              <form name="jjimFrm_moim" action="../main/jjimProc.jsp" method="get">
+                 <button  id="detailjjim_moim"
+	          onclick="likeBtnChange_moim(<%=moimbean.getMoimNum()%>)" 
+	          style="color : red;  
+	          background-color: transparent;
+			  border: none;
+			  font-size: 24px;
+			  cursor: pointer;
+			  width: 30px;
+			  height: 30px;">
+	  			<i id="heart_moim_<%=moimbean.getMoimNum() %>"
+	  			<%if(moimMgr.jjimCheck(memberId, moimbean.getMoimNum())){ %>
+	  			class = "fas fa-heart" style="display: inline-block; width: 100%; height: 100%;"<% } else{%>
+	  			class = "far fa-heart" style="display: inline-block; width: 100%; height: 100%;"
+	  			<%}%>
+	  			></i>
+			</button>
+              <%if(memberId==null){ %>
+              <%}else if(manngerBean.getMemberId().equals(memberId)){%>
+              <li><button type="button" class="moimEditorBtn" onclick="moimUpdate_moim()">내모임관리</button></li>
+              <%}%>
+            <input type="hidden" name ="jjimNum" value="">
+    		<input type="hidden" name ="memberId" value="<%=memberId %>">
+    		<input type="hidden" name ="moimNum" value="<%=no%>">
+    		</form>
             </ul>
           </div>
         </div>
@@ -653,7 +697,7 @@
 		  if(!memberId.equals(moimMemberId)){
   %>
 		  <div class="moimdetailBtn" style="bottom: 300px; right: 170px;">
-		  <a href="#">
+		  <a href="joinmoim.jsp?moimNum=<%=no%>&memberId=<%=memberId%>">
 		      <p class="moimdetailBtn-txt">가입하기</p>
 		  </a>
 		  </div>
@@ -667,6 +711,47 @@
  	  <%} %><!-- for -->
   <%} %><!-- if else -->
   <script>
+  
+  //찜목록 
+  function moimUpdate_moim(){//모임정보 수정 페이지로 감(모임)
+		document.jjimFrm_moim.action = "moimupdate.jsp";
+		document.jjimFrm_moim.submit();
+	}
+  
+  function moimUpdate_class(){//모임정보 수정 페이지로 감(클래스)
+		document.jjimFrm_class.action = "moimupdate.jsp";
+		document.jjimFrm_class.submit();
+	}
+  //////////////////////////////////////////////
+  function likeBtnChange_moim(num) {
+  	//Proc에 보내기 
+  	let jjimFrm_moim = document.forms["jjimFrm_moim"];
+  	jjimFrm_moim.moimNum.value = num;
+      jjimFrm_moim.submit();
+  	
+  	//색상 변경
+		let likeBtn = document.getElementById("heart_moim_"+ num)
+		if(likeBtn.className == "far fa-heart"){//빈 하트면
+			likeBtn.className = "fas fa-heart" //꽉찬 하트로
+		}else if(likeBtn.className == "fas fa-heart"){//꽉찬 하트면
+			likeBtn.className = "far fa-heart"//빈 하트로
+		}
+	}
+  
+  function likeBtnChange_class(num) {
+	  	//Proc에 보내기 
+	  	let jjimFrm_class= document.forms["jjimFrm_moim"];
+	  	jjimFrm_class.moimNum.value = num;
+	      jjimFrm_class.submit();
+	  	
+	  	//색상 변경
+			let likeBtn = document.getElementById("heart_class_"+ num)
+			if(likeBtn.className == "far fa-heart"){//빈 하트면
+				likeBtn.className = "fas fa-heart" //꽉찬 하트로
+			}else if(likeBtn.className == "fas fa-heart"){//꽉찬 하트면
+				likeBtn.className = "far fa-heart"//빈 하트로
+			}
+		}
   //모임 및 클래스 js
 	//모임 및 클래스 멤버들 탭js  
     const change = (num) =>{
