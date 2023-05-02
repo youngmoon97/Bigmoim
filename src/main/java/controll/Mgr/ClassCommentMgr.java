@@ -13,6 +13,7 @@ public class ClassCommentMgr {
 	public ClassCommentMgr() {
 		pool= DBConnectionMgr.getInstance();
 	}
+	
 	//클래스 댓글 작성
 	public boolean ccInsert(ClassCommentBean bean) {
 		Connection con = null;
@@ -22,12 +23,12 @@ public class ClassCommentMgr {
 		try {
 			con = pool.getConnection();
 			sql = "insert into classComment"
-				+ "(ccContent, memberId, bcDate, classNum) "
+				+ "(ccComment, memberId, ccDate, moimNum) "
 				+ "values(?,?,now(),?)";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, bean.getCcContent());
+			pstmt.setString(1, bean.getCcComment());
 			pstmt.setString(2, bean.getMemberId());
-			pstmt.setInt(3, bean.getClassNum());
+			pstmt.setInt(3, bean.getMoimNum());
 			if(pstmt.executeUpdate()==1) {
 				flag=true;
 			}
@@ -68,7 +69,7 @@ public class ClassCommentMgr {
 		boolean flag = false;
 		try {
 			con = pool.getConnection();
-			sql = "update classComment set ccContent=? "
+			sql = "update classComment set ccComment=? "
 				+ "where ccNum = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, ccNum);
@@ -83,7 +84,7 @@ public class ClassCommentMgr {
 		return flag;
 	}
 	//클래스 댓글 리스트
-	public Vector<ClassCommentBean> ccList(int classNum){
+	public Vector<ClassCommentBean> ccList(int moimNum){
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -91,18 +92,17 @@ public class ClassCommentMgr {
 		Vector<ClassCommentBean> vlist = new Vector<ClassCommentBean>();
 		try {
 			con = pool.getConnection();
-			sql = "select * from classComment  "
-				+ "where classNum =?";
+			sql = "select * from classcomment c where moimNum = ?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, classNum);
+			pstmt.setInt(1, moimNum);
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				ClassCommentBean bean = new ClassCommentBean();
 				bean.setCcNum(rs.getInt("ccNum"));
-				bean.setCcContent(rs.getString("ccContent"));
+				bean.setCcComment(rs.getString("ccComment"));
 				bean.setMemberId(rs.getString("memberId"));
 				bean.setCcDate(rs.getString("ccDate"));
-				bean.setClassNum(rs.getInt("classNum"));
+				bean.setMoimNum(rs.getInt("moimNum"));
 				vlist.addElement(bean);
 			}
 		} catch (Exception e) {

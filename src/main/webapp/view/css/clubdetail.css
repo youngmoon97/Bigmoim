@@ -5,7 +5,6 @@ fbody {
   margin: 0 auto; /* 가운데 정렬 */
 }
 
-
 a{
    text-decoration: none;
    color: black;
@@ -25,14 +24,14 @@ header {
 }
 
 .join-text {
-font-size: 28px;
-font-weight: bold;
-text-align: left;
-margin: 30px auto;
-padding: 20px;
-color: black;
-background-color: transparent;
-border-radius: 5px;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: left;
+  margin: 30px auto;
+  padding: 20px;
+  color: black;
+  background-color: transparent;
+  border-radius: 5px;
 }
 
 .main-container {
@@ -551,86 +550,83 @@ margin-right: 7px;
   color: #999;
 }
 
-
-/* 하단 */
-footer {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 20px;
-background-color: pink;
-color: white;
-font-size: 16px;
+/*클래스 댓글*/
+.commenttab{
+  border: 1px solid #ddd;
+  margin-bottom: 50px;
 }
 
-.social-media {
-display: flex;
-}
-
-.social-media a {
-display: flex;
-justify-content: center;
-align-items: center;
-width: 30px;
-height: 30px;
-margin-right: 10px;
-border-radius: 50%;
-background-color: white;
-color: pink;
-text-decoration: none;
-}
-
-.social-media a:hover {
-background-color: pink;
-color: white;
-}
-
-@media (max-width: 768px) {
-
-  header {
-  flex-direction: column;
-  align-items: flex-start;
+.commenttab .comments{
   padding: 10px;
-  }
-  
-  .search-area {
-  margin-top: 10px;
+  border: 1px solid #ddd;
+  margin: 10px 10px auto 10px;
+  border-radius: 10px;
+}
+
+.commenttab .comment {
+  border-radius: 20px;
+  padding: 10px;
+  background-color: #f8f8f8;
+}
+
+.commenttab .comment .author {
+  font-weight: bold;
+}
+
+.commenttab .comment .date{
+  color: gray;
+  font-size: 11px;
+}
+
+.commenttab .commentBtn{
   margin-bottom: 10px;
-  }
-  
-  input[type="text"] {
-  width: 200px;
-  margin-left: 5px;
-  }
-  
-  .login-btn, .signup-btn {
-  padding: 5px 10px;
-  font-size: 14px;
-  margin-right: 5px;
-  }
-  
-  nav {
-  justify-content: space-between;
-  padding: 10px;
-  }
-  
-  nav ul {
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+.comment-form {
+  margin: 10px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.comment-form input {
+  display: block;
+  margin: 10px;
+  padding: 5px;
+}
+
+.comment-form button {
+  margin: 10px;
+  background-color: pink;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 7px;
+}
+
+.comment-form button:hover {
+  background-color: #F5F5F5;
+}
+
+
+.moimdetailBtn{
+  position: fixed;
+  border-radius: 25px;
+  background-color: pink;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  }
-  
-  nav li {
-  margin-right: 0;
-  margin-bottom: 10px;
-  }
-  
-  }
-  
-  @media (max-width: 576px) {
-  
-  input[type="text"] {
-  width: 150px;
-  font-size: 14px;
-  }
-  
-  }
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  color: white;
+}
+
+.moimdetailBtn a{
+  color: white;
+}
+
+.moimdetailBtn-txt{
+  margin: 10px 25px;
+}

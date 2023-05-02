@@ -72,7 +72,7 @@ public class BoardMgr {
 		return flag;
 	}
 	// 게시판 삭제
-	public boolean boardDelete(int mbNum) {
+	public boolean boardDelete(int mbNum, String memberId) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
@@ -80,9 +80,10 @@ public class BoardMgr {
 		try {
 			con = pool.getConnection();
 			sql = "delete from memberboard "
-				+ "where mbNum =?";
+				+ "where mbNum =? and memberId =?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, mbNum);
+			pstmt.setString(2, memberId);
 			if(pstmt.executeUpdate()==1) {
 				flag=true;
 			}
@@ -206,5 +207,34 @@ public class BoardMgr {
 		}
 		return bean;
 	}
+	//게시판 가져오기
+	public MemberBoardBean getmemberBoard(String memberId, int mbNum) {
+	      Connection con = null;
+	      PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      String sql = null;
+	      MemberBoardBean bean = new MemberBoardBean();
+	      try {
+	         con = pool.getConnection();
+	         sql = "select mbTitle, mbContent, mbImg, mbNum from memberBoard where memberId = ? and mbNum = ?";
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setString(1, memberId);
+	         pstmt.setInt(2, mbNum);
+	         rs = pstmt.executeQuery();
+	         if (rs.next()) {
+
+	            bean.setMbTitle(rs.getString(1));
+	            bean.setMbContent(rs.getString(2));
+	            bean.setMbImg(rs.getString(3));
+	            bean.setMbNum(rs.getInt(4));
+	         }
+
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         pool.freeConnection(con, pstmt, rs);
+	      }
+	      return bean;
+	   }
 	
 }

@@ -58,7 +58,13 @@ function getCategoryNum(categoryNum){
  
  function memberBan(banMemberId){
 	 document.moimUpdateFrm.action = "memberBanProc.jsp";
+	 document.moimUpdateFrm.enctype = "application/x-www-form-urlencoded";
 	 document.moimUpdateFrm.memberId.value=banMemberId;
+	 document.moimUpdateFrm.submit();	
+ }
+ 
+ function moimUpdate(){
+	 document.moimUpdateFrm.enctype="multipart/form-data"
 	 document.moimUpdateFrm.submit();	
  }
 </script>
@@ -317,24 +323,25 @@ function getCategoryNum(categoryNum){
                                 <!-- 회원 리스트를 서버에서 받아와서 동적으로 생성 -->
                                 <!-- 예시로 더미 데이터를 사용 -->
                                 <ul id="memberList" class="list-group">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    
                                     <%for(int i=0;i<vMoimMembers.size();i++) {
                                     MemberBean memberBean = vMoimMembers.get(i);
-                                    System.out.println("moimupdate.memberBean = "+memberBean.getMemberId());
-                                    
+                                    //System.out.println("moimupdate.memberBean = "+memberBean.getMemberId());
+                                    if(!memberBean.getMemberId().equals(moimbean.getMemberId())) {
                         			img = "/bigmoim/image/"+memberBean.getMemberImg();
                                     %>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <div class="d-flex align-items-center">
                                             <img src="<%=img%>" class="mr-3" width="50" height="50"
                                                 name="memberImg-<%=memberBean.getMemberId()%>"> <!-- 프로필 사진 이미지 태그 -->
                                             <span name="memberId-<%=memberBean.getMemberId()%>"><%=memberBean.getMemberName() %></span> <!-- 회원 이름 텍스트 -->
                                         </div>
-                                        <button type="button" class="btn btn-danger" onclick="memberBan(<%=memberBean.getMemberId()%>)">추방</button>
+                                        <button type="button" class="btn btn-danger" onclick="memberBan('<%=memberBean.getMemberId()%>')">추방</button>
                                     </li>
-                                    <%} %>
+                                    <%} //if 
+                                       } //for%>                 
                                 </ul>
-									<input type="hidden" name ="memberId" value="">
-								
+									<input type="hidden" name ="memberId">
                                 <script>
        							
                                 </script> 
@@ -342,11 +349,11 @@ function getCategoryNum(categoryNum){
                             </div>
 
                             <div class="mt-4 text-center">
-                                <input type="submit" value="수정하기" class="btn btn-pill text-white btn-block"
-                                    style="background-color: pink;">
+                                <input type="button" value="수정하기" class="btn btn-pill text-white btn-block"
+                                    style="background-color: pink;" onclick="moimUpdate()">
 
                             </div>
-                            <input type="hidden" name ="moimNum" value=<%=moimNum%>>
+                            <input type="hidden" name ="moimNum" value='<%=moimNum%>'>
                             <input type="hidden" name ="moimOrclass" value=<%=moimType%>>                     
                     </form>
                 </div>

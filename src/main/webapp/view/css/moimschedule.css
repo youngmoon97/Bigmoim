@@ -1,83 +1,131 @@
 /* 전체 컨테이너 */
 .container {
-width: 900px;
-height: 500px;
-}     
-
-.wrapper {
-display: flex;
-flex-direction: row;
-align-items: center;
-background-color: #f5f5f5;
-border-radius: 8px;
-padding: 20px;
-box-shadow: 0px 3px 6px rgba(0,0,0,0.16);
-}
-
-/* 이미지 */
-.wrapper img {
-width: 150px;
-height: 150px;
-object-fit: cover;
-border-radius: 50%;
-margin-right: 40px;
-}
-
-/* 정보 */
-.info {
-display: flex;
-flex-direction: column;
-}
-
-.info h2 {
-margin: 0;
-font-size: 36px;
-font-weight: bold;
-color: #333;
-margin-bottom: 10px;
-}
-
-.info p {
-margin: 0;
-font-size: 18px;
-color: #777;
-margin-bottom: 20px;
-}
-
-/* 멤버 리스트 */
-.members {
-margin-top: 20px;
-}
-
-.member-list {
-display: flex;
-align-items: center;
-margin-bottom: 10px;
-}
-
-.member-list img {
-width: 35px;
-height: 35px;
-object-fit: cover;
-border-radius: 50%;
-margin-right: 10px;
-}
-
-.member-count {
-font-size: 16px;
-color: #999;
-margin-left: 5px;
+  flex-grow: 1;
+  
 }
 
 /* 미디어 쿼리 */
 @media screen and (max-width: 768px) {
-.wrapper {
-flex-direction: column;
-text-align: center;
+  .cards .wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .cards .wrapper img {
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
 }
 
-.wrapper img {
-margin-right: 0;
-margin-bottom: 20px;
+.cards {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 1000px; /* 최대 가로 길이 설정 */
+  margin: 0 auto; /* 가운데 정렬 */
+  background-color:rgb(255, 231, 235);
+  margin-bottom: 20px;
+  
 }
+
+.cards .wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 10px;
+  flex-basis: 90%;
+  width: 100%;
+  max-width: 965px; /* 최대 가로 길이 설정 */
+  margin: 0 auto; /* 가운데 정렬 */
+    background-color: white;
+  
+}
+
+
+.cards .moim-image {
+  flex-basis: 30%;
+  height: 100%;
+  margin-right: 2%;
+}
+
+.cards .moim-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cards .info {
+  flex-basis: 70%;
+  height: 100%;
+}
+
+.cards .info .info-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.cards .info .title {
+  margin-bottom: 2%;
+}
+
+.cards .info .content {
+  flex-grow: 1;
+  margin-bottom: 2%;
+}
+
+.cards .members {
+  margin-top: 2%;
+}
+
+.cards .member-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.cards .member-list img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  border-radius: 50%;
+}
+
+.cards .member-count {
+  margin-left: 5px;
+}
+.cards:hover {
+  transform: scale(1.025);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease-in-out;
+}
+/* .title 클래스 */
+.title {
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+/* .content 클래스 */
+.content {
+  margin-bottom: 0.5rem;
+  padding: 0;
+}
+
+/* p 태그 */
+.content p {
+  margin: 0;
+  font-size: 18px;
+}
+
+/* 제목과 컨텐츠 사이 간격 */
+.title h2 {
+  margin-bottom: 0.5rem;
 }

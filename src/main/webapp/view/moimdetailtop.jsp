@@ -16,12 +16,24 @@
 <body>
       <nav1>
         <ul class="clubdetail-nav">
-          <li class="clubdetail-nav-home"><a href="#">소개</a></li>
+          <li class="clubdetail-nav-home" onclick="boardchange(1)" >소개</li>
           <li class="clubdetail-nav-line1">|</li>
-          <li class="clubdetail-nav-notice"><a href="#">게시판</a></li>
+          <li class="clubdetail-nav-notice" onclick="boardchange(2)">게시판</li>
           <li class="clubdetail-nav-line2">|</li>
-          <li class="clubdetail-nav-notice"><a href="#">사진첩</a></li>
+          <li class="clubdetail-nav-notice" onclick="boardchange(3)">사진첩</li>
         </ul>
       </nav1>
 </body>
+
+<script>
+
+	const boardchange = (num) =>{
+	   const boardtabList = document.querySelectorAll(".mainwrapper");
+	   boardtabList.forEach((el) => (el.style.display = "none"));
+	   const boardnowTab = document.querySelector(".content"+ num);
+	   boardnowTab.style.display = "block";
+	};
+
+</script>
+
 </html>

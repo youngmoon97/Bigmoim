@@ -85,8 +85,9 @@ public class MoimMgr {
 			
 			try {
 				con = pool.getConnection();
-				sql = "	select member.memberId, memberImg, memberName "
-						+ "from member, moimMember where moimNum = ?";
+				sql = "SELECT member.memberId, member.memberImg, member.memberName "
+						+ "FROM member join moimmember on member.memberId = moimmember.memberId "
+						+ "WHERE moimmember.moimNum = ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, moimNum);
 				rs = pstmt.executeQuery();
@@ -560,7 +561,7 @@ public class MoimMgr {
 		return bean;
 	}
 	//모임가입신청
-	public boolean mjInsert(MoimJoinBean bean) {
+	public boolean mjInsert(int moimNum, String memberId, String mjContent) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
@@ -570,9 +571,9 @@ public class MoimMgr {
 			sql = "insert into moimjoin(moimNum,memberId,mjDate,mjContent)\r\n"
 					+ "values (?,?,now(),?) ";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, bean.getMoimNum());
-			pstmt.setString(2, bean.getMemberId());
-			pstmt.setString(3, bean.getMjContent());
+			pstmt.setInt(1, moimNum);
+			pstmt.setString(2, memberId);
+			pstmt.setString(3, mjContent);
 			if(pstmt.executeUpdate()==1) {
 				flag = true;
 			}
@@ -1213,4 +1214,27 @@ public class MoimMgr {
 	            }
 	            return flag;
 	         }
+	         //모임 탈퇴하기
+	         public boolean moimLeave(String memberId, int moimNum) {
+	            Connection con = null;
+	            PreparedStatement pstmt = null;
+	            String sql = null;
+	            boolean flag = false;
+	            try {
+	               con = pool.getConnection();
+	               sql = "delete from moimmember where memberId = ? AND moimNum = ?";
+	               pstmt = con.prepareStatement(sql);
+	               pstmt.setString(1, memberId);
+	               pstmt.setInt(2, moimNum);
+	               if(pstmt.executeUpdate()==1) {
+	                  flag = true;
+	               }
+	            } catch (Exception e) {
+	               e.printStackTrace();
+	            } finally {
+	               pool.freeConnection(con, pstmt);
+	            }
+	            return flag;
+	         }
+	      
 }

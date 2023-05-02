@@ -1,3 +1,7 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%
+	String moimName = request.getParameter("moimName");
+%>
 <!doctype html>
 <html lang="en">
 
@@ -32,11 +36,11 @@
                                     </a>
                                     <h3 class="ml-1 mb-0"><strong>모임 가입하기</strong></h3>
                                 </div>
-                                <form action="#" method="post">
+                                <form action="joinmoimProc.jsp" method="post">
                                     <div>
                                         <label>모임 이름</label>
                                         <textarea class="form-control" id="moimName" name="moimName" rows="1"
-                                            maxlength="30" placeholder="기존의 모임 명" readonly></textarea>
+                                            maxlength="30" placeholder="<%=moimName %>" readonly></textarea>
                                     </div>
 
                                     <div>

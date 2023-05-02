@@ -30,57 +30,71 @@
 		
     </style>
   </head>
-  <body style = "padding-top: 150px">
+<body style="min-height: 100vh; display: flex; flex-direction: column; padding-top: 150px;">
+  <!-- 카테고리 -->
+  <%@ include file = "/view/category.jsp" %>
+  
+  <div class="container" style="width: 1300px; margin: 0 auto;">
+    <%if(scheduleList.isEmpty()){ %>
+    <article>
+      <div class = "text">
+        <p class = "join-text"> 모임 일정이 없습니다. </p>
+      </div>
+    </article>
+    <%}else{ %>
+    <article>
+      <div class = "text">
+        <p class = "join-text"> 모임 일정입니다. </p>
+      </div>
+    </article>
+    <%
+      for(int i=0;i<scheduleList.size();i++){
+        MoimScheduleBean bean = scheduleList.get(i);
+      %>
+<div class="cards">     
+	<div class="wrapper">
+	  <div class="moim-image">
+	    <img src="/bigmoim/image/<%=bean.getMoimImg() %>" alt="모임 이미지" />
+	  </div>
+	  <div class="info">
+	    <div class="info-inner">
+	      <div class="title">
+	        
+	        <h1 class="msTitle"><strong><%=bean.getMsTitle() %></h2>	
+	      </strong></div>
+	      <div class="content" style="line-height: 1.2;">
+		  <p class="msArea"><%=bean.getMsArea() %></p>
+		  <p class="msDate"><%=bean.getMsDate() %></p>
+		  <p class="msContent"><%=bean.getMsContent() %></p>
+			</div>
+	      <div class="members">
+	        <div class="member-list">
+	          <% 
+	            Vector<MemberBean> joinmember = scMgr.moimScheduleImg(bean.getMsNum());
+	            for(int j=0;j<joinmember.size();j++){
+	              mbean = joinmember.get(i);
+	          %>
+	          <img src="/bigmoim/image/<%=mbean.getMemberImg() %>" alt="멤버 이미지1" />
+	          <%}%>
+	          <span class="member-count"></span>
+	        </div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
 
 
-	 <!-- 카테고리 -->
-    <%@ include file = "/view/category.jsp" %>
-    
-    <div class="container">
-    	<%if(scheduleList.isEmpty()){ %>
-    		<article>
-      		<div class = "text">
-        	<p class = "join-text"> 모임 일정이 없습니다. </p>
-      		</div>
-    		</article>
-    	<%}else{ %>
-    		<article>
-      		<div class = "text">
-        	<p class = "join-text"> 모임 일정입니다. </p>
-      		</div>
-    		</article>
-    		<%
-    		for(int i=0;i<scheduleList.size();i++){
-    			MoimScheduleBean bean = scheduleList.get(i);
-    		%>
-    			<div class="wrapper">
-    			<img src="/bigmoim/image/<%=bean.getMoimImg() %>" alt="모임 이미지" />
-    			<div class="info">
-      				<h2></h2>
-            		<p class="msTitle"><%=bean.getMsTitle() %></p>	
-      				<p class="msArea"><%=bean.getMsArea() %></p>
-      				<p class="msDate"><%=bean.getMsDate() %></p>
-      				<p class="msContent"><%=bean.getMsContent() %></p>
-      				<div class="members">
-        				<div class="member-list">
-    				<% 
-    				Vector<MemberBean> joinmember = scMgr.moimScheduleImg(bean.getMsNum());
-    				for(int j=0;j<joinmember.size();j++){
-    					mbean = joinmember.get(i);
-    				%>	
-          					<img src="/bigmoim/image/<%=mbean.getMemberImg() %>" alt="멤버 이미지1" />
-    		<%		}%>
-							<span class="member-count"></span>
-        				</div>
-      				</div>
-      				</div>
-  				</div>
-    			<% }//--for 
-    		}//--if-else %>
-  	</div>
-      
-    <!-- 하단 -->
-<!-- bottom.jsp -->
-    <%@ include file = "/view/bottom.jsp" %>
-  </body>
+
+
+
+      <% }//--for 
+    }//--if-else %>
+  </div>
+  
+  <!-- 하단 -->
+  <%@ include file = "/view/bottom.jsp" %>
+</body>
+
+</html>
 </html>

@@ -3,21 +3,21 @@ package model.Bean;
 public class ClassCommentBean {
 	
 	private int ccNum;
-	private String ccContent;
+	private String ccComment;
 	private String ccDate;
 	private String memberId;
-	private int classNum;
+	private int moimNum;
 	public int getCcNum() {
 		return ccNum;
 	}
 	public void setCcNum(int ccNum) {
 		this.ccNum = ccNum;
 	}
-	public String getCcContent() {
-		return ccContent;
+	public String getCcComment() {
+		return ccComment;
 	}
-	public void setCcContent(String ccContent) {
-		this.ccContent = ccContent;
+	public void setCcComment(String ccComment) {
+		this.ccComment = ccComment;
 	}
 	public String getCcDate() {
 		return ccDate;
@@ -31,11 +31,11 @@ public class ClassCommentBean {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
-	public int getClassNum() {
-		return classNum;
+	public int getMoimNum() {
+		return moimNum;
 	}
-	public void setClassNum(int classNum) {
-		this.classNum = classNum;
+	public void setMoimNum(int moimNum) {
+		this.moimNum = moimNum;
 	}
 	
 	
