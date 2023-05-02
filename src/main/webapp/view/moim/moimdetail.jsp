@@ -22,14 +22,14 @@
 // String memberId = (String)session.getAttribute("idKey");
 	//moimNum받아옴.
 	int no = Integer.parseInt(request.getParameter("num"));
-	System.out.print(no + "뭐야?");
+	//System.out.print(no + "뭐야?");
 	//모임상세 mgr 가져옴
 	MoimBean moimbean = moimMgr.moimDetail(no);
 	//모임안에서 클래스를 구분하기
 	int moimChk = moimbean.getMoimOrclass();
-	System.out.println(moimbean.getMoimOrclass());
+	//System.out.println(moimbean.getMoimOrclass());
 	String img = "/bigmoim/image/"+moimbean.getMoimImg();
-	System.out.print("img : " + img);
+	//System.out.print("img : " + img);
 	//moimnum을 받아서 해당 카테고리 이미지 가져옴.
 	MoimCategoryBean cabean = cateMgr.categoryImg(no);
 	//모임일정테이블에서 값들 가져오기
@@ -106,7 +106,7 @@
               <li><img class="clubdetail-jjim" src="/bigmoim/image/heart.png" name="jjim" /></li>
               <%if(memberId==null){ %>
               <%}else if(manngerBean.getMemberId().equals(memberId)){%>
-              <li><button class="moimEditorBtn" >수정하기</button></li>
+              <li><a href="/bigmoim/view/moim/moimupdate.jsp">수정하기</li>
               <%}%>
             </ul>
           </div>
@@ -298,8 +298,9 @@
 	      	<div class="comments">
 				<h3>등록된 댓글이 없습니다.</h3>
 	      	</div>
-	      	<form action = "moimdetailProc.jsp?num=<%=no %>" class="comment-form" method="post" name="commentFrm">
+	      	<form action = "moimdetailProc.jsp?num=<%=no %>&memberId=<%=memberId %>" class="comment-form" method="post" name="commentFrm">
 	      		<input type="text" id="ccComment" name="ccComment" placeholder="댓글을 입력하세요." value="" style="width: 610px; outline: none; height: fit-content;"/>
+	      		<input type="hidden" name="memberId" id="memberId" value="<%=memberId %>">
 	      		<button type="button" onclick="commentCheck()" style="width: 52px;">등록</button>
     		</form>
       	</div>
@@ -320,7 +321,7 @@
       			</div>
       			<%}%><!-- for -->
 	      	</div>
-	      	<form action = "moimdetailProc.jsp?num=<%=no%>&memberid=<%=memberId%>" class="comment-form" method="post" name="commentFrm" id="ccComment">
+	      	<form action = "moimdetailProc.jsp?num=<%=no%>&memberId=<%=memberId%>" class="comment-form" method="post" name="commentFrm" id="ccComment">
 	      		<input type="text" id="ccComment" name="ccComment" placeholder="댓글을 입력하세요." style="width: 610px; outline: none; height: fit-content;"/>
 	      		<button type="button" onclick="commentCheck()" style="width: 52px;">등록</button>
     		</form>
@@ -354,7 +355,7 @@
               <li class="moimarea-line">|</li>
               <li class="clubdetail-membercount" name="moimNCount">멤버&nbsp;<%=moimAllMemvlist.size() %></li>
               <li><img class="clubdetail-jjim" src="/bigmoim/image/heart.png" name="jjim" /></li>
-              <li><button class="moimEditorBtn">수정하기</button></li>
+              <li><a href="/bigmoim/view/moim/moimupdate.jsp">수정하기</li>
             </ul>
           </div>
         </div>

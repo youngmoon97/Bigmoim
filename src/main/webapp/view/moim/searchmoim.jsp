@@ -26,7 +26,7 @@
       @import url("https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Heebo:wght@500&display=swap");
     </style>
   </head>
-  <body>
+  <body style = "padding-top: 150px">
   
     <!-- 카테고리 -->
     <%@ include file = "/view/category.jsp" %>

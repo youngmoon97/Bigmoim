@@ -14,7 +14,7 @@
 	
 <%
 	//받아온 모임넘값
-	int moimNum = Integer.parseInt(request.getParameter("moimNum"));
+	int moimNum = Integer.parseInt(request.getParameter("no"));
 	//System.out.println("모임업데이트.jsp 모임넘 = "+moimNum);
 	MoimBean moimbean = moimMgr.moimDetail(moimNum);
 
