@@ -1,6 +1,7 @@
 <%@page import="model.Bean.ClassCommentBean"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <jsp:useBean id="ccMgr" class="controll.Mgr.ClassCommentMgr"/>
+<jsp:useBean id="mMgr" class="controll.Mgr.MemberMgr"/>
 <jsp:useBean id="ccBean" class="model.Bean.ClassCommentBean"/>
 <%
 	String memberId = request.getParameter("memberId");
@@ -14,13 +15,14 @@
 	ccBean.setMemberId(memberId);
 	ccBean.setCcComment(ccComment);
 	ccBean.setMoimNum(no);
-
+	int ccNum = ccMgr.getCcNum(memberId, no, ccComment);
 	boolean flag = ccMgr.ccInsert(ccBean);
 	
 	//System.out.print(flag +"입니다");
 	
 	if(flag){
 		msg = "댓글이 등록되었습니다.";
+		
 	}
 	
 	

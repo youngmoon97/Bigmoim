@@ -111,6 +111,31 @@ public class ClassCommentMgr {
 			pool.freeConnection(con, pstmt, rs);
 		}
 		return vlist;
-		
+	}
+	//클래스댓글번호가져오기
+	public int getCcNum(String memberId, int moimNum, String ccComment) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		int ccNum = 0 ;
+		try {
+			con = pool.getConnection();
+			sql = "select ccNum from classcomment "
+			+ "where memberId =? and moimNum and ccComment =?;";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, moimNum);
+			pstmt.setString(3, ccComment);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ccNum = rs.getInt("ccNum");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return ccNum;
 	}
 }

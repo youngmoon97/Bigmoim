@@ -55,26 +55,27 @@ public class MoimMgr {
 			return flag;
 		}
 		// 모임에서 멤버 추방
-		public boolean memberBan(String memberId) {
-			Connection con = null;
-			PreparedStatement pstmt = null;
-			String sql = null;
-			boolean flag = false;
-			try {
-				con = pool.getConnection();
-				sql = "delete from moimmember where memberId=?";
-				pstmt = con.prepareStatement(sql);
-				pstmt.setString(1, memberId);
-				if(pstmt.executeUpdate()==1) {
-					flag = true;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			} finally {
-				pool.freeConnection(con, pstmt);
-			}
-			return flag;
-		}
+		   public boolean memberBan(String memberId, int moimNum) {
+		      Connection con = null;
+		      PreparedStatement pstmt = null;
+		      String sql = null;
+		      boolean flag = false;
+		      try {
+		         con = pool.getConnection();
+		         sql = "delete from moimmember where memberId = ? AND moimNum = ?";
+		         pstmt = con.prepareStatement(sql);
+		         pstmt.setString(1, memberId);
+		         pstmt.setInt(2, moimNum);
+		         if(pstmt.executeUpdate()==1) {
+		            flag = true;
+		         }
+		      } catch (Exception e) {
+		         e.printStackTrace();
+		      } finally {
+		         pool.freeConnection(con, pstmt);
+		      }
+		      return flag;
+		   }
 		//한 모임의 전체 멤버 정보 받아오기(회원아이디, 회원이미지, 회원이름 받아옴)
 		public Vector<MemberBean> getMemberList(int moimNum){
 			Connection con = null;

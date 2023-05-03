@@ -153,19 +153,19 @@ padding: 10px;
            		for(int i=0;i<notiList.size();i++){
            			NotificationBean bean = notiList.get(i);
            			//게시판에 새글, 모임사진첩에 새 사진, 새로운 모임일정
-           			if(bean.getPhotoNum()!=0){
-           	%>
+           			if(bean.getPhotoNum()!=0){%>
 					<a href="#">모임에 새로운 사진이 추가되었습니다.</a>
            	<% }else if(bean.getMbNum()!=0){%>
            			<a href="#">모임에 새로운 게시글이 추가되었습니다.</a>
            	<% }else if(bean.getMsNum()!=0){ %>
            			<a href="#">모임에 새로운 일정이 추가되었습니다.</a>
-           	<% }//--else if %>
-             	<!-- 뭐 무슨 가입 신청, 가입 신청한거 완료한거 여기다가 뜨게 하면 되겠죠? maybe? -->
-             	<a href="#">새로운 메시지가 있습니다.</a>
-             	
-           <%	}//-for
-           	}//--if-else %>
+           	<% }else if(bean.getCcNum()!=0){ 
+           	System.out.println("ccnum :" + bean.getCcNum());%>
+           			
+             		<a href="#">클래스에 새로운 댓글이 추가되었습니다.</a>
+            <%} //if-else-2
+           			}//-for
+           	}//--if-else-1%>
              
 </button>
 

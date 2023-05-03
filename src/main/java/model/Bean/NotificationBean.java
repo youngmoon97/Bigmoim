@@ -7,6 +7,14 @@ public class NotificationBean {
 	private int mbNum;
 	private int msNum;
 	private int read;
+	private int ccNum;
+	
+	public int getCcNum() {
+		return ccNum;
+	}
+	public void setCcNum(int ccNum) {
+		this.ccNum = ccNum;
+	}
 	public int getNotiNum() {
 		return notiNum;
 	}

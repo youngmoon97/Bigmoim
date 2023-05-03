@@ -462,20 +462,21 @@ public class MemberMgr {
 		}
 	// 알림 추가 - MoimMgr.mmList로 모임의 멤버아이디 전부 가져와서 포문으로 넣어줘야함
 	//mb=memberBoard, ms=moimschedule, bc=BoardComment
-	public boolean notiInsert(String memberId, int photoNum, int mbNum, int msNum) {
+	public boolean notiInsert(String memberId, int photoNum, int mbNum, int msNum, int ccNum) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		String sql = null;
 		boolean flag = false;
 		try {
 			con = pool.getConnection();
-			sql = "insert into notification (memberId, photoNum, mbNum, msNum) "
-				+ "value(?,?,?,?)";
+			sql = "insert into notification (memberId, photoNum, mbNum, msNum, ccNum) "
+				+ "value(?,?,?,?,?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, memberId);
 			pstmt.setInt(2, photoNum);
 			pstmt.setInt(3, mbNum);
 			pstmt.setInt(4, msNum);
+			pstmt.setInt(5, ccNum);
 			if(pstmt.executeUpdate()==1){
 				flag=true;
 			}
