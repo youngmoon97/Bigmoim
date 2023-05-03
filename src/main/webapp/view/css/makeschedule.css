@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+/* 전체 폼 스타일링 */
+form {
+  width: 60%;
+  height: 40%;
+  margin: 50px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 18px;
+  line-height: 1.5;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+/* 레이블 스타일링 */
+label {
+display: block;
+margin-bottom: 5px;
+font-weight: bold;
+}
+
+/* 텍스트 입력 필드 스타일링 */
+input[type="text"], input[type="number"], input[type="date"], input[type="time"], textarea {
+  width: 60%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+
+/* 주소 입력 필드 스타일링 */
+.makeschedule-address {
+margin-bottom: 20px;
+}
+
+.makeschedule-address label {
+margin-bottom: 5px;
+font-weight: bold;
+}
+
+.makeschedule-address input {
+margin-bottom: 10px;
+}
+
+/* 주소 입력 필드 스타일링 */
+.makeschedule-address {
+  margin-bottom: 20px;
+}
+
+.makeschedule-address label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.makeschedule-address input[name="makeschedule-Zipcode"] {
+  margin-bottom: 10px;
+  width: 80px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.makeschedule-address input[type="button"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.makeschedule-address input[type="button"]:hover {
+  background-color: #3e8e41;
+}
+
+.makeschedule-address input[name="moimArea1"],
+.makeschedule-address input[name="moimArea2"] {
+  margin-bottom: 10px;
+  width: 200px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+
+/* 제출 버튼 스타일링 */
+button {
+background-color: #4CAF50;
+color: white;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+font-size: 18px;
+cursor: pointer;
+transition: background-color 0.3s;
+}
+
+button:hover {
+background-color: #3e8e41;
+}

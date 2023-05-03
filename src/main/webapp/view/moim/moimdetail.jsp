@@ -565,7 +565,7 @@
           <div class="categorya">
             <div class="main-mergea">
               <div class="uploadb">
-            <%if(memberId.equals(moimbean.getMemberId())){ %>
+            <%if(memberId != null && memberId.equals(moimbean.getMemberId())){ %>
 				<button type="button" onclick="makeboard('<%=no %>' , '<%=memberId %>')"
                     style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">
                     게시글 등록

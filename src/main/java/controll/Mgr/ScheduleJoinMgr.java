@@ -218,10 +218,10 @@ public class ScheduleJoinMgr {
 				rs = pstmt.executeQuery();
 				while (rs.next()) {
 					MemberBean mbean = new MemberBean();
-					mbean.setMemberImg(rs.getString(1));
-					mbean.setMemberName(rs.getString(2));
-					mbean.setMemberProfile(rs.getString(3));
-					mbean.setMemberId(rs.getString(4));
+					mbean.setMemberImg(rs.getString("member.memberImg"));
+					mbean.setMemberName(rs.getString("member.memberName"));
+					mbean.setMemberProfile(rs.getString("member.memberProfile"));
+					mbean.setMemberId(rs.getString("member.memberId"));
 					moimschvlist.addElement(mbean);
 				}
 			} catch (Exception e) {

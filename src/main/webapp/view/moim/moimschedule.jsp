@@ -6,7 +6,7 @@
 <%@ include file = "/view/top.jsp" %>
 <%
 	Vector<MoimScheduleBean> scheduleList = scMgr.allmoimScheduleList();
-	
+	Vector<MemberBean> joinmember = null;
 %>
 
 <!DOCTYPE html>
@@ -34,6 +34,7 @@
   <!-- 카테고리 -->
   <%@ include file = "/view/category.jsp" %>
   
+  <!-- 모임일정 리스트 -->
   <div class="container" style="width: 1300px; margin: 0 auto;">
     <%if(scheduleList.isEmpty()){ %>
     <article>
@@ -70,12 +71,20 @@
 	      <div class="members">
 	        <div class="member-list">
 	          <% 
-	            Vector<MemberBean> joinmember = scMgr.moimScheduleImg(bean.getMsNum());
+	            joinmember = scMgr.moimScheduleMember(bean.getMsNum());
+	          	//System.out.println("joinmember : "+i+ bean.getMsNum());
+	          if(joinmember.isEmpty()){%>
+	        	  <h4>참여 멤버가 없습니다.</h4>
+	          <%}else{
 	            for(int j=0;j<joinmember.size();j++){
-	              mbean = joinmember.get(i);
+	              	mbean = joinmember.get(j);
+		          	//System.out.println("mbean : "+ mbean.getMemberImg());
+		          	//System.out.println("mbean : "+ joinmember.get(i).getMemberImg());
+
 	          %>
 	          <img src="/bigmoim/image/<%=mbean.getMemberImg() %>" alt="멤버 이미지1" />
-	          <%}%>
+	          <%}
+	          }%>
 	          <span class="member-count"></span>
 	        </div>
 	      </div>
@@ -83,15 +92,9 @@
 	  </div>
 	</div>
 </div>
-
-
-
-
-
       <% }//--for 
-    }//--if-else %>
+    }//--if-else 젤큰 ifelse %>
   </div>
-  
   <!-- 하단 -->
   <%@ include file = "/view/bottom.jsp" %>
 </body>
