@@ -368,5 +368,29 @@ public class ScheduleJoinMgr {
 		}
 		return flag;
 	}
-
+	//모임 가입 여부
+	   public boolean moimMemberCheck(int moimNum, String memberId) {
+	      Connection con = null;
+	      PreparedStatement pstmt = null;
+	      ResultSet rs = null;
+	      String sql = null;
+	      boolean flag = false;
+	      try {
+	         con = pool.getConnection();
+	         sql = "select * from moimmember "
+	            + "where moimNum = ? and  memberId = ?";
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setInt(1, moimNum);
+	         pstmt.setString(2, memberId);         
+	         rs = pstmt.executeQuery();
+	         if(rs.next()) {
+	            flag=true;
+	         }
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         pool.freeConnection(con, pstmt, rs);
+	      }
+	      return flag;
+	   }
 }

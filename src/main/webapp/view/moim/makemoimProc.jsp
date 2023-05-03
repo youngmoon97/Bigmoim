@@ -17,7 +17,7 @@
 	moimBean.setClassprice(classprice);
 	System.out.print(moimBean.getMemberId());*/
     boolean result = moimMgr.moimInsert(request);
-   
+   	
    String msg = "모임개설 실패";
    String url = "makemoim.jsp";
    

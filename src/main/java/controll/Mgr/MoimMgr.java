@@ -1317,5 +1317,27 @@ public class MoimMgr {
 	            }
 	            return flag;
 	         }
-	      
+	      // 모임맴버에 모임장 바로추가
+	         public boolean moimmemberInsert(String memberId, int moimNum) {
+	        	 Connection con = null;
+				PreparedStatement pstmt = null;
+				String sql = null;
+				boolean flag = false;
+				try {
+					con = pool.getConnection();
+					sql = "insert into moimmember (memberId, moimNum) "
+						+ "values(?,?);";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, memberId);
+					pstmt.setInt(2, moimNum);
+					if(pstmt.executeUpdate()==1) {
+						flag=true;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					pool.freeConnection(con, pstmt);
+				}
+				return flag;
+	         }
 }

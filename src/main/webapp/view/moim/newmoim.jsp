@@ -5,6 +5,7 @@
 <%	
 	// top에 있는 멤버 데이터 가져와서 
 	String address = mbean.getMemberAddr();
+	mbean= mMgr.getMember(memberId);
 	Vector<MoimBean> newMoimList = moimMgr.newMoimList(address);
 	Vector<MoimBean> newMoimListnoaddr = moimMgr.newMoimList();
 	Vector<MoimBean> allMoim = moimMgr.moimAllList();

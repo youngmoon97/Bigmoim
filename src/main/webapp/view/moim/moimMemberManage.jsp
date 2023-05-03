@@ -175,7 +175,7 @@ button {
 <div class = "admin-moim-wrapper">
 
 <div class="admin-moim-top">
-  <a class="admin-moim-back" href="javascript:history.back();" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">
+  <a class="admin-moim-back" href="moimdetail.jsp?num=<%=moimNum %>" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">
     <img src="/bigmoim/image/back-button.png" alt="뒤로가기" style="width: 40px; height: 40px;"/>
   </a>
   <h1>모임 회원 관리</h1>

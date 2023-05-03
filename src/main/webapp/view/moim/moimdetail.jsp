@@ -186,15 +186,30 @@
 						</ul>
 					</li>
 					<li class="btn">
-						<a href="schedulejoinProc.jsp?msNum=<%=msbean.getMsNum()%>&memberId=<%=memberId %>&moimNum=<%=msbean.getMoimNum() %>" onclick="schedulejoin()" class="share">
+						<%
+					if(moimScheduleMember.size() < msbean.getMsHCount()){
+					boolean memberChk = sjMgr.moimMemberCheck(no, memberId);
+					if(memberChk){
+						%>
+						<a href="schedulejoinProc.jsp?moimNum=<%=no %>&memberId=<%=memberId %>&msNum=<%=msbean.getMsNum() %>" class="share">
 							일정<br />
 							참여
 						</a>
+					<% 
+						}
+					}else{%>
+						<a>
+						인원<br />
+						초과
+					</a>
+					<% }
+					%>
 					</li>
 				</ul>
 				<div class="member" id="cont_1">
 					<!-- 추가-->
 					<h4 name="msNCount">참여 멤버(<%=moimScheduleMember.size() %>/<%=msbean.getMsHCount() %>)</h4>
+		            <div class="container">
 		            <%
 		              	if(moimScheduleMember.isEmpty()){
 		            %>
@@ -205,14 +220,13 @@
 		            		//MemberBean memberBean = moimschvlist.get(j);
 		          			//MemberBean memberbean = moimScheduleMember.get(j);
 		              %>
-		              <div class="container">
 	              		<div class="joinMemberImg">
 	              			<img src="/bigmoim/image/<%=memberbean.getMemberImg()%>"/>
 	           	  		</div>
-	           	  	  </div>
 	              	  <%}%><!-- for -->
 		            <%}%><!-- if else -->
 		         </div>
+		       </div>
         	<%}%><!-- 큰 for -->
           <%} %><!-- 큰 if else -->
 		  </li>	
@@ -444,15 +458,22 @@
 					</li>
 					<li class="btn">
 					<%
-					boolean memberChk = sjMgr.scJoin(msbean.getMsNum(), memberId, no);
+					if(moimScheduleMember.size() < msbean.getMsHCount()){
+					boolean memberChk = sjMgr.moimMemberCheck(no, memberId);
 					if(memberChk){
 						%>
-						<a href="<%= %>" class="share">
+						<a href="schedulejoinProc.jsp?moimNum=<%=no %>&memberId=<%=memberId %>&msNum=<%=msbean.getMsNum() %>" class="share">
 							일정<br />
 							참여
 						</a>
 					<% 
-					}
+						}
+					}else{%>
+						<a>
+						인원<br />
+						초과
+					</a>
+					<% }
 					%>
 						
 					</li>
@@ -460,6 +481,7 @@
 				<div class="member" id="cont_1">
 					<!-- 추가-->
 					<h4 name="msNCount">참여 멤버(<%=moimScheduleMember.size() %>/<%=msbean.getMsHCount() %>)</h4>
+		            <div class="container">
 		            <%
 		              	if(moimScheduleMember.isEmpty()){
 		            %>
@@ -469,13 +491,12 @@
 		            		//MemberBean memberBean = moimschvlist.get(j);
 		          			MemberBean memberbean = moimScheduleMember.get(j);
 		              %>
-		              <div class="container">
 	              		<div class="joinMemberImg">
 	              			<img src="/bigmoim/image/<%=memberbean.getMemberImg()%>"/>
-	           	  		</div>
-	  	           	  </div>
+	           	  		</div> 
 	              	  <%}%><!-- for -->
 		            <%}%><!-- if else -->
+		            </div>
 		        </div>
         	<%}%><!-- for -->
         <%} %><!-- if else -->
@@ -499,18 +520,19 @@
 	          <%} %><!-- if -->
 
 	        </ul>
-	        <div class="tabcontent tab0">
-	          <h3 name="msNCount">모임멤버(<%=moimAllMemvlist.size() %>)</h3>
-	          <div class="manager"></div>
-	          <ul class="tabcontent-list">
-	            <li class="tabcontent-list-img " name="memberImg"><img src="/bigmoim/image/<%=manngerBean.getMemberImg()%>" class="memberImg" /></li>
-	            <li>
-	              <ul class="tabcontent-list-detail">
-	              	<li class="tabcontent-list-name" name="memberName"><%=manngerBean.getMemberName() %></li>
-	                <li class="tabcontent-list-hello" name="memberProfile"><%=manngerBean.getMemberProfile() %></li>
-	              </ul>
-	            </li> 
-	          </ul>
+			<div class="tabcontent tab0">
+             <h3 name="msNCount">모임멤버(<%=moimAllMemvlist.size() %>)</h3>
+             <div class="manager"></div>
+             <ul class="tabcontent-list">
+               <li class="tabcontent-list-img " name="memberImg"><img src="/bigmoim/image/<%=manngerBean.getMemberImg()%>" class="memberImg" /></li>
+               <li>
+                 <ul class="tabcontent-list-detail">
+                    <li class="tabcontent-list-name" name="memberName"><%=manngerBean.getMemberName() %></li>
+                   <li class="tabcontent-list-hello" name="memberProfile"><%=manngerBean.getMemberProfile() %></li>
+                 </ul>
+               </li> 
+             </ul>
+            </div><!-- 추가 -->
 	          <% 
 			for(int z=0;z<msvlist.size();z++){
 				MoimScheduleBean moimScheduleBean = msvlist.get(z);
@@ -682,7 +704,9 @@
         </div>
     </div>
 </div>
+  
   <%} %><!-- 클래스와 모임 구분 if else -->
+  <!-- 가입/탈퇴/로그인 버튼 -->
   <%if(memberId==null){%>
   <div class="moimdetailBtn" style="bottom: 300px; right: 170px;">
   <a href="../login/login.html">
@@ -690,25 +714,24 @@
   </a>
   </div>
   <%}else{
-	  for(int i=0;i<moimAllMemvlist.size();i++){
-		  MemberBean MemberBean = moimAllMemvlist.get(i);
-		  String moimMemberId = MemberBean.getMemberId(); 
-		   
-		  if(!memberId.equals(moimMemberId)){
+     boolean memberChk = sjMgr.moimMemberCheck(no, memberId);
+     System.out.println("memberChk : " +memberChk);
+     Vector<MoimScheduleBean> allmoimScheduleList = sjMgr.allmoimScheduleList();
+        if(memberChk){ //있다 -탈퇴하기
   %>
-		  <div class="moimdetailBtn" style="bottom: 300px; right: 170px;">
-		  <a href="joinmoim.jsp?moimNum=<%=no%>&memberId=<%=memberId%>">
-		      <p class="moimdetailBtn-txt">가입하기</p>
-		  </a>
-		  </div>
-  		  <%}else{%><!-- if -->
-  		  <div class="moimdetailBtn" style="bottom: 300px; right: 170px;">
-          <a href="#" onclick="moimQuit();">
+        <div class="moimdetailBtn" style="bottom: 300px; right: 170px;">
+        <a href="#" onclick="moimQuit();">
             <p class="moimdetailBtn-txt">탈퇴하기</p>
-        	</a>
-        	</div>
-  		  <%} %>
- 	  <%} %><!-- for -->
+        </a>
+        </div>
+          <%}else{%><!-- 없다 가입하기 --> 
+          <div class="moimdetailBtn" style="bottom: 300px; right: 170px;">
+          <a href="joinmoim.jsp?moimNum=<%=no%>&memberId=<%=memberId%>">
+            <p class="moimdetailBtn-txt">가입하기</p>
+           </a>
+           </div>
+          <%} %>
+
   <%} %><!-- if else -->
   <script>
   
