@@ -249,6 +249,28 @@ nav a:hover {
   margin-bottom: 0px;
 }
 
+.classManageBtn{
+  background: #eee;
+  border-radius: 5px;
+  margin-left: 20px;
+  border-left-width: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom-width: 20px;
+  margin-bottom: 0px;
+}
+
+.memberManageBtn{
+  background: #eee;
+  border-radius: 5px;
+  margin-left: 20px;
+  border-left-width: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom-width: 20px;
+  margin-bottom: 0px;
+}
+
 .clubdetail-photo{
   display: flex;
   justify-content: center;
@@ -566,6 +588,7 @@ margin-right: 7px;
   border-radius: 20px;
   padding: 10px;
   background-color: #f8f8f8;
+  margin-bottom: 10px;
 }
 
 .commenttab .comment .author {

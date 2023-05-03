@@ -28,25 +28,25 @@ public class ScheduleJoinMgr {
 		      Vector<MoimScheduleBean> msvlist = new Vector<MoimScheduleBean>();
 		      try {
 		         con = pool.getConnection();
-		         sql = "select m.*, m2.moimImg "
-		         	+ "from moimschedule m , moim m2 "
-		         	+ "where  m.moimNum =m2.moimNum "
-		        	+ "order by m.msDate;  ";
+		         sql = "select m.*, m2.moimImg from moimschedule m ,moim m2 "
+		         	+ "where m.moimNum =m2.moimNum and "
+		         	+ "datediff(msDate,now()) >= 0 "
+		        	+ "order by m.msDate ";
 		         pstmt = con.prepareStatement(sql);
 		         rs = pstmt.executeQuery();
 		         while(rs.next()) {
 		            MoimScheduleBean bean = new MoimScheduleBean();
-		            bean.setMsNum(rs.getInt(1));
-		            bean.setMsTime(rs.getString(2));
-		            bean.setMsArea(rs.getString(3));
-		            bean.setMoimNum(rs.getInt(4));
-		            bean.setMsHCount(rs.getInt(5));
-		            bean.setMemberId(rs.getString(6));
-		            bean.setMsNCount(rs.getInt(7));
-		            bean.setMsTitle(rs.getString(8));
-		            bean.setMsContent(rs.getString(9));
-		            bean.setMsDate(rs.getString(10));
-		            bean.setMoimImg(rs.getString(11));
+		            bean.setMsNum(rs.getInt("m.msNum"));
+		            bean.setMsTime(rs.getString("m.msTime"));
+		            bean.setMsArea(rs.getString("m.msArea"));
+		            bean.setMoimNum(rs.getInt("m.moimNum"));
+		            bean.setMsHCount(rs.getInt("m.msHCount"));
+		            bean.setMemberId(rs.getString("m.memberId"));
+		            bean.setMsNCount(rs.getInt("m.msNCount"));
+		            bean.setMsTitle(rs.getString("m.msTitle"));
+		            bean.setMsContent(rs.getString("m.msContent"));
+		            bean.setMsDate(rs.getString("m.msDate"));
+		            bean.setMoimImg(rs.getString("m2.moimImg"));
 		            msvlist.addElement(bean);
 		         }
 		      } catch (Exception e) {
@@ -318,6 +318,55 @@ public class ScheduleJoinMgr {
 			pool.freeConnection(con, pstmt, rs);
 		}
 		return bean;
+	}
+	//일정참여하기-가입한 멤버인지 확인
+	public boolean scjoinChk(int moimNum, String memberId) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "select count(*) from moimmember "
+				+ "where moimNum = ? and memberId =?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, moimNum);
+			pstmt.setString(2, memberId);
+			rs = pstmt.executeQuery();
+			if(rs.next()==true) {
+				flag =true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return flag;
+	}
+	//일정참여하기 
+	public boolean scJoin(int msNum, String memberId, int moimNum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "insert into schedulejoin (msNum, memberId, moimNum) "
+					+ "values(?,?,?);";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, msNum);
+			pstmt.setString(2, memberId);
+			pstmt.setInt(3, moimNum);
+			if(pstmt.executeUpdate()==1) {
+				flag=true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
 	}
 
 }

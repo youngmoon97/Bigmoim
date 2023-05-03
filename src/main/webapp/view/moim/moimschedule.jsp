@@ -52,11 +52,12 @@
       for(int i=0;i<scheduleList.size();i++){
         MoimScheduleBean bean = scheduleList.get(i);
       %>
-<div class="cards">     
-	<div class="wrapper">
-	  <div class="moim-image">
-	    <img src="/bigmoim/image/<%=bean.getMoimImg() %>" alt="모임 이미지" />
-	  </div>
+	<a href="moimdetail.jsp?num=<%=bean.getMoimNum() %>">
+	<div class="cards">     
+		<div class="wrapper">
+	  	<div class="moim-image">
+	    	<img src="/bigmoim/image/<%=bean.getMoimImg() %>" alt="모임 이미지" />
+	  	</div>
 	  <div class="info">
 	    <div class="info-inner">
 	      <div class="title">
@@ -92,6 +93,7 @@
 	  </div>
 	</div>
 </div>
+</a>
       <% }//--for 
     }//--if-else 젤큰 ifelse %>
   </div>

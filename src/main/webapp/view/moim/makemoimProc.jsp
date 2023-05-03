@@ -22,7 +22,7 @@
    String url = "makemoim.jsp";
    
    if(result){
-      msg = "가입성공";
+      msg = "개설성공";
       url = "/bigmoim/view/main/main.jsp";
    }
    System.out.print(result);

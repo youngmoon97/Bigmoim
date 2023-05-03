@@ -9,7 +9,23 @@
 %>
 <!doctype html>
 <html lang="en">
+    <style>
+     /*뒤로가기 버튼 수정 css*/
+        .back-button {
+            display: flex;
+            align-items: center;
+        }
 
+        .back-button img {
+            width: 2em;
+            /* 이미지의 너비를 글씨 크기와 동일하게 조절 */
+            height: 2em;
+            /* 이미지의 높이를 글씨 크기와 동일하게 조절 */
+            margin-right: 0.5em;
+            /* 이미지와 글씨 사이의 간격 조절 */
+            /* 원하는 위치만큼의 음수 값을 입력하여 이미지를 높일 수 있습니다. */
+        }
+    </style>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -34,12 +50,13 @@
                 <div class="col-md-6 contents">
                     <div class="row justify-content-center">
                         <div class="col-md-12">
-                            <div class="main-merge"> <!--main page 간격-->
-                                <div class="mb-4 d-flex align-items-center">
-                                    <a href="#" class="btn btn-light ml-0">
-                                        <span class="icon-arrow-left"></span>
+                               <div class="main-merge"> <!--main page 간격-->
+                    <div class="back-button" style="margin-top: 3em">
+                        <a href="javascript:history.back();">
+                            <img src="/bigmoim/image/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
                                     </a>
-                                    <h3 class="ml-1 mb-0"><strong>모임 가입하기</strong></h3>
+                                    <h3 class="ml-1 mb-0" ><strong>모임 가입하기</strong></h3>
+                                    
                                 </div>
                                 <form action="joinmoimProc.jsp" method="post">
                                     <div>

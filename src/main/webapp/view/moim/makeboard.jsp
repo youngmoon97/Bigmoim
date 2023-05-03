@@ -95,7 +95,7 @@
                     <div class="back-button" style="margin-top: 3em">
                         <!--a 태그에 메인 URL 입력해야함-->
                         <a href="#" onclick="window.history.back(); return false;">
-                            <img src="../images/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
+                            <img src="/bigmoim/image/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
                         </a>
                     </div>
                                     <h3 class="ml-1 mb-0"><strong>게시글 작성</strong></h3>

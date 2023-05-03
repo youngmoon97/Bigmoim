@@ -18,6 +18,7 @@
 <jsp:useBean id="boardMgr" class="controll.Mgr.BoardMgr"/>
 <jsp:useBean id="memberboardBean" class="model.Bean.MemberBoardBean"/>
 <jsp:useBean id="boardcommentMgr" class="controll.Mgr.BoardCommentMgr"/>
+<jsp:useBean id="memberMgr" class="controll.Mgr.MemberMgr"/>
 <%
 // String memberId = (String)session.getAttribute("idKey");
 	//moimNum받아옴.
@@ -152,17 +153,19 @@
         <div class="clubdetail-schedule">
           <div style="display: flex;">
           	<h2 class="clubdetail-text" style="margin: 0px;">클래스일정</h2>
+          	<%if(manngerBean.getMemberId().equals(memberId)){%>
           	<a href="makeschedule.jsp?memberId=<%=memberId%>&moimNum=<%=no%>">
           		<img alt="모임일정 생성" src="../../image/플러스버튼.png" width="30" height="30" style="margin-left: 10px">
           	</a>
+          	<%} %>
           </div>
           <ul class="meeting_list">
           	<%
           		if(msvlist.isEmpty()){
           	%>
-          	<li>
+          	<div>
           		<h4>일정이 없습니다.</h4>
-          	</li>
+          	</div>
           	<%}else{
           		for(int i=0;i<msvlist.size();i++){
           			MoimScheduleBean msbean = msvlist.get(i);
@@ -179,13 +182,13 @@
 						<ul class="in_cont">
 							<li class="ico calendar" name="msTime"><%=msbean.getMsDate()%>&nbsp;<%=msbean.getMsTime()%></li>
 							<li class="ico place" name="msArea"><%=msbean.getMsArea()%></li>
-							<li class="ico cost" name="">없음.</li>
+							<li class="ico cost" name=""><%=moimbean.getClassprice() %></li>
 						</ul>
 					</li>
 					<li class="btn">
-						<a href="<%=moimbean.getMoimKakao() %>" class="share">
-							친구에게<br />
-							공유하기
+						<a href="schedulejoinProc.jsp?msNum=<%=msbean.getMsNum()%>&memberId=<%=memberId %>&moimNum=<%=msbean.getMoimNum() %>" onclick="schedulejoin()" class="share">
+							일정<br />
+							참여
 						</a>
 					</li>
 				</ul>
@@ -300,17 +303,8 @@
 	          <%} %><!-- if else --> 
 	        </div>
 	        <%} %><!-- 큰 for -->
-     	<%}else {%>
-	      	<ul class="tabnav">
-	          <li class="tab-link current" name="msTime"><a href="#tab01">전체멤버(0)</a></li>
-	        </ul>
-	        <div class="tabcontent">
-              <ul class="tabcontent-list">
-                <li>가입된 멤버가 없습니다.</li>
-              </ul>
-	        </div>
-      	<%} %><!-- 큰 if else -->
-      	</div>
+     	<%}%><!-- 큰 if else -->
+ 	</div>
       	<!-- 클래스 댓글 -->
       	<h2>댓글을 달아보세요</h2>
     	<div class="commenttab">
@@ -332,9 +326,11 @@
 		        	<div class="message"><%=ccbean.getCcComment() %></div>
 		        	<div class="date"><%=ccbean.getCcDate() %></div>
 		      	</div>
+		      	<%if(ccbean.getMemberId().equals(memberId)) {%>
 		      	<div class="commentBtn">
-        			<button>수정</button><span><button onclick="">삭제</button></span>
+        			<a href="deleteclasscommentProc.jsp?num=<%=memberId%>&cCnum=<%=ccbean.getCcNum()%>&moimNum=<%=no%>">[삭제]</a>
       			</div>
+      			<%} %>
       			<%}%><!-- for -->
 	      	</div>
 	     	<%} %><!-- if else -->
@@ -343,7 +339,7 @@
 	      		<button type="button" onclick="commentCheck()" style="width: 52px;">등록</button>
     		</form>
       	</div>
-     </div>
+    </div>
   </div>
 
     
@@ -416,17 +412,19 @@
          <div class="clubdetail-schedule">
           <div style="display: flex;">
           	<h2 class="clubdetail-text" style="margin: 0px;">모임일정</h2>
+          	<%if(manngerBean.getMemberId().equals(memberId)){%>
           	<a href="makeschedule.jsp?memberId=<%=memberId%>&moimNum=<%=no%>">
           		<img alt="모임일정 생성" src="../../image/플러스버튼.png" width="30" height="30" style="margin-left: 10px">
           	</a>
+          	<%} %>
           </div>
           <ul class="meeting_list">
           	<%
           		if(msvlist.isEmpty()){
           	%>
-          	<li>
+          	<div>
           		<h4>일정이 없습니다.</h4>
-          	</li>
+          	</div>
           	<%}else{
           		for(int i=0;i<msvlist.size();i++){
           			MoimScheduleBean msbean = msvlist.get(i);
@@ -445,10 +443,18 @@
 						</ul>
 					</li>
 					<li class="btn">
-						<a href="<%=moimbean.getMoimKakao() %>" class="share">
-							친구에게<br />
-							공유하기
+					<%
+					boolean memberChk = sjMgr.scJoin(msbean.getMsNum(), memberId, no);
+					if(memberChk){
+						%>
+						<a href="<%= %>" class="share">
+							일정<br />
+							참여
 						</a>
+					<% 
+					}
+					%>
+						
 					</li>
 				</ul>
 				<div class="member" id="cont_1">
@@ -536,16 +542,7 @@
 	          <%} %>  
 	        </div>
 	        <%} %>  
-     	<%}else {%>
-	      	<ul class="tabnav">
-	          <li class="tab-link current" name="msTime"><a href="#tab01">전체멤버(0)</a></li>
-	        </ul>
-	        <div class="tabcontent">
-              <ul class="tabcontent-list">
-                <li>가입된 멤버가 없습니다.</li>
-              </ul>
-	        </div>
-      <%} %>
+     	<%}%>
       </div>
       </div>
 
@@ -578,13 +575,14 @@
             <%}else	// 게시글이 있는 경우 %>
                    <% for(int i = 0; i < boardvlist.size(); i++) {
                 	   // mbBean : 해당 모임의 게시글 리스트
-                   MemberBoardBean mbBean = boardvlist.get(i); %>
+                   MemberBoardBean mbBean = boardvlist.get(i);
+                   MemberBean memberBean = memberMgr.getMember(memberId);%>
               <div class="post-containerb">
 
                   <div class="post-headerb" style="position: relative;">
                        <div class="profile-infob">
-                      <img src= "/bigmoim/image/<%=mbBean.getMbImg()%>">
-               <p class="author-nameb" style="margin-top: 1em;"><%=mbBean.getMemberId()%></p>
+                      <img src = "/bigmoim/image/<%=memberBean.getMemberImg()%>">
+					<p class="author-nameb" style="margin-top: 1em;"><%=mbBean.getMemberId()%></p>
               </div>
               <%if(mbBean.getMemberId().equals(memberId)){%>
                     <a href="javascript:updateFn('<%=mbBean.getMbNum()%>','<%=mbBean.getMemberId() %>','<%=mbBean.getMoimNum()%>')" style="position: absolute; top:0; right: 45px;">[수정]</a>                   
@@ -600,7 +598,7 @@
 	                        <p><%=mbBean.getMbContent() %></p>
 	                      </div>
 	                      <div class="post-imageb">
-	                        <img src="../images/<%=mbBean.getMbImg()%>">
+	                        <img src="/bigmoim/image/<%=mbBean.getMbImg()%>" width="150" height="150">
 	                      </div>
 	                      </div>
                     <hr>
@@ -713,6 +711,11 @@
  	  <%} %><!-- for -->
   <%} %><!-- if else -->
   <script>
+  
+  //일정 참여
+  function schedulejoin(){
+	  
+  }
   //탈퇴하기
   function moimQuit(){//예
      if(confirm("정말 탈퇴하시겠습니까?")){

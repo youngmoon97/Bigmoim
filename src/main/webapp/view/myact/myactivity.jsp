@@ -224,13 +224,13 @@
     		</div> <!-- card-group -->
     <%}//--if-else %>
     <hr>
-    <!-- 최근본모임 -->
+      <!-- 최근본모임 -->
     <% if(recentmoim.isEmpty()){
     %>
     <article>
       <div class = "text">
         <!-- class 이름 알잘딱깔센으로 적어보시길... -->
-        <p class = "join-text">최근 본 모임이 없네요!ㅠㅠ</p>
+        <p class = "join-text"></p>
       </div>
     </article>
 
@@ -239,13 +239,12 @@
   	<!-- 최근 본 모임이 없음 -->
 	</div><!--card-group-->
     <%}else{//--if-else %>
-    		<article>
+    		<!-- <article>
       			<div class = "text">
 		        <p class = "join-text">최근 본 모임</p>
  	     		</div>
-    		</article>
-    		
-    		
+    		</article> -->
+
     		<div class="card-group">
     		<% 
     		for(int i=0;i<recentmoim.size();i++){
@@ -289,8 +288,7 @@
   <%}%><!--for-->
 </div><!--card-group-->
 <%}//--if-else %>
-<hr>
-    
+
     <br>
     <!-- 업무별 모임 -->
     <% if(bmoim.isEmpty()){
@@ -452,7 +450,7 @@
         <p class="moimProfile" name="moimProfile" value=""><%=moimbean.getMoimProfile() %></p>
         </a>
     		</article>
-    		<hr>
+
 
     		<%}%><!--for-->
 </div><!--card-group-->
