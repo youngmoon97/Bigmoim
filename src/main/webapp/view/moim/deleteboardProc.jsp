@@ -10,13 +10,13 @@
 		System.out.println(mbnum + " 게시글번호");
 		System.out.println(memberId + " 아이디");
 		String msg = "본인만 삭제할수 있습니다.";
-		String url = "/bigmoim/view/moim/moimdetail.jsp?num="+moimnum;
+		String url = "moimdetail.jsp?num=" + moimnum;
 		if(result){
 			msg = "삭제되었습니다.";
 		}
-		System.out.print(result + " 안녕");
+		
 %>
 <script>
 alert("<%=msg%>");
-location.href="<%=url%>"
+location.href = "<%=url%>";
 </script>

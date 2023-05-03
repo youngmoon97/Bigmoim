@@ -153,7 +153,7 @@
           <div style="display: flex;">
           	<h2 class="clubdetail-text" style="margin: 0px;">클래스일정</h2>
           	<a href="makeschedule.jsp?memberId=<%=memberId%>&moimNum=<%=no%>">
-          		<img alt="모임일정 생성" src="../../image/back-button.png" width="30" height="30" style="margin-left: 10px">
+          		<img alt="모임일정 생성" src="../../image/플러스버튼.png" width="30" height="30" style="margin-left: 10px">
           	</a>
           </div>
           <ul class="meeting_list">
@@ -209,6 +209,7 @@
 	           	  	  </div>
 	              	  <%}%><!-- for -->
 		            <%}%><!-- if else -->
+		         </div>
         	<%}%><!-- 큰 for -->
           <%} %><!-- 큰 if else -->
 		  </li>	
@@ -312,22 +313,15 @@
       	</div>
       	<!-- 클래스 댓글 -->
       	<h2>댓글을 달아보세요</h2>
+    	<div class="commenttab">
       	<%
       		if(ccList.isEmpty()){
       			//System.out.print("클래스 : "+ccList);
       	%>
-        <div class="commenttab">
 	      	<div class="comments">
 				<h3>등록된 댓글이 없습니다.</h3>
 	      	</div>
-	      	<form action = "moimdetailProc.jsp?num=<%=no %>&memberId=<%=memberId %>" class="comment-form" method="post" name="commentFrm">
-	      		<input type="text" id="ccComment" name="ccComment" placeholder="댓글을 입력하세요." value="" style="width: 610px; outline: none; height: fit-content;"/>
-	      		<input type="hidden" name="memberId" id="memberId" value="<%=memberId %>">
-	      		<button type="button" onclick="commentCheck()" style="width: 52px;">등록</button>
-    		</form>
-      	</div>
       	<%}else{ %>
-	    <div class="commenttab">
 	      	<div class="comments">
 	      		<%
 	      			for(int i=0;i<ccList.size();i++){
@@ -339,16 +333,16 @@
 		        	<div class="date"><%=ccbean.getCcDate() %></div>
 		      	</div>
 		      	<div class="commentBtn">
-        			<button>수정</button><span><button>삭제</button></span>
+        			<button>수정</button><span><button onclick="">삭제</button></span>
       			</div>
       			<%}%><!-- for -->
 	      	</div>
+	     	<%} %><!-- if else -->
 	      	<form action = "moimdetailProc.jsp?num=<%=no%>&memberId=<%=memberId%>" class="comment-form" method="post" name="commentFrm" id="ccComment">
 	      		<input type="text" id="ccComment" name="ccComment" placeholder="댓글을 입력하세요." style="width: 610px; outline: none; height: fit-content;"/>
 	      		<button type="button" onclick="commentCheck()" style="width: 52px;">등록</button>
     		</form>
       	</div>
-        <%} %><!-- if else -->
      </div>
   </div>
 
@@ -423,7 +417,7 @@
           <div style="display: flex;">
           	<h2 class="clubdetail-text" style="margin: 0px;">모임일정</h2>
           	<a href="makeschedule.jsp?memberId=<%=memberId%>&moimNum=<%=no%>">
-          		<img alt="모임일정 생성" src="../../image/back-button.png" width="30" height="30" style="margin-left: 10px">
+          		<img alt="모임일정 생성" src="../../image/플러스버튼.png" width="30" height="30" style="margin-left: 10px">
           	</a>
           </div>
           <ul class="meeting_list">
@@ -445,7 +439,7 @@
 					<li class="date" name="msTime"><%=mjDayName%><span><%=moimschbean.getMsDate()%></span></li>
 					<li>
 						<ul class="in_cont">
-							<li class="ico calendar" name="msTime"><%=msbean.getMsDate()%>&nbsp;<%=msbean.getMsTime()%>s</li>
+							<li class="ico calendar" name="msTime"><%=msbean.getMsDate()%>&nbsp;<%=msbean.getMsTime()%></li>
 							<li class="ico place" name="msArea"><%=msbean.getMsArea()%></li>
 							<li class="ico cost" name="">없음</li>
 						</ul>
@@ -458,8 +452,8 @@
 					</li>
 				</ul>
 				<div class="member" id="cont_1">
+					<!-- 추가-->
 					<h4 name="msNCount">참여 멤버(<%=moimScheduleMember.size() %>/<%=msbean.getMsHCount() %>)</h4>
-		            <div class="container">
 		            <%
 		              	if(moimScheduleMember.isEmpty()){
 		            %>
@@ -476,7 +470,7 @@
 	  	           	  </div>
 	              	  <%}%><!-- for -->
 		            <%}%><!-- if else -->
-		          </div>
+		        </div>
         	<%}%><!-- for -->
         <%} %><!-- if else -->
 			</li>	
@@ -560,82 +554,110 @@
       -->
       <!-- 하단 -->
 
-
+</div>
     </div>
 
   <!-- ---------------------------------------------------게시판------------------------------- -->
-  <div class="mainwrapper content2" style="display: none;">
-        <div class="main-container">
-          <div class="categorys">
-            <div class="main-merge">
-              <div class="upload">
-				<button type="button" onclick="makeboard('<%=memberId %>', '<%=no %>')"
+  
+  
+   <div class="mainwrapper content2" style="display: none";>
+        <div class="main-containera">
+          <div class="categorya">
+            <div class="main-mergea">
+              <div class="uploadb">
+            <%if(memberId.equals(moimbean.getMemberId())){ %>
+				<button type="button" onclick="makeboard('<%=no %>' , '<%=memberId %>')"
                     style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">
                     게시글 등록
-                </button>
+                </button><%} // 버튼 보이기 (모임회원만) 추가%>
+            
             </div>
             <br>
-            
-                   <div class="post-container">
-                    <%for(int i = 0; i< boardvlist.size(); i++){MemberBoardBean mbBean = boardvlist.get(i); %>
+            <% if(boardvlist.isEmpty()){%>
+            	<div>게시글이 없습니다.</div>
+            <%}else	// 게시글이 있는 경우 %>
+                   <% for(int i = 0; i < boardvlist.size(); i++) {
+                	   // mbBean : 해당 모임의 게시글 리스트
+                   MemberBoardBean mbBean = boardvlist.get(i); %>
+              <div class="post-containerb">
 
-                  <div class="post-header" style="position: relative; padding-top: 40px;">
-                       <div class="profile-info">
-                      <img src="../../image/" alt=" 작성자 아이디 : <%=mbBean.getMemberId()%>">
-
-                    <a href="javascript:updateFn('<%=mbBean.getMbNum()%>')">[수정]</a>                   
-                    <a href="deleteboardProc.jsp?num=<%=memberId%>&mbnum=<%=mbBean.getMbNum()%>&moimnum=<%=no%>">[삭제]</a> 
-                    </div>
-                    <div class="post-time">
+                  <div class="post-headerb" style="position: relative;">
+                       <div class="profile-infob">
+                      <img src= "/bigmoim/image/<%=mbBean.getMbImg()%>">
+               <p class="author-nameb" style="margin-top: 1em;"><%=mbBean.getMemberId()%></p>
+              </div>
+              <%if(mbBean.getMemberId().equals(memberId)){%>
+                    <a href="javascript:updateFn('<%=mbBean.getMbNum()%>','<%=mbBean.getMemberId() %>','<%=mbBean.getMoimNum()%>')" style="position: absolute; top:0; right: 45px;">[수정]</a>                   
+                    <a href="deleteboardProc.jsp?num=<%=memberId%>&mbnum=<%=mbBean.getMbNum()%>&moimnum=<%=no%>" style="position: absolute; top: 0; right: 0; margin-right: 5px">[삭제]</a> 
+              <%}%>
+                    <div class="post-timeb">
                      <!--올린 날자-->
                      <p id="mbDate"><%=mbBean.getMbDate()%></p>
                     </div>
                   </div>                 
-                    <div class="post-body">
-                      <div class="post-content">
-                        <p><%=mbBean.getMbContent() %></p>
-                      </div>
-                      <div class="post-image">
-                        <img src="../images/moimsampleImg1.png" alt="게시글 이미지">
-                      </div>
+                    <div class="post-bodyb">
+                      <div class="post-contentb">
+	                        <p><%=mbBean.getMbContent() %></p>
+	                      </div>
+	                      <div class="post-imageb">
+	                        <img src="../images/<%=mbBean.getMbImg()%>">
+	                      </div>
+	                      </div>
                     <hr>
                     <!--댓글 라인-->
  
-                    <div class="post-footer">
-                      <div class="post-actions" style="display: flex; justify-content: space-between;">
-                        <button class="show-comments" style="align-self: flex-start;" onclick="function()">댓글보기</button>
-                      </div> 
+	               <div class="post-footerb">
+	               <div class="post-actions" style="display: flex; justify-content: space-between;">
+	                 <button class="show-comments" style="align-self: flex-start;" onclick="showComments(<%=mbBean.getMbNum()%>)">댓글보기</button>
+	               </div> 
  
-                      <div class="comments" style="display: none;">
-                      <%Vector<BoardCommentBean> bcvlist = boardcommentMgr.bcList(mbBean.getMbNum()); 
-                            for(int j = 0; i<bcvlist.size(); i++){
-                            BoardCommentBean bcBean = bcvlist.get(i);%> 
-                       <ul>
-                           
-                          <li>
+ 				<!-- ---------------------------댓글 폼 보이기 --------------------------->
+ 				
+				<script>
+				  function showComments(mbNum) {
+				    var comments = document.querySelector('#comments_' + mbNum);
+				    if (comments.style.display === 'none') {
+				      comments.style.display = 'block';
+				    } else {
+				      comments.style.display = 'none';
+				    }
+				  }
+				</script>
+ 
+ 
+                            <!-- 댓글 영역에 고유한 ID 할당 -->
+               <div class="comments" id="comments_<%=mbBean.getMbNum()%>" style="display: none;">
+                 <% Vector<BoardCommentBean> bcvlist = boardcommentMgr.bcList(mbBean.getMbNum()); 
+                    for(int j = 0; j < bcvlist.size(); j++) {
+                      BoardCommentBean bcBean = bcvlist.get(j); %>
+                    <ul>
+                      <li>
                             <div class="comment-info">
+                            <%if(bcBean.getMemberId().equals(memberId)) {%>
+                            <a href="deletecomment.jsp?memberId=<%=memberId%>&bcNum=<%=bcBean.getBcNum()%>&moimNum=<%=no%> ">삭제</a>
+                            
+                            <%} // 댓글 수정,삭제 버튼%>
                               <p class="comment-author" id="memberId"><%=bcBean.getMemberId() %></p>
                               <p class="comment-date" id ="bcDate"><%=bcBean.getBcDate()%></p>
                             </div>
                             <p class="comment-text" id="bcContent"><%=bcBean.getBcContent()%></p>
-                          </li>
-                          
-                      </ul>
-                        <%}%>
-                        <form method="post" action="insertboardProc.jsp?mbnum=<%=mbBean.getMbNum()%>&memberId=<%=memberId%>" class="comment-form" name="commentFrm" id="commentFrm">
-                          <label for="comment-input">댓글 작성:</label>
-                          <input type="text" id="comment-input" name="comment-input">
-                          <button onclick = "makeboardcomment()">작성</button>
-                        </form>
-                     </div>
-                    </div>
-                   <%}%>
+                         </li>
+                   </ul>
+                    <%}// 댓글 for문%>
+                    <form method="post" action="insertboardProc.jsp?mbNum=<%=mbBean.getMbNum()%>&memberId=<%=memberId%>&moimNum=<%=no%>" class="comment-form" name="commentFrm" id="commentFrm">
+                      <label for="comment-input">댓글 작성:</label>
+                      <input type="text" id="comment-input" name="comment-input">
+                      <button onclick="makeboardcomment()">작성</button>
+                   </form>
                   </div>
-               </div>
-                </div>
-             </div>
-             </div>
-            </div>
+                 </div>
+              	</div>
+              <br>
+           	<%}// else%>
+           </div>
+          </div>
+         </div>
+        </div>
   <!-- ---------------------사진첩 ---------------------------------------------------------------->
   <div class="mainwrapper content3" style="display: none;">
     <div class="main-container">
@@ -649,7 +671,7 @@
                 <br>
                 <div class="image-container">
                     <% for(int i = 0; i < moimphotovlist.size(); i++){
-                       System.out.print("아아아아아아아ㅏ아아아아");
+                       
                         MoimPhotosBean photobean = moimphotovlist.get(i);
                         %>
                         <div class="image-box" onclick="showDetail('<%=photobean.getPhotoName()%>')">
@@ -683,23 +705,24 @@
 		  </div>
   		  <%}else{%><!-- if -->
   		  <div class="moimdetailBtn" style="bottom: 300px; right: 170px;">
-  		  <a href="quitmoim.jsp?memberId=<%=memberId %>" onclick="">
-		      <p class="moimdetailBtn-txt">탈퇴하기</p>
-		  </a>
-		  </div>
+          <a href="#" onclick="moimQuit();">
+            <p class="moimdetailBtn-txt">탈퇴하기</p>
+        	</a>
+        	</div>
   		  <%} %>
  	  <%} %><!-- for -->
   <%} %><!-- if else -->
   <script>
   //탈퇴하기
-  function quit(){
-	  if(confirm("정말 탈퇴하시겠습니까?")){
-		  //예
-		  
-	  }else{
-		  //아니요
-			
-	  }
+  function moimQuit(){//예
+     if(confirm("정말 탈퇴하시겠습니까?")){
+        location.href = "quitMoimProc.jsp?memberId=<%=memberId %>&moimNum=<%=no%>";
+        return true;
+        
+     }else{//아니오
+        
+         return false;
+     }
   }
   // 멤버관리
   function memberManage_moim(){
@@ -782,11 +805,13 @@
 	}
    	
     //게시판 js
-    //게시판 수정
-    function updateFn(num){
-       url = "updateboard.jsp?num="+num;
+    function updateFn(num, memberId, moimNum){
+    	
+       url = "updateboard.jsp?num="+num + "&memberId=" + memberId + "&moimNum=" + moimNum;
+       
        window.open(url,"Board Update","width=540, height=600");
     }
+    
     //게시글 댓글 공백 체크 및 내용 submit
     function makeboardcomment() {
        const commentFrm = document.commentFrm;       
@@ -797,30 +822,10 @@
        commentFrm.submit();
     }
     //게시글 등록 창 띄우기
-    function makeboard(memberId, no){
+    function makeboard(no, memberId){
        url = "makeboard.jsp?num=" + no + "&memberId=" + memberId;
-           window.open(url,"Board MAKE","width=540, height=300");
+           window.open(url,"Board MAKE","width=700, height=800");
     }
-    // 댓글 접었다 폈다 하는 js
-    // show-comments 버튼 요소를 선택합니다.
-    const showCommentsButton = document.querySelector('.show-comments');
-    
-    // showComments 함수를 정의합니다.
-    function showComments() {
-      // post-container 요소에서 comments 클래스를 가진 요소를 선택합니다.
-      const comments = document.querySelector('.post-container .comments');
-    
-      // comments 요소가 보이지 않는 상태라면 보이게 하고, 그렇지 않은 경우에는 숨깁니다.
-      if (comments.style.display === 'none') {
-        comments.style.display = 'block';
-      } else {
-        comments.style.display = 'none';
-      }
-    }
-    
-    // show-comments 버튼에 클릭 이벤트 리스너를 추가합니다.
-    showCommentsButton.addEventListener('click', showComments);
-
   </script>
   <!-- bottom.jsp -->
   <%@ include file = "/view/bottom.jsp" %>

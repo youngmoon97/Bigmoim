@@ -42,129 +42,184 @@ function moimJoinCheck_refuse(mjMemberId){ //가입거절
 <head>
     <meta charset="UTF-8">
     <title>모임 회원 관리</title>
-    <!-- 임시로 주석처리함 수정필요 <link rel="stylesheet" href="/bigmoim/view/css/adminmoim.css">  -->
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/style.css">
-      <style>
-        .main-container {
-            padding: 50px;
-            background-color: rgb(255, 231, 235);
-            min-width: min-content;
-            /* 내용 최소너비를 유지 */
-        }
-
-        .main-wrapper {
-            max-width: 1300px;
-            /* 전체적인 크기를 1300px로 제한 */
-            margin: 0 auto;
-            /* 가운데 정렬 */
-        }
-
-        .category {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 20px 56px;
-            align-content: center;
-        }
-
-        .main-merge {
-            max-width: 900px;
-            margin: 0 auto;
-            /* 가운데 정렬을 위한 margin 설정 */
-            width: 85%;
-            /* 예시 값 */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 50px;
-            background-color: white;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /*뒤로가기 버튼 수정 css*/
-        .back-button {
-            display: flex;
-            align-items: center;
-        }
-
-        .back-button img {
-            width: 2em;
-            /* 이미지의 너비를 글씨 크기와 동일하게 조절 */
-            height: 2em;
-            /* 이미지의 높이를 글씨 크기와 동일하게 조절 */
-            margin-right: 0.5em;
-            /* 이미지와 글씨 사이의 간격 조절 */
-            margin-top: -9px;
-            /* 원하는 위치만큼의 음수 값을 입력하여 이미지를 높일 수 있습니다. */
-            margin-left: -16em;
-        }
-
-        /*모임 대표 이미지 관련 css*/
-        #preview-image {
-            max-width: 200px;
-            /* 변경된 부분: 최대 너비를 200px로 설정 */
-            max-height: 200px;
-            /* 변경된 부분: 최대 높이를 200px로 설정 */
-        }
-        
-                    .file-input-container {
-            background-color: pink;
-            color: white;
-            padding: 10px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            margin-left: 15px;
-            /* 해당 버튼의 margin-left 값을 조정하여 간격 조절 가능 */
-            }
-
-                .file-input-container input[type=file] {
-            position: absolute;
-            top: 10px;
-            /* 파일 선택 버튼을 부모 요소의 오른쪽 상단에 위치시킴 */
-            margin-top: 20px;
-            /* 버튼과 상위 요소 간의 간격을 20px로 지정함 */
-        }
-
-        /* 파일 선택 버튼 숨기기 */
-        #profile-image {
-            display: none;
-        }
-
-    </style>
+    <link rel="stylesheet" href="/bigmoim/view/css/moimMemberManage.css">
 </head>
+<style>
+
+/* 전체 페이지 */
+body {
+  font-family: 'Nanum Gothic', sans-serif;
+  background-color: #f5f5f5;
+}
+
+/* 전체 컨테이너 */
+.admin-moim-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/* 전체 래퍼 */
+.admin-moim-wrapper {
+  width: 60%;
+  max-width: 1200px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+.admin-moim-request a img {
+  width: 20px;
+  margin-right: 5px;
+}
+
+
+/* 회원 신청 리스트 */
+.request-list-group {
+  list-style: none;
+  padding-left: 0;
+}
+
+.request-list-group li,
+.kick-list-group li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+}
+
+/* 가입수락, 가입거절 버튼 */
+.request-list-group .accept-btn,
+.request-list-group .refuse-btn,
+.kick-list-group .kick-btn {
+  padding: 5px 10px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* 가입수락 버튼 스타일 */
+.request-list-group .accept-btn {
+  margin-right: 10px;
+  background-color: green;
+}
+
+/* 가입거절 버튼 스타일 */
+.request-list-group .refuse-btn {
+  background-color: red;
+}
+
+.request-list-group .accept-btn:active,
+.request-list-group .accept-btn:focus {
+  background-color: darkgreen;
+}
+
+.request-list-group .refuse-btn:active,
+.request-list-group .refuse-btn:focus {
+  background-color: darkred;
+}
+
+/* 추방 리스트 */
+.kick-list-group {
+  list-style: none;
+  padding-left: 0;
+}
+
+.kick-list-group li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+}
+
+/* 추방 버튼 */
+.kick-list-group .kick-btn {
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+/* li 크기 조정 */
+.request-list-group li,
+.kick-list-group li {
+  padding: 15px;
+}
+
+/* 버튼 크기 조정 */
+button {
+  width: 60px;
+  height: 50px;
+}
+
+.kick-list-group span {
+  position: relative;
+  top: -20px;
+  left: 10px;
+}
+
+
+</style>
 <body>
+
 
 <div class = "admin-moim-container">
 <div class = "admin-moim-wrapper">
 
+<div class="admin-moim-top">
+  <a class="admin-moim-back" href="javascript:history.back();" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">
+    <img src="/bigmoim/image/back-button.png" alt="뒤로가기" style="width: 40px; height: 40px;"/>
+  </a>
+  <h1>모임 회원 관리</h1>
+</div>
+
+
+
+<!-- 회원 신청 -->
 <div class = "admin-moim-request">
-<ul>
-<a href="moimdetail.jsp?num=<%=moimNum%>">
-<img src="/bigmoim/image/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
-</a>
-<h3>모임 회원 관리</h3>
+
+<ul class = "request-list-group">
+
+<br>
+
+<h3>회원 승인</h3>
 <form name="moimMemberManageFrm" action="memberBanProc.jsp" method="get">
 <%for(int i=0;i<vMoimJoinList.size();i++) {
 	  MoimJoinBean mjBean = vMoimJoinList.get(i);
 %>
   <li>
   	<!-- 회원 아이디 -->
-  	 <span><%=mjBean.getMemberId() %></span>
+  	<span><%=mjBean.getMemberId() %></span>
     <!-- 회원 가입인사 -->
     <span><%=mjBean.getMjContent() %></span>
     <!-- 수락, 거절 버튼 -->
-    <button type="button" onclick="moimJoinCheck_accept('<%=mjBean.getMemberId() %>')">수락</button>
-    <button type="button" onclick="moimJoinCheck_refuse('<%=mjBean.getMemberId() %>')">거절</button>
+    <div class = "admin-moim-select-btn">
+   		<button type="button" onclick="moimJoinCheck_accept('<%=mjBean.getMemberId() %>')style = "background-color: green;">수락</button>
+    	<button type="button" onclick="moimJoinCheck_refuse('<%=mjBean.getMemberId() %>')style = "background-color: red;">거절</button>
+    </div>
   </li>
   <%}//--for %>
 </ul>
+
 </div>
 
+<br>
+
+<!-- 회원 추방 -->
 <div class = "admin-moim-kick">
-<ul id = "memberList" class="list-group">
+<ul class="kick-list-group">
+
+<h3>회원 추방</h3>
 <% String img = "";
 		for(int i=0;i<vMoimMembers.size();i++) {
         MemberBean memberBean = vMoimMembers.get(i);
@@ -180,19 +235,22 @@ function moimJoinCheck_refuse(mjMemberId){ //가입거절
     	<span name="memberId-<%=memberBean.getMemberId()%>"><%=memberBean.getMemberName() %></span>
     	<!-- 추방 버튼 -->
     	</div>
-   		<button type="button" onclick="memberBan('<%=memberBean.getMemberId()%>')">추방</button>
+   		<button type="button" onclick="memberBan('<%=memberBean.getMemberId()%>')" style = "background-color: red;">추방</button>
     </li>
     <%} //if 
      } //for%> 
+     
 </ul>
-<input type="hidden" name ="memberId">
-<input type="hidden" name ="moimNum" value='<%=moimNum%>'>
-<input type="hidden" name ="mjflag" value="true">
+
+	<input type="hidden" name ="memberId">
+	<input type="hidden" name ="moimNum" value='<%=moimNum%>'>
+	<input type="hidden" name ="mjflag" value="true">
 
 </div>
 
 </div>
 </div>
+
 </form>
 </body>
 </html>

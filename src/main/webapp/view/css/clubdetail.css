@@ -629,3 +629,158 @@ margin-right: 7px;
 .moimdetailBtn-txt{
   margin: 10px 25px;
 }
+
+/*사진첩용 css*/
+.image-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image-box {
+  flex: 0 0 calc(33.33% - 20px);
+  margin: 10px;
+}
+
+.main-containera {
+  padding: 50px;
+  background-color: rgb(255, 231, 235);
+  min-width: min-content; /* 내용 최소너비를 유지 */
+}
+
+.main-mergea {
+    max-width: 900px;
+    margin: 0 auto;
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+    background-color: white;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+.uploada {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+/*게시판용 css*/
+.uploadb {
+    display: flex;
+    justify-content: flex-end;
+    width: 80%;
+}
+
+.post-containerb {
+    width: 80%;
+    max-width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.post-headerb {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.profile-infob {
+    display: flex;
+    align-items: center;
+}
+
+.profile-infob img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.author-nameb {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.post-timeb {
+    margin-top: 2em;
+    font-size: 12px;
+}
+
+.post-bodyb {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.post-contentb {
+    width: 60%;
+}
+
+.post-imageb {
+    width: 40%;
+    text-align: right;
+}
+
+.post-footerb {
+    padding: 10px;
+}
+
+.comments ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        height: 70px;
+}
+
+.comments li {
+    margin-bottom: 10px;
+}
+
+    .comments li p {
+        margin: 0;
+        padding: 0;
+        line-height: 1.2;
+    }
+
+.comment-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.comment-author {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.comment-text {
+    margin-left: 40px;
+}
+
+.comment-form {
+    margin-top: 20px;
+    overflow: auto;
+}
+.comment-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+.comment-form input[type="text"] {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.comment-form button {
+    background-color: pink;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right;
+}

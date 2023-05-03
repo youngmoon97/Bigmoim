@@ -2,9 +2,10 @@
 <jsp:useBean id="boardcommentBean" class="model.Bean.BoardCommentBean"/>
 <jsp:useBean id="boardcommentMgr" class="controll.Mgr.BoardCommentMgr"/>
 <%
-	int mbNum = Integer.parseInt(request.getParameter("mbnum"));
+	int mbNum = Integer.parseInt(request.getParameter("mbNum"));
 	String memberId = request.getParameter("memberId");
 	String comment = request.getParameter("comment-input");
+	int moimNum = Integer.parseInt(request.getParameter("moimNum"));
 	
 	boardcommentBean.setMbNum(mbNum);
 	boardcommentBean.setMemberId(memberId);
@@ -14,6 +15,7 @@
 	
 	boolean result = boardcommentMgr.bcInsert(boardcommentBean);
 	
+	String url = "moimdetail.jsp?num=" + moimNum; 
 	if(result){
 		msg = "등록완료";
 	}
@@ -22,6 +24,5 @@
 
 <script>
 alert("<%=msg%>");
-opener.location.reload();
-self.close();
+location.href = "<%=url%>";
 </script>

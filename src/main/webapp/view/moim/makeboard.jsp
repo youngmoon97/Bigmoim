@@ -4,19 +4,9 @@
 <jsp:useBean id="boardBean" class="model.Bean.MemberBoardBean"/>
 
 <%
-	String memberId = request.getParameter("num");
-	int moimNum = Integer.parseInt(request.getParameter("moimnum"));
-	System.out.println("모임 번호는 : " + moimNum);
-	System.out.print(memberId + " 아이디");
-	String mbTitle = request.getParameter("mbTitle");
-	String mbContent = request.getParameter("mbContent");
-	String mbImg = request.getParameter("mbImg");
-	
-/* 	boardBean.setMemberId(memberId);
-	boardBean.setMbTitle(mbTitle);
-	boardBean.setMbContent(mbContent);
-	boardBean.setMbImg(mbImg);
-	 */
+	String memberId = request.getParameter("memberId");
+	int moimNum = Integer.parseInt(request.getParameter("num"));
+	System.out.println("moimNum : "+ moimNum);
 	
 %>
 
@@ -81,10 +71,10 @@
          	}
        		}
              
-             function addboard() {
+             /*function addboard() {
 				const myFrm = document.frm;
 				myFrm.submit();
-			}
+			}*/
       </script>	
 
     <title>게시글 작성</title>
@@ -111,11 +101,10 @@
                                     <h3 class="ml-1 mb-0"><strong>게시글 작성</strong></h3>
                                 </div>
                                 <!-- 멤버 아이디 Proc파일로 넘김 -->
-                                <form action="makeboardProc.jsp?num=<%=memberId%>&moimnum=<%=moimNum%>" method="POST" id="frm" name="frm">
+                                <form action="makeboardProc.jsp?memberId=<%=memberId %>&moimNum=<%=moimNum%>" method="POST" id="frm" name="frm" enctype="multipart/form-data">
                                     <div>
                                         <label>작성자</label>
-                                        <input class="form-control" id="memberName" name="memberName" rows="1"
-                                            maxlength="30" placeholder="<%=memberId%>" readonly></input>
+
                                     </div>
 
                                     <!-- 현제의 날짜를 받는 JavaScript 코드  -->
@@ -126,14 +115,13 @@
                                     </script>
 
                                     <div>
-                                        <label>게시글 제목</label>
+                                        		<label>게시글 제목</label>
                                         <br>
                                         <textarea class="form-control" id="mbTitle" name="mbTitle" rows="1"
                                             maxlength="30" placeholder="게시글 제목을 입력하세요"></textarea>
-                                         <br>
-                                    
-                                        <br>
-                                        <label>게시글 내용</label>
+                                         <br><br>
+                                         
+                                        		<label>게시글 내용</label>
                                         <br>
                                         <textarea class="form-control" id="mbContent" name="mbContent" rows="5"
                                             maxlength="500" placeholder="게시글 내용을 입력해주세요"></textarea>
@@ -156,8 +144,8 @@
 
 
                                 <div class="mt-4 text-center">
-                                        <button class="btn btn-pill text-white btn-block"
-                                            style="background-color: pink;" onclick="addboard()" >등록하기</button>
+                                        <button type="submit"  class="btn btn-pill text-white btn-block"
+                                            style="background-color: pink;"  >등록하기</button>
                                     </div>
                                 </form>
                             </div>

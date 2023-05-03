@@ -4,23 +4,29 @@
 <jsp:useBean id="memberMgr" class="controll.Mgr.MemberMgr"/>
 <jsp:useBean id="boardMgr" class="controll.Mgr.BoardMgr"/>
 <jsp:useBean id="updatebean" class="model.Bean.MemberBoardBean"/>
-<jsp:setProperty property="*" name="updatebean"/>
+
 
 <%
 	String msg = "수정 실패";
 	String url = "makeboard.jsp";
-	int mbNum = Integer.parseInt(request.getParameter("num"));
 	
-	updatebean.setMbNum(mbNum);
-	System.out.println("게시판 번호 " + updatebean.getMbNum());
+	int mbNum = Integer.parseInt(request.getParameter("mbNum"));
+	System.out.println("mbNum : " + mbNum);
+	String memberId = request.getParameter("memberId");
+	int moimNum = Integer.parseInt(request.getParameter("moimNum"));
+	String mbDate = request.getParameter("mbDate");
+	String mbTitle = request.getParameter("mbTitle");
+	String mbContent = request.getParameter("mbContent");
+	String mbImg = request.getParameter("mbImg");
+	
+
+	
 	
 	boolean result = boardMgr.boardUpdate(request);
 	
 	if(result){
 		msg = "수정 되었습니다.";
 	}
-	
-	System.out.println(result + "맞아?");
 
 %>
 

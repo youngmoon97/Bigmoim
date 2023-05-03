@@ -5,11 +5,18 @@
 <jsp:useBean id="boardMgr" class="controll.Mgr.BoardMgr"/>
 
 <%
-	
+	// 게시판 번호 
 	int mbNum = Integer.parseInt(request.getParameter("num"));
+	// 게시판 작성 회원
 	String memberId = request.getParameter("memberId");
+	
+	// 게시판 작성되는 모임 추가 
+	
+	int moimNum = Integer.parseInt(request.getParameter("moimNum"));
+	// 게시판 번호로 게시판 정보 받아오기 
 	MemberBoardBean mbBean = boardMgr.boarddetail(mbNum);
 	
+	// 게시판 정보에 작성자아이디와 로그인한 아이디가 일치하면 bean에 저장
 	if(memberId == mbBean.getMemberId()){
 	MemberBoardBean updatebean = boardMgr.getmemberBoard(memberId, mbNum);
 	}
@@ -71,20 +78,20 @@
                            var reader = new FileReader();
                              reader.onload = function (e) {
                              previewImage.src = e.target.result;
-                            }
+                            	}
                              reader.readAsDataURL(input.files[0]);
-                                            } else {
-                                                previewImage.src = '';
-                                            }
-                                        }
-                      
+                           		} else {
+                                    previewImage.src = '';
+                                   }
+                          }
+                     
                       function updateBoard(){
 						var myFrm = document.updateFrm;
 						if(myFrm.mbContent.value.length < 1){
 							alert("내용을 적어주세요");
 							return;
 						}
-						if(myFrm.mbTitle.vlaue.length < 1){
+						if(myFrm.mbTitle.value.length < 1){
 							alert("제목을 적어주세요");
 							return;
 						}
@@ -119,10 +126,10 @@
                                     </div>
                                     <h3 class="ml-1 mb-0"><strong>게시글 수정</strong></h3>
                                 </div>
-                                <form action="updateboardProc.jsp?num=<%=mbNum%>&" method="post" name="updateFrm" id="updateFrm">
+                                <form action="updateboardProc.jsp?mbNum=<%=mbNum%>&memberId=<%=memberId%>&moimNum=<%=moimNum %>" method = "post" name="updateFrm" id="updateFrm" enctype="multipart/form-data">
                                     <div>
                                     	<label>게시글 번호 </label>
-                                    	<input  type="text" class="form-control" id="mbNum" name="nbNum" rows="1"
+                                    	<input  type="text" class="form-control" id="mbNum" name="mbNum" rows="1"
                                            maxlength="30" readonly value="<%=mbNum%>"></input>
                                     </div>
                                     <div>
@@ -137,7 +144,7 @@
                                             readonly value = "<%=mbBean.getMbDate()%>"></input>
                                             <br>
                                     </div>
-
+			
                                     <!-- 현제의 날짜를 받는 JavaScript 코드  -->
                                     <script>
                                         var currentDate = new Date().toLocaleDateString(); // 현재 날짜를 문자열로 가져옴
@@ -173,8 +180,8 @@
                                             onchange="showPreviewImage(this)">
                                     </div>
                                     <div class="mt-4 text-center">
-                                        <button onclick="updateBoard()" class="btn btn-pill text-white btn-block"
-                                            style="background-color: pink;">수정하기</button>
+                                        <button type="button" class="btn btn-pill text-white btn-block"
+                                            style="background-color: pink;" onclick="updateBoard()">수정하기</button>
                                     </div>
                                 </form >
                             </div>
