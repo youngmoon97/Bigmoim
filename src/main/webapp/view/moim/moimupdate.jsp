@@ -177,7 +177,7 @@ function getCategoryNum(categoryNum){
                 <div class="main-merge"> <!--main page 간격-->
                     <div class="back-button" style="margin-top: 3em">
                         <!--a 태그에 메인 URL 입력해야함-->
-                        <a href="javascript:history.back();">
+                        <a href="#">
                             <img src="../../image/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
                         </a>
                         <h3 style="margin-left: -7.5em"><strong>모임 관리하기</strong></h3>
@@ -307,47 +307,14 @@ function getCategoryNum(categoryNum){
                                 </div>
                             </div>
 
-
-
-
                             <div>
                                 <label>모임 소개</label>
                                 <br>
                                 <textarea class="form-control" id="moimProfile" name="moimProfile" rows="5"
                                     maxlength="500" value=<%= moimProfile %>><%= moimProfile %></textarea>
                             </div>
-
-                            <div>
-                                <br>
-                                <label>모임 멤버</label>
-                                <!-- 회원 리스트를 서버에서 받아와서 동적으로 생성 -->
-                                <!-- 예시로 더미 데이터를 사용 -->
-                                <ul id="memberList" class="list-group">
-                                    
-                                    <%for(int i=0;i<vMoimMembers.size();i++) {
-                                    MemberBean memberBean = vMoimMembers.get(i);
-                                    //System.out.println("moimupdate.memberBean = "+memberBean.getMemberId());
-                                    if(!memberBean.getMemberId().equals(moimbean.getMemberId())) {
-                        			img = "/bigmoim/image/"+memberBean.getMemberImg();
-                                    %>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <div class="d-flex align-items-center">
-                                            <img src="<%=img%>" class="mr-3" width="50" height="50"
-                                                name="memberImg-<%=memberBean.getMemberId()%>"> <!-- 프로필 사진 이미지 태그 -->
-                                            <span name="memberId-<%=memberBean.getMemberId()%>"><%=memberBean.getMemberName() %></span> <!-- 회원 이름 텍스트 -->
-                                        </div>
-                                        <button type="button" class="btn btn-danger" onclick="memberBan('<%=memberBean.getMemberId()%>')">추방</button>
-                                    </li>
-                                    <%} //if 
-                                       } //for%>                 
-                                </ul>
-									<input type="hidden" name ="memberId">
-                                <script>
-       							
-                                </script> 
-                      
-                            </div>
-
+                            
+							<input type="hidden" name ="memberId">
                             <div class="mt-4 text-center">
                                 <input type="button" value="수정하기" class="btn btn-pill text-white btn-block"
                                     style="background-color: pink;" onclick="moimUpdate()">

@@ -1,15 +1,18 @@
+<%@page import="model.Bean.MoimBean"%>
 <%@page contentType="text/html; charset=UTF-8"%>
 <jsp:useBean id="moimMgr" class="controll.Mgr.MoimMgr"/>
-<jsp:useBean id="memberBean" class="model.Bean.MemberBean"/>
-<jsp:setProperty property="*" name="memberBean"/>
+<jsp:useBean id="moimMemberBean" class="model.Bean.MoimMemberBean"/>
+<jsp:setProperty property="*" name="moimMemberBean"/>
 <%
-		boolean result = moimMgr.memberBan(memberBean.getMemberName());
+		String memberId = request.getParameter("memberId");
+		int moimNum = Integer.parseInt(request.getParameter("moimNum"));
+		boolean result = moimMgr.memberBan(memberId, moimNum);
+
 		if(result){ //추방성공
 %>
 		<script>
 			alert("회원 추방 완료");
-			history.back();
-			location.reload(true);//새로고침, 서버로부터 새 데이터 받아옴
+			location.href="moimMemberManage.jsp?moimNum=<%=moimNum%>"
 		</script>
 <%}else{ //추방실패%>
 		<script>

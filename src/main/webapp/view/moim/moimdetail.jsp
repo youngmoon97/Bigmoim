@@ -564,7 +564,7 @@
     </div>
 
   <!-- ---------------------------------------------------게시판------------------------------- -->
-  <div class="mainwrapper content2" style="display: none";>
+  <div class="mainwrapper content2" style="display: none;">
         <div class="main-container">
           <div class="categorys">
             <div class="main-merge">

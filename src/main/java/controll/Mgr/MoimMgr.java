@@ -685,6 +685,29 @@ public class MoimMgr {
 		return vlist;
 	}
 	
+	//모임가입신청 삭제(거절)
+	   public boolean mjDelete(String memberId, int moimNum) {
+	      Connection con = null;
+	      PreparedStatement pstmt = null;
+	      String sql = null;
+	      boolean flag = false;
+	      try {
+	         con = pool.getConnection();
+	         sql = "delete from moimjoin where memberId=? and moimNum=?";
+	         pstmt = con.prepareStatement(sql);
+	         pstmt.setString(1, memberId);
+	         pstmt.setInt(2, moimNum);
+	         if(pstmt.executeUpdate()==1) {
+	            flag = true;
+	         }
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } finally {
+	         pool.freeConnection(con, pstmt);
+	      }
+	      return flag;
+	   }
+	
 	//모임일정생성
 	public boolean msInsert(MoimScheduleBean bean) {
 		Connection con = null;
@@ -694,8 +717,8 @@ public class MoimMgr {
 		try {		
 			con = pool.getConnection();
 			sql = "insert into moimschedule(msTime,msArea,moimNum,"
-				+ "msHCount,memberId,msTitle,msContent) "
-				+ "values (?,?,?,?,?,?,?)";
+				+ "msHCount,memberId,msTitle,msContent, msDate) "
+				+ "values (?,?,?,?,?,?,?,?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, bean.getMsTime());
 			pstmt.setString(2, bean.getMsArea());
@@ -704,6 +727,7 @@ public class MoimMgr {
 			pstmt.setString(5, bean.getMemberId());
 			pstmt.setString(6, bean.getMsTitle());
 			pstmt.setString(7, bean.getMsContent());
+			pstmt.setString(8, bean.getMsDate());
 			if(pstmt.executeUpdate()==1) {
 				flag=true;
 			}

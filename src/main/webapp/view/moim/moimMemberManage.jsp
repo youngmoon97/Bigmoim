@@ -142,7 +142,7 @@ function moimJoinCheck_refuse(mjMemberId){ //가입거절
 
 <div class = "admin-moim-request">
 <ul>
-<a href="javascript:history.back();">
+<a href="moimdetail.jsp?num=<%=moimNum%>">
 <img src="/bigmoim/image/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
 </a>
 <h3>모임 회원 관리</h3>
