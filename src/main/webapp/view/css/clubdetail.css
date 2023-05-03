@@ -275,6 +275,10 @@ nav a:hover {
   width: 700px;
 }
 
+.clubdetail-text{
+  margin: 0px;
+}
+
 .clubdetail-schedule .meeting_list {
   display: flex;
   flex-direction: column;
@@ -393,11 +397,6 @@ margin-right: 7px;
   -webkit-transform: rotate(90deg);
 }
 
-.memTxt{
-  margin-left: 50px;
-  margin-top: 20px;
-  padding-top: 70px;
-}
 
 .container .joinMemberImg{
   -webkit-transform: rotate(90deg);

@@ -87,7 +87,7 @@ public class ScheduleJoinMgr {
 	       return moimschvlist;
 	    }
 	 // 모임스케줄가져오기(수정)
-		public Vector<MoimScheduleBean> moimScheduleList(int num) {
+	    public Vector<MoimScheduleBean> moimScheduleList(int num) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -110,7 +110,7 @@ public class ScheduleJoinMgr {
 					bean.setMsNCount(rs.getInt(7));
 					bean.setMsTitle(rs.getString(8));
 					bean.setMsContent(rs.getString(9));
-					bean.setMsTime(rs.getString(10));
+					bean.setMsDate(rs.getString(10));
 					msvlist.addElement(bean);
 				}
 			} catch (Exception e) {

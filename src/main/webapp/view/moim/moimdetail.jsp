@@ -124,6 +124,7 @@
               <%}else if(manngerBean.getMemberId().equals(memberId)){%>
               <li><button type="button" class="moimEditorBtn" onclick="moimUpdate_class()">내클래스관리</button></li>
               <li><button type="button" class="classManageBtn" onclick="memberManage_class()">클래스회원관리</button></li>
+              
               <%}%>
               	<input type="hidden" name ="jjimNum" value="">
     			<input type="hidden" name ="memberId" value="<%=memberId %>">
@@ -147,9 +148,14 @@
 			<%=moimbean.getMoimProfile() %>
           </p>
         </div>
-                <!-- 클래스 일정 -->
+        <!-- 클래스 일정 -->
         <div class="clubdetail-schedule">
-          <h2>클래스일정</h2>
+          <div style="display: flex;">
+          	<h2 class="clubdetail-text" style="margin: 0px;">클래스일정</h2>
+          	<a href="makeschedule.jsp?memberId=<%=memberId%>&moimNum=<%=no%>">
+          		<img alt="모임일정 생성" src="../../image/back-button.png" width="30" height="30" style="margin-left: 10px">
+          	</a>
+          </div>
           <ul class="meeting_list">
           	<%
           		if(msvlist.isEmpty()){
@@ -171,7 +177,7 @@
 					<li class="date" name="msTime"><%=mjDayName%><span><%=moimschbean.getMsDate() %></span></li>
 					<li>
 						<ul class="in_cont">
-							<li class="ico calendar" name="msTime"><%=msbean.getMsTime()%></li>
+							<li class="ico calendar" name="msTime"><%=msbean.getMsDate()%>&nbsp;<%=msbean.getMsTime()%></li>
 							<li class="ico place" name="msArea"><%=msbean.getMsArea()%></li>
 							<li class="ico cost" name="">없음.</li>
 						</ul>
@@ -186,25 +192,23 @@
 				<div class="member" id="cont_1">
 					<!-- 추가-->
 					<h4 name="msNCount">참여 멤버(<%=moimScheduleMember.size() %>/<%=msbean.getMsHCount() %>)</h4>
-		            <div class="container">
-		              <%
+		            <%
 		              	if(moimScheduleMember.isEmpty()){
-		              %>
-		              <div class="noMemberTxt">
-			          		<h4 class="memTxt">참여 멤버가 없습니다.</h4>
-			          </div>
+		            %>
+			          <h4>참여 멤버가 없습니다.</h4>
 		              <%}else{
 		            	  for(int j=0;j<moimScheduleMember.size();j++){
 		            		  MemberBean memberbean = moimScheduleMember.get(j);
 		            		//MemberBean memberBean = moimschvlist.get(j);
 		          			//MemberBean memberbean = moimScheduleMember.get(j);
 		              %>
+		              <div class="container">
 	              		<div class="joinMemberImg">
 	              			<img src="/bigmoim/image/<%=memberbean.getMemberImg()%>"/>
 	           	  		</div>
+	           	  	  </div>
 	              	  <%}%><!-- for -->
 		            <%}%><!-- if else -->
-		          </div>
         	<%}%><!-- 큰 for -->
           <%} %><!-- 큰 if else -->
 		  </li>	
@@ -415,8 +419,13 @@
 			<%=moimbean.getMoimProfile() %>
           </p>
         </div>
-        <div class="clubdetail-schedule">
-          <h2>모임일정</h2>
+         <div class="clubdetail-schedule">
+          <div style="display: flex;">
+          	<h2 class="clubdetail-text" style="margin: 0px;">모임일정</h2>
+          	<a href="makeschedule.jsp?memberId=<%=memberId%>&moimNum=<%=no%>">
+          		<img alt="모임일정 생성" src="../../image/back-button.png" width="30" height="30" style="margin-left: 10px">
+          	</a>
+          </div>
           <ul class="meeting_list">
           	<%
           		if(msvlist.isEmpty()){
@@ -436,7 +445,7 @@
 					<li class="date" name="msTime"><%=mjDayName%><span><%=moimschbean.getMsDate()%></span></li>
 					<li>
 						<ul class="in_cont">
-							<li class="ico calendar" name="msTime"><%=msbean.getMsTime()%></li>
+							<li class="ico calendar" name="msTime"><%=msbean.getMsDate()%>&nbsp;<%=msbean.getMsTime()%>s</li>
 							<li class="ico place" name="msArea"><%=msbean.getMsArea()%></li>
 							<li class="ico cost" name="">없음</li>
 						</ul>
@@ -451,20 +460,20 @@
 				<div class="member" id="cont_1">
 					<h4 name="msNCount">참여 멤버(<%=moimScheduleMember.size() %>/<%=msbean.getMsHCount() %>)</h4>
 		            <div class="container">
-		              <%
+		            <%
 		              	if(moimScheduleMember.isEmpty()){
-		              %>
-		              <div class="noMemberTxt">
-			          		<h4 class="memTxt">참여 멤버가 없습니다.</h4>
-			          </div>
+		            %>
+			          <h4>참여 멤버가 없습니다.</h4>
 		              <%}else{
 		            	  for(int j=0;j<moimScheduleMember.size();j++){
 		            		//MemberBean memberBean = moimschvlist.get(j);
 		          			MemberBean memberbean = moimScheduleMember.get(j);
 		              %>
+		              <div class="container">
 	              		<div class="joinMemberImg">
 	              			<img src="/bigmoim/image/<%=memberbean.getMemberImg()%>"/>
 	           	  		</div>
+	  	           	  </div>
 	              	  <%}%><!-- for -->
 		            <%}%><!-- if else -->
 		          </div>
@@ -472,6 +481,7 @@
         <%} %><!-- if else -->
 			</li>	
 		  </ul>
+
       <div class="tab">
       	<%
       		if(moimAllMemvlist!=null){		
@@ -673,7 +683,7 @@
 		  </div>
   		  <%}else{%><!-- if -->
   		  <div class="moimdetailBtn" style="bottom: 300px; right: 170px;">
-  		  <a href="#">
+  		  <a href="quitmoim.jsp?memberId=<%=memberId %>" onclick="">
 		      <p class="moimdetailBtn-txt">탈퇴하기</p>
 		  </a>
 		  </div>
@@ -681,6 +691,16 @@
  	  <%} %><!-- for -->
   <%} %><!-- if else -->
   <script>
+  //탈퇴하기
+  function quit(){
+	  if(confirm("정말 탈퇴하시겠습니까?")){
+		  //예
+		  
+	  }else{
+		  //아니요
+			
+	  }
+  }
   // 멤버관리
   function memberManage_moim(){
 	  document.jjimFrm_moim.action = "moimMemberManage.jsp";
@@ -690,7 +710,6 @@
 	  document.jjimFrm_class.action = "moimMemberManage.jsp";
 	  document.jjimFrm_class.submit();
   }
-  
   
   //찜목록 
   function moimUpdate_moim(){//모임정보 수정 페이지로 감(모임)

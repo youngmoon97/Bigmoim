@@ -20,7 +20,7 @@
      <!-- 하단 -->
 <footer>
   <div class="footer-section">
-    <ul>
+    <ul class="footer-bottom">
       <li><a href="#">이용약관</a></li>
       <li><a href="#">개인정보처리방침</a></li>
       <li><a href="#">고객센터</a></li>
@@ -28,7 +28,6 @@
       <li><a href="#">대모임 인재채용</a></li>
     </ul>
   </div>
-  <div>
     <ul class="Creater">
       <li>Creater</li>
       <li><a href="https://github.com/youngmoon97" target='_blank'>Young-Moon Cho</a></li>

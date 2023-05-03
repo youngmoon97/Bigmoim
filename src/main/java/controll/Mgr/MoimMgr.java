@@ -585,6 +585,62 @@ public class MoimMgr {
 		}
 		return flag;
 	}
+	//가입신청리스트
+	public Vector<MoimJoinBean> mjList(int moimNum){
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		Vector<MoimJoinBean> vlist = new Vector<MoimJoinBean>();
+		try {
+			con = pool.getConnection();
+			sql = "select * from moimjoin  "
+				+ "where moimNum =? and mjCheck = 0";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, moimNum);			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				MoimJoinBean bean = new MoimJoinBean();
+				bean.setMjNum(rs.getInt(1));
+				bean.setMoimNum(rs.getInt(2));
+				bean.setMemberId(rs.getString(3));
+				bean.setMjCheck(rs.getInt(4));
+				bean.setMjDate(rs.getString(5));				
+				bean.setMjContent(rs.getString(6));
+				vlist.addElement(bean);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return vlist;
+	}
+	//가입수락 업데이트
+	public boolean mjAccept(String memberId, int moimNum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		String sql = null;
+		boolean flag = false;
+		try {
+			con = pool.getConnection();
+			sql = "update moimjoin set mjcheck=1 "
+				+ "where memberId =? and moimNum =?;";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, moimNum);		
+			if(pstmt.executeUpdate()==1) {
+				flag=true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pool.freeConnection(con, pstmt);
+		}
+		return flag;
+	}
+	
+	
 	//멤버가 가입한 모임 리스트 가져오기
 	public Vector<MoimBean> joinmoimList(String memberId){
 		Connection con = null;
