@@ -70,10 +70,18 @@
     		%>
           <img src=<%=img %> alt="Image">
 
-          <button class="like-btn">
-  			<i class="far fa-heart"></i>
-			</button>
-			
+         <%if (memberId!="방문자"){%> 
+         <button class="like-btn" id="like-btn-<%=moimbean.getMoimNum()%>"
+          onclick="likeBtnChange(<%=moimbean.getMoimNum()%>)" style="color:red; bgcolor: white;">
+           <i id="heart<%=moimbean.getMoimNum() %>"
+           <%if(moimMgr.jjimCheck(memberId, moimbean.getMoimNum())){ %>
+           class = "fas fa-heart"
+           <% } else{%>
+           class = "far fa-heart"
+           <%}%>></i>
+      		</button>
+     	 <%} %>
+     	 
         </div>
         <h4><%=moimbean.getMoimName() %></h4>
         <div class="card-nav">
@@ -84,7 +92,11 @@
         <p class="moimProfile" name="moimProfile" value="" style="margin-top: 0; color: black; text-decoration: none;"><%=moimbean.getMoimProfile() %></p>
         </a>
     		</article>
-    		
+    	  <input type="hidden" name ="jjimNum" value="">
+          <input type="hidden" name ="memberId" value="<%=memberId %>">
+          <input type="hidden" name ="moimNum" value="">
+          <input type="hidden" name ="classNum" value="">
+          </form>
     		<%}%><!--for-->
 </div><!--card-group-->
 <%}//--if-else 
@@ -104,7 +116,24 @@
     </footer>
 
     <script>
-
+    function likeBtnChange(num) {
+        //Proc에 보내기
+        //document.jjimFrm.submit();
+        //alert(num)
+        let jjimFrm = document.forms["jjimFrm"];
+        jjimFrm.moimNum.value = num;
+         jjimFrm.submit();
+        //$("#jjimFrm").submit();
+        
+        //색상 변경
+       let likeBtn = document.getElementById("heart"+ num)
+       if(likeBtn.className == "far fa-heart"){//빈 하트면
+          likeBtn.className = "fas fa-heart" //꽉찬 하트로
+       }else if(likeBtn.className == "fas fa-heart"){//꽉찬 하트면
+          likeBtn.className = "far fa-heart"//빈 하트로
+       }
+        
+    }
       	
     </script>
     </div>

@@ -214,44 +214,77 @@ public class MoimMgr {
 					new MultipartRequest(req, SAVEFOLDER, MAXSIZE, ENCODING
 							,new DefaultFileRenamePolicy());
 			String moimImg = null;
+			con = pool.getConnection();
 			if(multi.getFilesystemName("moimImg")!=null) {
 				moimImg = multi.getFilesystemName("moimImg");
+				int moimNum = Integer.parseInt(multi.getParameter("moimNum"));
+				String moimName = multi.getParameter("moimName");
+				String moimArea = multi.getParameter("moimArea");
+				int moimHCount = Integer.parseInt(multi.getParameter("moimHCount"));
+				String memberId = multi.getParameter("memberId");
+				String moimKakao = multi.getParameter("moimKakao");
+				String moimProfile = multi.getParameter("moimProfile");
+				String moimDate = multi.getParameter("moimDate");
+				String classprice = multi.getParameter("classprice");
+				int categoryNum = Integer.parseInt(multi.getParameter("categoryNum"));
+				int businessNum = Integer.parseInt(multi.getParameter("businessNum"));
+				int taskNum = Integer.parseInt(multi.getParameter("taskNum"));
+				int themeNum = Integer.parseInt(multi.getParameter("themeNum"));
+				int moimOrclass = Integer.parseInt(multi.getParameter("moimOrclass"));
+				con = pool.getConnection();
+				sql = "update moim  "
+						+ "set moimName= ?, moimArea=?, moimKakao=?, categoryNum=?, "
+						+ "moimImg=?, moimProfile=?, themeNum=?, taskNum=?, moimHCount =?, "
+						+ "businessNum=?, classprice=?, moimOrclass = ?  "
+						+ "where moimNum= ? ";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, moimName);
+					pstmt.setString(2, moimArea);
+					pstmt.setString(3, moimKakao);
+					pstmt.setInt(4, categoryNum);
+					pstmt.setString(5, moimImg);
+					pstmt.setString(6, moimProfile);
+					pstmt.setInt(7, themeNum);
+					pstmt.setInt(8, taskNum);
+					pstmt.setInt(9, moimHCount);
+					pstmt.setInt(10, businessNum);
+					pstmt.setString(11, classprice);
+					pstmt.setInt(12, moimOrclass);
+					pstmt.setInt(13, moimNum);
+			}else {
+				int moimNum = Integer.parseInt(multi.getParameter("moimNum"));
+				String moimName = multi.getParameter("moimName");
+				String moimArea = multi.getParameter("moimArea");
+				int moimHCount = Integer.parseInt(multi.getParameter("moimHCount"));
+				String memberId = multi.getParameter("memberId");
+				String moimKakao = multi.getParameter("moimKakao");
+				String moimProfile = multi.getParameter("moimProfile");
+				String moimDate = multi.getParameter("moimDate");
+				String classprice = multi.getParameter("classprice");
+				int categoryNum = Integer.parseInt(multi.getParameter("categoryNum"));
+				int businessNum = Integer.parseInt(multi.getParameter("businessNum"));
+				int taskNum = Integer.parseInt(multi.getParameter("taskNum"));
+				int themeNum = Integer.parseInt(multi.getParameter("themeNum"));
+				int moimOrclass = Integer.parseInt(multi.getParameter("moimOrclass"));
+				sql = "update moim  "
+					+ "set moimName= ?, moimArea=?, moimKakao=?, categoryNum=?, "
+					+ " moimProfile=?, themeNum=?, taskNum=?, moimHCount =?, "
+					+ "businessNum=?, classprice=?, moimOrclass = ?  "
+					+ "where moimNum= ? ";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, moimName);
+				pstmt.setString(2, moimArea);
+				pstmt.setString(3, moimKakao);
+				pstmt.setInt(4, categoryNum);
+				pstmt.setString(5, moimProfile);
+				pstmt.setInt(6, themeNum);
+				pstmt.setInt(7, taskNum);
+				pstmt.setInt(8, moimHCount);
+				pstmt.setInt(9, businessNum);
+				pstmt.setString(10, classprice);
+				pstmt.setInt(11, moimOrclass);
+				pstmt.setInt(12, moimNum);
 			}
-			//File f = new File(memberImg);
-			int moimNum = Integer.parseInt(multi.getParameter("moimNum"));
-			String moimName = multi.getParameter("moimName");
-			String moimArea = multi.getParameter("moimArea");
-			int moimHCount = Integer.parseInt(multi.getParameter("moimHCount"));
-			String memberId = multi.getParameter("memberId");
-			String moimKakao = multi.getParameter("moimKakao");
-			String moimProfile = multi.getParameter("moimProfile");
-			String moimDate = multi.getParameter("moimDate");
-			String classprice = multi.getParameter("classprice");
-			int categoryNum = Integer.parseInt(multi.getParameter("categoryNum"));
-			int businessNum = Integer.parseInt(multi.getParameter("businessNum"));
-			int taskNum = Integer.parseInt(multi.getParameter("taskNum"));
-			int themeNum = Integer.parseInt(multi.getParameter("themeNum"));
-			int moimOrclass = Integer.parseInt(multi.getParameter("moimOrclass"));
-			con = pool.getConnection();
-			sql = "update moim  "
-				+ "set moimName= ?, moimArea=?, moimKakao=?, categoryNum=?, "
-				+ "moimImg=?, moimProfile=?, themeNum=?, taskNum=?, moimHCount =?, "
-				+ "businessNum=?, classprice=?, moimOrclass = ?  "
-				+ "where moimNum= ? ";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, moimName);
-			pstmt.setString(2, moimArea);
-			pstmt.setString(3, moimKakao);
-			pstmt.setInt(4, categoryNum);
-			pstmt.setString(5, moimImg);
-			pstmt.setString(6, moimProfile);
-			pstmt.setInt(7, themeNum);
-			pstmt.setInt(8, taskNum);
-			pstmt.setInt(9, moimHCount);
-			pstmt.setInt(10, businessNum);
-			pstmt.setString(11, classprice);
-			pstmt.setInt(12, moimOrclass);
-			pstmt.setInt(13, moimNum);
 			if(pstmt.executeUpdate()==1) {
 				flag=true;
 			}
@@ -1061,7 +1094,7 @@ public class MoimMgr {
 		            pstmt = con.prepareStatement(sql);
 			        pstmt.setString(1, memberId);
 			        pstmt.setInt(2, moimNum);
-			           rs = pstmt.executeQuery();
+			        rs = pstmt.executeQuery();
 			        if(rs.next()) {
 		              flag = true;
 			           }
@@ -1250,7 +1283,7 @@ public class MoimMgr {
 	               Vector<MoimPhotosBean> photovlist = new Vector<MoimPhotosBean>();
 	               try {
 	                  con = pool.getConnection();
-	                  sql = "select photo, photoName , photoNum from moimphotos where moimNum = ?";
+	                  sql = "select photo, photoName, memberId, photoNum from moimphotos where moimNum = ?";
 	                  pstmt = con.prepareStatement(sql);
 	                  pstmt.setInt(1, moimNum);
 	                  rs = pstmt.executeQuery();
@@ -1258,7 +1291,8 @@ public class MoimMgr {
 	                     MoimPhotosBean bean = new MoimPhotosBean();
 	                     bean.setPhoto(rs.getString(1));
 	                     bean.setPhotoName(rs.getString(2));
-	                     bean.setPhotoNum(rs.getInt(3));
+	                     bean.setMemberId(rs.getString(3));	                 
+	                     bean.setPhotoNum(rs.getInt(4));
 	                     photovlist.addElement(bean);
 	                  }
 
@@ -1396,5 +1430,32 @@ public class MoimMgr {
 	               pool.freeConnection(con, pstmt, rs);
 	            }
 	            return bean;
+	         }
+	         
+	         //모임가입신청에 있는지 확인
+	         
+	         public boolean mjChk(String memberId, int moimNum) {
+	        	Connection con = null;
+				PreparedStatement pstmt = null;
+				ResultSet rs = null;
+				String sql = null;
+				boolean flag=false;
+				try {
+					con = pool.getConnection();
+					sql = "select * from moimjoin  "
+						+ "where memberId = ? and moimNum = ? ";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setString(1, memberId);
+					pstmt.setInt(2, moimNum);					
+					rs = pstmt.executeQuery();
+					if(rs.next()) {
+						flag=true;
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				} finally {
+					pool.freeConnection(con, pstmt, rs);
+				}
+				return flag;
 	         }
 }

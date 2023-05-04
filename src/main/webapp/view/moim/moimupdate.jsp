@@ -18,7 +18,7 @@
 	//System.out.println("모임업데이트.jsp 모임넘 = "+moimNum);
 	MoimBean moimbean = moimMgr.moimDetail(moimNum);
 
-	//String moimImg = moimbean.getMoimImg();
+	String moimImg = moimbean.getMoimImg();
 	String moimName = moimbean.getMoimName();
 	String moimArea = moimbean.getMoimArea();
 	int moimHCount = moimbean.getMoimHCount();
@@ -198,7 +198,7 @@ function getCategoryNum(categoryNum){
     								%>
     							<div class="image-preview-container">
                                 <img id="preview-image" src="<%=img %>" alt="Preview Image">
-                                <label for="profile-image" class="file-input-container">사진 선택하기</label>
+                                <label for="profile-image" class="file-input-container" value="<%=img %>">사진 선택하기</label>
                                 <input type="file" class="form-control-file" id="profile-image" name="moimImg"
                                     onchange="showPreviewImage(this)">
                             </div>

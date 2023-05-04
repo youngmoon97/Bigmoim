@@ -392,7 +392,8 @@
 			  height: 30px;">
 	  			<i id="heart_moim_<%=moimbean.getMoimNum() %>"
 	  			<%if(moimMgr.jjimCheck(memberId, moimbean.getMoimNum())){ %>
-	  			class = "fas fa-heart" style="display: inline-block; width: 100%; height: 100%;"<% } else{%>
+	  			class = "fas fa-heart" style="display: inline-block; width: 100%; height: 100%;"
+	  			<% } else{%>
 	  			class = "far fa-heart" style="display: inline-block; width: 100%; height: 100%;"
 	  			<%}%>
 	  			></i>
@@ -604,16 +605,16 @@
             Vector<MemberBean> moimMemberList = moimMgr.getMemberList(no);
             for(int i=0;i<moimMemberList.size();i++){
             	
-            	if(memberId != null && memberId.equals(moimMemberList.get(i).getMemberId()) || memberId.equals(moimbean.getMemberId())){ 
+            	if(memberId != null && memberId.equals(moimMemberList.get(i).getMemberId())){ 
             %>
-            	
-            
 				<button type="button" onclick="makeboard('<%=no %>' , '<%=memberId %>')"
                     style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">
                     게시글 등록
                 </button>
-            <%}
-            } // 버튼 보이기 (모임회원만) 추가%>
+            <%
+            	}
+            	
+            }%> 
             
             </div>
             <br>
@@ -631,8 +632,8 @@
                <p class="author-nameb" style="margin-top: 1em;"><%=mbBean.getMemberId()%></p>
               </div>
               <%if(mbBean.getMemberId().equals(memberId)){%>
-                    <a href="javascript:updateFn('<%=mbBean.getMbNum()%>','<%=mbBean.getMemberId() %>','<%=mbBean.getMoimNum()%>')" style="position: absolute; top:0; right: 45px;">[수정]</a>                   
-                    <a href="deleteboardProc.jsp?num=<%=memberId%>&mbnum=<%=mbBean.getMbNum()%>&moimnum=<%=no%>" style="position: absolute; top: 0; right: 0; margin-right: 5px">[삭제]</a> 
+                    <a href="javascript:updateFn('<%=mbBean.getMbNum()%>','<%=mbBean.getMemberId() %>','<%=mbBean.getMoimNum()%>')" style="position: absolute; top: 5px; right: 45px;"> [수정]&nbsp</a>                   
+                    <a href="deleteboardProc.jsp?num=<%=memberId%>&mbnum=<%=mbBean.getMbNum()%>&moimnum=<%=no%>" style="position: absolute; top: 5px;; right: 0; margin-right: 5px"> [삭제] </a> 
               <%}%>
                     <div class="post-timeb">
                      <!--올린 날자-->
@@ -653,7 +654,8 @@
  
 	               <div class="post-footerb">
 	               <div class="post-actions" style="display: flex; justify-content: space-between;">
-	                 <button class="show-comments" style="align-self: flex-start;" onclick="showComments(<%=mbBean.getMbNum()%>)">댓글보기</button>
+	                 <button class="show-comments" style="position: relative; left: 17cm; bottom: 5px;" onclick="showComments(<%=mbBean.getMbNum()%>)">댓글보기</button>
+	                 <br>
 	               </div> 
  
  				<!-- ---------------------------댓글 폼 보이기 --------------------------->
@@ -679,7 +681,7 @@
                       <li>
                             <div class="comment-info">
                             <%if(bcBean.getMemberId().equals(memberId)) {%>
-                            <a href="deletecomment.jsp?memberId=<%=memberId%>&bcNum=<%=bcBean.getBcNum()%>&moimNum=<%=no%> ">삭제</a>
+                            <a href="deletecomment.jsp?memberId=<%=memberId%>&bcNum=<%=bcBean.getBcNum()%>&moimNum=<%=no%> " style = "margin-left: 15px;">[삭제]</a>
                             
                             <%} // 댓글 수정,삭제 버튼%>
                               <p class="comment-author" id="memberId"><%=bcBean.getMemberId() %></p>
@@ -690,7 +692,7 @@
                    </ul>
                     <%}// 댓글 for문%>
                     <form method="post" action="insertboardProc.jsp?mbNum=<%=mbBean.getMbNum()%>&memberId=<%=memberId%>&moimNum=<%=no%>" class="comment-form" name="commentFrm" id="commentFrm">
-                      <label for="comment-input">댓글 작성:</label>
+                      <label for="comment-input" style = "width: 95px; position: relative; bottom: -20px; left: 5px;"> 댓글 작성 </label>
                       <input type="text" id="comment-input" name="comment-input">
                       <button onclick="makeboardcomment()">작성</button>
                    </form>
@@ -713,7 +715,7 @@
                 	
                 	for(int i=0;i<moimMemberList.size();i++){
                 	
-                	if(memberId != null && memberId.equals(moimMemberList.get(i).getMemberId()) || memberId.equals(moimbean.getMemberId())){ 
+                	if(memberId != null && memberId.equals(moimMemberList.get(i).getMemberId())){ 
                 %>
                  <button type="button" onclick="registerPhoto('<%=memberId %>', '<%=no %>')" value="<%=result%>" id="photoBtn" name="photoBtn"
                             style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; margin-left: 20.5cm;
@@ -733,7 +735,7 @@
                         MoimPhotosBean photobean = moimphotovlist.get(k);
                         
                         %>
-                        <div class="image-box" onclick="showDetail('<%=photobean.getPhotoName()%>', '<%=memberId%>', '<%=no%>', '<%=photobean.getPhotoNum()%>')">
+                        <div class="image-box" onclick="showDetail('<%=photobean.getPhotoName()%>', '<%=photobean.getMemberId()%>', '<%=no%>', '<%=photobean.getPhotoNum()%>')">
                             <img src="/bigmoim/image/<%=photobean.getPhoto()%>" id="photo" width="280" height="200">
                             <h2 style = "text-align: center;"><%=photobean.getPhotoName()%></h2>
                         </div>
@@ -765,13 +767,18 @@
             <p class="moimdetailBtn-txt">탈퇴하기</p>
            </a>
            </div>
-          <%}else{%><!-- 없다 가입하기 --> 
+           
+       <%}else{ // 없다 가입하기
+    	   boolean mjChk = moimMgr.mjChk(memberId, no);
+       		if(!mjChk){ // 모입가입신청안헀으면
+       %>		
           <div class="moimdetailBtn" style="bottom: 300px; right: 170px;">
           <a href="joinmoim.jsp?moimNum=<%=no%>&memberId=<%=memberId%>">
             <p class="moimdetailBtn-txt">가입하기</p>
            </a>
            </div>
-          <%} %>
+          <%}
+          } %>
 
   <%} %><!-- if else -->
   <script>

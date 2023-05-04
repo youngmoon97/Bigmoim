@@ -107,26 +107,39 @@ public class BoardMgr {
 	         MultipartRequest multi = new MultipartRequest(request, SAVEFOLDER, MAXSIZE, ENCODING,
 	               new DefaultFileRenamePolicy());
 	         String mbImg = null;
+	         con = pool.getConnection();
 	         if (multi.getFilesystemName("mbImg") != null) {
 	            mbImg = multi.getFilesystemName("mbImg");
+	            String mbTitle = multi.getParameter("mbTitle");
+		         String mbContent = multi.getParameter("mbContent");
+		         int moimNum = Integer.parseInt(multi.getParameter("moimNum"));
+		         int mbNum = Integer.parseInt(multi.getParameter("mbNum"));
+		         String mbDate = multi.getParameter("mbDate");
+		         String memberId = multi.getParameter("memberId");
+		         String boardType = multi.getParameter("boardType");
+		         sql = "update memberboard set mbTitle=?,mbContent=?,mbImg=?,mbDate=now(), moimNum=? where mbNum =? ";
+		         pstmt = con.prepareStatement(sql);
+		         pstmt.setString(1, mbTitle);
+		         pstmt.setString(2, mbContent);
+		         pstmt.setString(3, mbImg);
+		         pstmt.setInt(4, moimNum);
+		         pstmt.setInt(5, mbNum);
+	         }else {
+	        	 String mbTitle = multi.getParameter("mbTitle");
+		         String mbContent = multi.getParameter("mbContent");
+		         int moimNum = Integer.parseInt(multi.getParameter("moimNum"));
+		         int mbNum = Integer.parseInt(multi.getParameter("mbNum"));
+		         String mbDate = multi.getParameter("mbDate");
+		         String memberId = multi.getParameter("memberId");
+		         String boardType = multi.getParameter("boardType");
+		         
+		         sql = "update memberboard set mbTitle=?,mbContent=?,mbDate=now(), moimNum=? where mbNum =? ";
+		         pstmt = con.prepareStatement(sql);
+		         pstmt.setString(1, mbTitle);
+		         pstmt.setString(2, mbContent);
+		         pstmt.setInt(3, moimNum);
+		         pstmt.setInt(4, mbNum);
 	         }
-	         // File f = new File(memberImg);
-	         String mbTitle = multi.getParameter("mbTitle");
-
-	         String mbContent = multi.getParameter("mbContent");
-	         int moimNum = Integer.parseInt(multi.getParameter("moimNum"));
-	         int mbNum = Integer.parseInt(multi.getParameter("mbNum"));
-	         String mbDate = multi.getParameter("mbDate");
-	         String memberId = multi.getParameter("memberId");
-	         String boardType = multi.getParameter("boardType");
-	         con = pool.getConnection();
-	         sql = "update memberboard set mbTitle=?,mbContent=?,mbImg=?,mbDate=now(), moimNum=? where mbNum =? ";
-	         pstmt = con.prepareStatement(sql);
-	         pstmt.setString(1, mbTitle);
-	         pstmt.setString(2, mbContent);
-	         pstmt.setString(3, mbImg);
-	         pstmt.setInt(4, moimNum);
-	         pstmt.setInt(5, mbNum);
 	         if (pstmt.executeUpdate() == 1) {
 	            flag = true;
 	         }

@@ -67,9 +67,11 @@
     		%>
     		
           <img src=<%=img %> alt="Image">
-		<form name="jjimFrm" action="jjimProc.jsp" method="get">
-		
-		<%if (memberId!="방문자"){%> 
+		<form name="jjimFrm" action="../main/jjimProc.jsp" method="get">
+		<!--  찜 -->
+		<%if (memberId!="방문자"){
+			
+		%> 
          <button class="like-btn" id="like-btn-<%=moimbean.getMoimNum()%>"
           onclick="likeBtnChange(<%=moimbean.getMoimNum()%>)" style="color:red; bgcolor: white;">
   			<i id="heart<%=moimbean.getMoimNum() %>"
