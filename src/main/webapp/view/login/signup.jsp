@@ -291,14 +291,14 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
                                                 <label for="memberAddr">집주소(필수)</label>
                                             </div>
                                             <div>
-                                              <input name="memberAddrZipcode" size="5" readonly style="height: 40px;">
+                                              <input name="memberAddrZipcode" size="5" readonly style="height: 40px;" value="<%=memberAddrZipcode%>">
                                               <input type="button" name ="memberAddrBtn" value="우편번호찾기" onClick="zipSearch(this.name)"
                                                style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; height: 40px;">
                                             </div>
                                              <div class="sign-nameHeader">
                                               <br>
-                                              <input name="memberAddrArea1" size="5"  readonly>
-                                              <input name="memberAddrArea2" size="13"  readonly>
+                                              <input name="memberAddrArea1" value="<%=memberAddrArea1%>" size="5"  readonly>
+                                              <input name="memberAddrArea2" value="<%=memberAddrArea2%>" size="13"  readonly>
                                                  <input type="hidden" name="memberAddr" id="memberAddr">
                                             </div>
                                          </div>
@@ -308,14 +308,14 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
                                                  <label>직장 주소</label>
                                                 </div>
                                              <div>
-                                                 <input name="memberJobAddrZipcode" size="5" readonly style="height: 40px;">
+                                                 <input name="memberJobAddrZipcode" size="5" readonly style="height: 40px;" value="<%=memberJobAddrZipcode %>">
                                                  <input type="button" name="memberJobAddrBtn" value="우편번호찾기" onClick="zipSearch(this.name)"
                                                    style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; height: 40px;">
                                                </div>
                                                  <div class="sign-nameHeader">
                                                   <br>
-                                                  <input name="memberJobAddrArea1" size="5" readonly>
-                                                  <input name="memberJobAddrArea2" size="13" readonly>
+                                                  <input name="memberJobAddrArea1" value="<%=memberJobAddrArea1%>" size="5" readonly>
+                                                  <input name="memberJobAddrArea2" value="<%=memberJobAddrArea2%>" size="13" readonly>
                                                   <input type="hidden" name="memberJobAddr" id="memberJobAddr">
                                                </div>
                                             </div>
@@ -577,7 +577,7 @@ Vector<MoimCategoryBean> vCategory = cMgr.categoryList(); //관심사
                         <input type="hidden" name="memberPw" value="<%=memberPw%>">
                         <input type="hidden" name="memberPwConfirm" value="<%=memberPwConfirm%>">
                         <input type="hidden" name="memberTel" value="<%=memberTel%>">
-
+						
                         <input type="hidden" name="memberAddrZipcode" value="<%=memberAddrZipcode%>">
                         <input type="hidden" name="memberAddrArea1" value="<%=memberAddrArea1%>">
                         <input type="hidden" name="memberAddrArea2" value="<%=memberAddrArea2%>">

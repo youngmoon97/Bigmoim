@@ -503,26 +503,30 @@
 			</li>	
 		  </ul>
 
+       <!-- 모임멤버 탭 -->   
       <div class="tab">
-      	<%
-      		if(moimAllMemvlist!=null){		
-      	%>
-      		<ul class="tabnav">
-	          <li class="tab-link current" name="msTime" onclick="change(0)"><a href="javascript:void(0)">전체멤버</a></li>
-	          <%
-	          	if(msvlist!=null){
-	          		for(int i=0;i<msvlist.size();i++){
-	          			MoimScheduleBean msbean = msvlist.get(i);
-	          			MoimScheduleBean moimschbean = sjvlist.get(i);
-	          %>
-	          	<li class="tab-link current" name="msTime" onclick="change(<%=msbean.getMsNum() %>)"><a href="javascript:void(0)"><%=mmDay%>월<%=moimschbean.getMsDate()%>일</a></li>
-	          	<%} %><!-- for -->
-	          <%} %><!-- if -->
-
-	        </ul>
-			<div class="tabcontent tab0">
+         <%
+            if(moimAllMemvlist!=null){      
+         %>
+            <!-- 모임멤버 탭 부분 -->
+            <ul class="tabnav">
+             <li class="tab-link current" name="msTime" onclick="change(0)"><a href="javascript:void(0)">전체멤버</a></li>
+             <%
+                if(msvlist!=null){
+                   for(int i=0;i<msvlist.size();i++){
+                      MoimScheduleBean msbean = msvlist.get(i);
+                      MoimScheduleBean moimschbean = sjvlist.get(i);
+             %>
+                <li class="tab-link current" name="msTime" onclick="change(<%=msbean.getMsNum() %>)"><a href="javascript:void(0)"><%=mmDay%>월<%=moimschbean.getMsDate()%>일</a></li>
+                <%} %><!-- for -->
+             <%} %><!-- if -->
+           </ul>
+           <!-- 모임 멤버 탭에 따른 멤버 출력 -->
+         <div class="tabcontent tab0">
              <h3 name="msNCount">모임멤버(<%=moimAllMemvlist.size() %>)</h3>
+             <!-- 모임장 위에 나오는 왕관부분 -->
              <div class="manager"></div>
+             <!-- 모임장 출력 -->
              <ul class="tabcontent-list">
                <li class="tabcontent-list-img " name="memberImg"><img src="/bigmoim/image/<%=manngerBean.getMemberImg()%>" class="memberImg" /></li>
                <li>
@@ -532,51 +536,63 @@
                  </ul>
                </li> 
              </ul>
-            </div><!-- 추가 -->
-	          <% 
-			for(int z=0;z<msvlist.size();z++){
-				MoimScheduleBean moimScheduleBean = msvlist.get(z);
-				Vector<MemberBean> moimScheduleMember = sjMgr.moimScheduleMember(moimScheduleBean.getMsNum());
-				// Vector<ScheduleJoinBean> filteredList = scheduleJoinMsvList.stream().filter(item -> item.getMsNum() == moimScheduleBean.getMsNum()).collect(Collectors.toCollection(Vector::new));			
-			%>
-			<div class="tabcontent tab<%=moimScheduleBean.getMsNum() %>" style="display: none" >
-	          <h3 name="msNCount">모임멤버(<%=moimScheduleMember.size() %>)</h3>
-	          <%
-	          	if(moimScheduleMember.size() <= 0){
-	          %>
-	          	<li><h3>참여멤버가 없습니다.</h3></li>
-	          <%}else{		
-            	  for(int j=0;j<moimScheduleMember.size();j++){
-            		  MemberBean memberBean = moimScheduleMember.get(j);
-            		  // filteredList.stream().filter(item -> item.getMemberid().equals(memberBean.getMemberId())).count() > 0	
-					if(moimScheduleMember.size() > 0){
-	          %>
-	          	<ul class="tabcontent-list">
-		            <li class="tabcontent-list-img" name="memberImg"><img src="/bigmoim/image/<%=memberBean.getMemberImg()%>" class="memberImg"/></li>
-		            <li>
-		              <ul class="tabcontent-list-detail">
-		                <li class="tabcontent-list-name" name="memberName"><%=memberBean.getMemberName() %></li>
-		                <li class="tabcontent-list-hello" name="memberProfile"><%=memberBean.getMemberProfile() %></li>
-		              </ul>
-		            </li>
-	            </ul>
-	            <% } } %> 
-	          <%} %>  
-	        </div>
-	        <%} %>  
-     	<%}%>
+             <!-- 모임장을 뺀 모임 멤버들 -->
+             <%
+               for(int i=0;i<moimAllMemvlist.size();i++){
+                  //System.out.println(moimAllMemvlist.get(i).getMemberId());
+                  if(!manngerBean.getMemberId().equals(moimAllMemvlist.get(i).getMemberId())){
+                     MemberBean membean = moimAllMemvlist.get(i);
+               %>
+             <ul class="tabcontent-list">
+               <li class="tabcontent-list-img" name="memberImg"><img src="/bigmoim/image/<%=membean.getMemberImg()%>" class="memberImg"/></li>
+               <li>
+                 <ul class="tabcontent-list-detail">
+                   <li class="tabcontent-list-name" name="memberName"><%=membean.getMemberName() %></li>
+                   <li class="tabcontent-list-hello" name="memberProfile"><%=membean.getMemberProfile() %></li>
+                 </ul>
+               </li> 
+             </ul>
+             <%} %><!-- if -->
+             <%} %><!-- for -->  
+           </div>
+            <!-- 일정에 따른 참여멤버출력 -->
+           <% 
+         for(int z=0;z<msvlist.size();z++){
+            MoimScheduleBean moimScheduleBean = msvlist.get(z);
+            Vector<MemberBean> moimScheduleMember = sjMgr.moimScheduleMember(moimScheduleBean.getMsNum());
+            // Vector<ScheduleJoinBean> filteredList = scheduleJoinMsvList.stream().filter(item -> item.getMsNum() == moimScheduleBean.getMsNum()).collect(Collectors.toCollection(Vector::new));            
+         %>
+         <div class="tabcontent tab<%=moimScheduleBean.getMsNum() %>" style="display: none" >
+             <h3 name="msNCount">모임멤버(<%=moimScheduleMember.size() %>)</h3>
+             <%
+                if(moimScheduleMember.size() <= 0){
+             %>
+                <li><h3>참여멤버가 없습니다.</h3></li>
+             <%}else{      
+                 for(int j=0;j<moimScheduleMember.size();j++){
+                    MemberBean memberBean = moimScheduleMember.get(j);
+                    // filteredList.stream().filter(item -> item.getMemberid().equals(memberBean.getMemberId())).count() > 0   
+               if(moimScheduleMember.size() > 0){
+             %>
+                <ul class="tabcontent-list">
+                  <li class="tabcontent-list-img" name="memberImg"><img src="/bigmoim/image/<%=memberBean.getMemberImg()%>" class="memberImg"/></li>
+                  <li>
+                    <ul class="tabcontent-list-detail">
+                      <li class="tabcontent-list-name" name="memberName"><%=memberBean.getMemberName() %></li>
+                      <li class="tabcontent-list-hello" name="memberProfile"><%=memberBean.getMemberProfile() %></li>
+                    </ul>
+                  </li>
+               </ul>
+               <% }%><!-- if -->
+              <%} %><!-- for -->
+             <%} %><!-- if else -->
+           </div>
+          <%} %><!-- 큰 for --> 
+         <%} %><!-- 큰 if else --> 
       </div>
+       </div>
       </div>
-
-      <!--  
-      <a id="topBtn" href="#">top</a>
-      -->
-      <!-- 하단 -->
-
-</div>
-    </div>
-
-  <!-- ---------------------------------------------------게시판------------------------------- -->
+ <!-- ---------------------------------------------------게시판------------------------------- -->
   
   
    <div class="mainwrapper content2" style="display: none";>
@@ -584,11 +600,20 @@
           <div class="categorya">
             <div class="main-mergea">
               <div class="uploadb">
-            <%if(memberId != null && memberId.equals(moimbean.getMemberId())){ %>
+            <%
+            Vector<MemberBean> moimMemberList = moimMgr.getMemberList(no);
+            for(int i=0;i<moimMemberList.size();i++){
+            	
+            	if(memberId != null && memberId.equals(moimMemberList.get(i).getMemberId()) || memberId.equals(moimbean.getMemberId())){ 
+            %>
+            	
+            
 				<button type="button" onclick="makeboard('<%=no %>' , '<%=memberId %>')"
                     style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">
                     게시글 등록
-                </button><%} // 버튼 보이기 (모임회원만) 추가%>
+                </button>
+            <%}
+            } // 버튼 보이기 (모임회원만) 추가%>
             
             </div>
             <br>
@@ -597,14 +622,13 @@
             <%}else	// 게시글이 있는 경우 %>
                    <% for(int i = 0; i < boardvlist.size(); i++) {
                 	   // mbBean : 해당 모임의 게시글 리스트
-                   MemberBoardBean mbBean = boardvlist.get(i);
+                   MemberBoardBean mbBean = boardvlist.get(i); 
                    MemberBean memberBean = memberMgr.getMember(memberId);%>
               <div class="post-containerb">
-
                   <div class="post-headerb" style="position: relative;">
                        <div class="profile-infob">
-                      <img src = "/bigmoim/image/<%=memberBean.getMemberImg()%>">
-					<p class="author-nameb" style="margin-top: 1em;"><%=mbBean.getMemberId()%></p>
+                      <img src= "/bigmoim/image/<%=memberBean.getMemberImg()%>">
+               <p class="author-nameb" style="margin-top: 1em;"><%=mbBean.getMemberId()%></p>
               </div>
               <%if(mbBean.getMemberId().equals(memberId)){%>
                     <a href="javascript:updateFn('<%=mbBean.getMbNum()%>','<%=mbBean.getMemberId() %>','<%=mbBean.getMoimNum()%>')" style="position: absolute; top:0; right: 45px;">[수정]</a>                   
@@ -617,7 +641,8 @@
                   </div>                 
                     <div class="post-bodyb">
                       <div class="post-contentb">
-	                        <p><%=mbBean.getMbContent() %></p>
+                      		<h3>제목: <%=mbBean.getMbTitle() %></h3>
+	                        <p><%=mbBean.getMbContent()%></p>
 	                      </div>
 	                      <div class="post-imageb">
 	                        <img src="/bigmoim/image/<%=mbBean.getMbImg()%>" width="150" height="150">
@@ -678,28 +703,44 @@
           </div>
          </div>
         </div>
-  <!-- ---------------------사진첩 ---------------------------------------------------------------->
+  	                   <!-- ---------------------사진첩 ---------------------------------------------------------------->
   <div class="mainwrapper content3" style="display: none;">
     <div class="main-container">
         <div class="categorys">
-            <div class="main-merge">
+            <div class="main-mergea">
                 <div class="upload">
-                    <button onclick="registerPhoto()" value="<%=result%>" id="photoBtn" name="photoBtn"
-                            style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px;">사진등록
+                <%
+                	
+                	for(int i=0;i<moimMemberList.size();i++){
+                	
+                	if(memberId != null && memberId.equals(moimMemberList.get(i).getMemberId()) || memberId.equals(moimbean.getMemberId())){ 
+                %>
+                 <button type="button" onclick="registerPhoto('<%=memberId %>', '<%=no %>')" value="<%=result%>" id="photoBtn" name="photoBtn"
+                            style="background: pink; color: #fff; border: none; padding: 10px 20px; cursor: pointer; border-radius: 5px; margin-left: 20.5cm;
+                            cm;">사진등록
                     </button>
+                  <%	} 
+                  }%>
                 </div>
                 <br>
                 <div class="image-container">
-                    <% for(int i = 0; i < moimphotovlist.size(); i++){
+                    <% 
+                    if(moimphotovlist.size() <= 0){%>
+                       <div style="text-align: center;">등록된 사진이 없습니다.</div>   
+                   <%}else{
+                       for(int k = 0; k < moimphotovlist.size(); k++){
                        
-                        MoimPhotosBean photobean = moimphotovlist.get(i);
+                        MoimPhotosBean photobean = moimphotovlist.get(k);
+                        
                         %>
-                        <div class="image-box" onclick="showDetail('<%=photobean.getPhotoName()%>')">
-                            <img src="/bigmoim/image/<%=photobean.getPhoto()%>" id="photo">
-                            <h2><%=photobean.getPhotoName()%></h2>
+                        <div class="image-box" onclick="showDetail('<%=photobean.getPhotoName()%>', '<%=memberId%>', '<%=no%>', '<%=photobean.getPhotoNum()%>')">
+                            <img src="/bigmoim/image/<%=photobean.getPhoto()%>" id="photo" width="280" height="200">
+                            <h2 style = "text-align: center;"><%=photobean.getPhotoName()%></h2>
                         </div>
-                    <% } %>
+                    <%}%>
+                <%}%>
                 </div>
+
             </div>
         </div>
     </div>
@@ -719,11 +760,11 @@
      Vector<MoimScheduleBean> allmoimScheduleList = sjMgr.allmoimScheduleList();
         if(memberChk){ //있다 -탈퇴하기
   %>
-        <div class="moimdetailBtn" style="bottom: 300px; right: 170px;">
-        <a href="#" onclick="moimQuit();">
+        <div class="moimdetailBtn" style="bottom: 50px; right: 100px;">
+          <a href="#" onclick="moimQuit();">
             <p class="moimdetailBtn-txt">탈퇴하기</p>
-        </a>
-        </div>
+           </a>
+           </div>
           <%}else{%><!-- 없다 가입하기 --> 
           <div class="moimdetailBtn" style="bottom: 300px; right: 170px;">
           <a href="joinmoim.jsp?moimNum=<%=no%>&memberId=<%=memberId%>">
@@ -735,10 +776,7 @@
   <%} %><!-- if else -->
   <script>
   
-  //일정 참여
-  function schedulejoin(){
-	  
-  }
+ 
   //탈퇴하기
   function moimQuit(){//예
      if(confirm("정말 탈퇴하시겠습니까?")){
@@ -788,7 +826,7 @@
   
   function likeBtnChange_class(num) {
 	  	//Proc에 보내기 
-	  	let jjimFrm_class= document.forms["jjimFrm_moim"];
+	  	let jjimFrm_class= document.forms["jjimFrm_class"];
 	  	jjimFrm_class.moimNum.value = num;
 	      jjimFrm_class.submit();
 	  	
@@ -852,6 +890,17 @@
        url = "makeboard.jsp?num=" + no + "&memberId=" + memberId;
            window.open(url,"Board MAKE","width=700, height=800");
     }
+    
+    // 사진 js
+        function registerPhoto(memberId, no){
+   		url = "uploadphotos.jsp?memberId=" + memberId + "&moimNum=" + no;
+      	window.open(url,"Board MAKE","width=700, height=800");
+    }
+
+    function showDetail(imageUrl, memberId, no, photoNum) {
+  			window.location.href = "photodetail.jsp?image=" + encodeURIComponent(imageUrl) + "&memberId=" + memberId + "&moimNum=" + no + "&photoNum=" + photoNum;
+		}
+
   </script>
   <!-- bottom.jsp -->
   <%@ include file = "/view/bottom.jsp" %>

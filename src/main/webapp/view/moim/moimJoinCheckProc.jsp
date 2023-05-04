@@ -9,7 +9,7 @@
 		String memberId = request.getParameter("memberId");
 		int moimNum = Integer.parseInt(request.getParameter("moimNum"));
 		boolean result = false;
-		String msg = "회원 가입 거절z";
+		String msg = "회원 가입 거절";
 		String url= "moimMemberManage.jsp?moimNum="+moimNum;
 		System.out.println("flag : "+ flag);
 		

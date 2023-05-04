@@ -1241,34 +1241,34 @@ public class MoimMgr {
 	               }
 	               return flag;
 	            }
-	      // 모임 사진 리스트 
-	         public Vector<MoimPhotosBean> getmoimImgList(int moimNum){
-	            Connection con = null;
-	            PreparedStatement pstmt = null;
-	            ResultSet rs = null;
-	            String sql = null;
-	            Vector<MoimPhotosBean> photovlist = new Vector<MoimPhotosBean>();
-	            try {
-	               con = pool.getConnection();
-	               sql = "select photo, photoName from moimphotos where moimNum = ?";
-	               pstmt = con.prepareStatement(sql);
-	               pstmt.setInt(1, moimNum);
-	               rs = pstmt.executeQuery();
-	               while(rs.next()) {
-	                  MoimPhotosBean bean = new MoimPhotosBean();
-	                  bean.setPhoto(rs.getString(1));
-	                  bean.setPhotoName(rs.getString(2));
-	                  photovlist.addElement(bean);
-	               }
+	            // 모임 사진 리스트
+	            public Vector<MoimPhotosBean> getmoimImgList(int moimNum) {
+	               Connection con = null;
+	               PreparedStatement pstmt = null;
+	               ResultSet rs = null;
+	               String sql = null;
+	               Vector<MoimPhotosBean> photovlist = new Vector<MoimPhotosBean>();
+	               try {
+	                  con = pool.getConnection();
+	                  sql = "select photo, photoName , photoNum from moimphotos where moimNum = ?";
+	                  pstmt = con.prepareStatement(sql);
+	                  pstmt.setInt(1, moimNum);
+	                  rs = pstmt.executeQuery();
+	                  while (rs.next()) {
+	                     MoimPhotosBean bean = new MoimPhotosBean();
+	                     bean.setPhoto(rs.getString(1));
+	                     bean.setPhotoName(rs.getString(2));
+	                     bean.setPhotoNum(rs.getInt(3));
+	                     photovlist.addElement(bean);
+	                  }
 
-	            } catch (Exception e) {
-	               e.printStackTrace();
-	            } finally {
-	               pool.freeConnection(con, pstmt, rs);
+	               } catch (Exception e) {
+	                  e.printStackTrace();
+	               } finally {
+	                  pool.freeConnection(con, pstmt, rs);
+	               }
+	               return photovlist;
 	            }
-	            return photovlist;
-	         }
-	         
 	         public boolean getMoimMemberId(String memberId, int moimNum) {
 	            Connection con = null;
 	            PreparedStatement pstmt = null;
@@ -1339,5 +1339,62 @@ public class MoimMgr {
 					pool.freeConnection(con, pstmt);
 				}
 				return flag;
+	         }
+	         
+	      // 모임 사진 삭제
+
+	         public boolean deleteMoimphoto(int photoNum, String memberId) {
+	            Connection con = null;
+	            PreparedStatement pstmt = null;
+	            String sql = null;
+	            boolean flag = false;
+	            try {
+	               con = pool.getConnection();
+	               sql = "delete from moimphotos where photoNum = ? and memberId = ?";
+	               pstmt = con.prepareStatement(sql);
+	               pstmt.setInt(1, photoNum);
+	               pstmt.setString(2, memberId);
+	               if (pstmt.executeUpdate() == 1) {
+	                  flag = true;
+	               }
+	               ;
+	            } catch (Exception e) {
+	               e.printStackTrace();
+	            } finally {
+	               pool.freeConnection(con, pstmt);
+	            }
+	            return flag;
+	         }
+	         
+	      // 모임 사진 상세 (모임에 사진 리스트에서 사진 누르면 얻어야함 )
+
+	         public MoimPhotosBean getmoimImgDetail(int photoNum) {
+	            Connection con = null;
+	            PreparedStatement pstmt = null;
+	            ResultSet rs = null;
+	            String sql = null;
+	            MoimPhotosBean bean = new MoimPhotosBean();
+	            try {
+	               con = pool.getConnection();
+	               sql = "select * from moimPhotos where photoNum = ?";
+	               pstmt = con.prepareStatement(sql);
+	               pstmt.setInt(1, photoNum);
+
+	               rs = pstmt.executeQuery();
+	               if (rs.next()) {
+	                  bean.setPhotoNum(rs.getInt(1));
+	                  bean.setMoimNum(rs.getInt(2));
+	                  bean.setPhoto(rs.getString(3));
+	                  bean.setUpDate(rs.getString(4));
+	                  bean.setMemberId(rs.getString(5));
+	                  bean.setPhotoName(rs.getString(6));
+	               }
+
+	            } catch (Exception e) {
+	               e.printStackTrace();
+	            } finally {
+	               pool.freeConnection(con, pstmt, rs);
+	            }
+	            return bean;
 	         }
 }

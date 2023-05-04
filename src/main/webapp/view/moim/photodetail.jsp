@@ -1,3 +1,18 @@
+<%@page import="model.Bean.MoimPhotosBean"%>
+<%@page contentType="text/html; charset=UTF-8"%>
+<jsp:useBean id="moimphotoMgr" class="controll.Mgr.MoimMgr"/>
+<%
+	// 등록일, 멤버 아이디, 사진이름, 이미지 나와야함	
+	String memberId = request.getParameter("memberId");
+	int moimNum = Integer.parseInt(request.getParameter("moimNum"));
+	int photoNum = Integer.parseInt(request.getParameter("photoNum"));
+	 System.out.print("photoNum : " + photoNum );
+	MoimPhotosBean mpBean = moimphotoMgr.getmoimImgDetail(photoNum);
+	
+	
+	
+%>
+
 <!doctype html>
 <html lang="en">
 
@@ -94,7 +109,7 @@
                     <div class="back-button" style="margin-top: 3em">
                         <!--a 태그에 메인 URL 입력해야함-->
                         <a href="#" onclick="window.history.back(); return false;">
-                            <img src="../images/back-button.png" alt="뒤로가기">
+                            <img src="/bigmoim/image/back-button.png" alt="뒤로가기">
                         </a>
 
                         <h3 style="margin-left: -7.5em"><strong>사진첩</strong></h3>
@@ -103,48 +118,28 @@
                         <div style="display: flex; align-items: center;">
                             <div class="sign-dateHeader" style="margin-right: 1em;">
                                 <label for="regDate">등록일</label>
-                                <input type="text" class="form-control" id="upDate" name="upDate" value="<%=upDate%>" readonly>
+                                <input type="text" class="form-control" id="upDate" name="upDate" value="<%=mpBean.getUpDate() %>" readonly>
                             </div>
                             <div class="sign-nameHeader" style="margin-top: 1em; margin-left: 5em;">
                                 <br>
-                                <input type="text" class="form-control" name="memberName" value="<%=memberId>" readonly>
+                                <input type="text" class="form-control" name="memberName" value="<%=memberId%>" readonly>
                             </div>
                         </div>
                     </div>
                     <div style="float: left;">
                         <br>
                         <h3 id="photoName" style="margin-left: -9em;">
-                            <%= photoName %>
+                            
                         </h3>
                     </div>
                     <div style="margin-top: 2em">
-                        <img src="../images/bg_1.jpg" alt="사진" id="photo" style="max-width: 100%; max-height: 600px;">
+                        <img src="/bigmoim/image/<%=mpBean.getPhoto() %>" alt="사진" id="photo" style="max-width: 100%; max-height: 600px;">
                     </div>
                     <div style="display: flex; margin-top: 2em;">
-                        <button type="button" class="btn btn-primary" onclick="updatePhoto()"
-                            style="margin-right: 1em;">수정</button>
-                        <button type="button" class="btn btn-danger" onclick="confirmDelete()">삭제</button>
+                        
+                        <a href="deletemoimphoto.jsp?photoNum=<%=photoNum%>&memberId=<%=memberId%>&moimNum=<%=moimNum%>">삭제</a>
                     </div>
                     <script>
-                        function updatePhoto() {
-                            var w = 500; // 창 너비
-                            var h = 750; // 창 높이
-                            var left = (screen.width / 2) - (w / 2); // 중앙에서부터 창의 왼쪽 위치 계산
-                            var top = (screen.height / 2) - (h / 2); // 중앙에서부터 창의 위쪽 위치 계산
-                            window.open("updatephotos.html", "새창 이름", "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left);
-                        }
-
-
-                        function confirmDelete() {
-                            if (confirm("정말로 삭제하시겠습니까?")) {
-                                // 삭제 로직 작성
-                                // 예를 들어, 해당 요소의 id를 찾아서 삭제할 수 있습니다.
-                                var elementToDelete = document.getElementById("elementId");
-                                elementToDelete.remove();
-                            } else {
-                                // 삭제 취소 시 동작할 로직 작성
-                            }
-                        }
 
                     </script>
                 </div>
@@ -158,6 +153,4 @@
     <script src="../js/main.js"></script>
 
 </body>
-
-
 </html>

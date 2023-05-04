@@ -2,7 +2,9 @@
 <jsp:useBean id="moimphotoMgr" class="controll.Mgr.MoimMgr"/>
 <jsp:useBean id="moimphotoBean" class="model.Bean.MoimPhotosBean"/>
 <%
-	String memberId = (String)session.getAttribute("idKey");
+	String memberId = request.getParameter("memberId");
+	int moimNum = Integer.parseInt(request.getParameter("moimNum"));
+	
 %>
 
 <!DOCTYPE html>
@@ -65,10 +67,10 @@
                                     </div>
                                     <h3 class="ml-1 mb-0"><strong>사진 등록하기</strong></h3>
                                 </div>
-                                <form action="#" method="post" id = "frm" name="frm">
+                                <form action="uploadphotosProc.jsp?memberId=<%=memberId%>&moimNum=<%=moimNum%>" method="post" id = "frm" name="frm" enctype="multipart/form-data">
                                     <div>
                                         <label>작성자</label>
-                                        <textarea class="form-control" id="memberId" name="memberId" rows="1" maxlength="30" readonly><%=memberId%></textarea>
+                                        <textarea class="form-control" id="memberId" name="memberId" rows="1" maxlength="30" readonly><%=memberId %></textarea>
                                         <br>
                                     </div>
                                     <div>
@@ -136,7 +138,7 @@
 			return;
 		}
 		
-		myFrm.action = "uploadphotosProc.jsp";
+
 		myFrm.submit();
 	}
 	

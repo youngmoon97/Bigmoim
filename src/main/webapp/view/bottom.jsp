@@ -30,7 +30,7 @@
   </div>
   <div>
     <ul class="Creater">
-      <li>Creater</li>
+     <li  style="list-style: none; margin-left:1em;">Creater</li>
       <li><a href="https://github.com/youngmoon97" target='_blank'>Young-Moon Cho</a></li>
       <li><a href="https://github.com/Lsm0823" target='_blank'>Sang-Mok Lee</a></li>
       <li><a href="https://github.com/LMoment" target='_blank'>Seo-Young Ha</a></li>
