@@ -60,12 +60,12 @@
                             <div class="main-merge"> <!--main page 간격-->
                                 <div class="mb-4 d-flex align-items-center">
                                     <div class="back-button" style="margin-top: 3em">
-                                        <!--a 태그에 메인 URL 입력해야함-->
-                                        <a href="#" onclick="window.history.back(); return false;">
-                                            <img src="../images/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
-                                        </a>
-                                    </div>
-                                    <h3 class="ml-1 mb-0"><strong>사진 등록하기</strong></h3>
+                        <!--a 태그에 메인 URL 입력해야함-->
+                        <a href="#" onclick="window.history.back(); return false;">
+                            <img src="/bigmoim/image/back-button.png" alt="뒤로가기" style="filter: FFC0C;" />
+                        </a>
+                    </div>
+                                    <h3 class="ml-1 mb-0"><strong>사진첩 등록</strong></h3>
                                 </div>
                                 <form action="uploadphotosProc.jsp?memberId=<%=memberId%>&moimNum=<%=moimNum%>" method="post" id = "frm" name="frm" enctype="multipart/form-data">
                                     <div>

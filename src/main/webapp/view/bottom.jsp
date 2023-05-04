@@ -35,7 +35,7 @@
       <li><a href="https://github.com/Lsm0823" target='_blank'>Sang-Mok Lee</a></li>
       <li><a href="https://github.com/LMoment" target='_blank'>Seo-Young Ha</a></li>
       <li><a href="https://github.com/oowij" target='_blank'>Ji-Woo Seo</a></li>
-      <li><a href="https://github.com/Chaeso99" target='_blank'>Gi-Joo Chea</a></li>
+      <li><a href="https://github.com/Chaeso99" target='_blank'>Gi-Ju Chae</a></li>
       <li><a href="https://github.com/yangsol" target='_blank'>Han-Sol Yang</a></li>
     </ul>
   </div>

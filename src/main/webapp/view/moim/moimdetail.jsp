@@ -81,7 +81,9 @@
 		footer p {
 			padding-right: 10cm;
 		}
+		
     </style>
+
     
   </head>
   <body style = "padding-top: 150px">
@@ -628,7 +630,6 @@
               <div class="post-containerb">
                   <div class="post-headerb" style="position: relative;">
                        <div class="profile-infob">
-                      <img src= "/bigmoim/image/<%=memberBean.getMemberImg()%>">
                <p class="author-nameb" style="margin-top: 1em;"><%=mbBean.getMemberId()%></p>
               </div>
               <%if(mbBean.getMemberId().equals(memberId)){%>
@@ -677,24 +678,27 @@
                  <% Vector<BoardCommentBean> bcvlist = boardcommentMgr.bcList(mbBean.getMbNum()); 
                     for(int j = 0; j < bcvlist.size(); j++) {
                       BoardCommentBean bcBean = bcvlist.get(j); %>
-                    <ul>
-                      <li>
+                    <li style = "list-style-type: none; position: relative; bottom: -10px;">
                             <div class="comment-info">
-                            <%if(bcBean.getMemberId().equals(memberId)) {%>
+                            
+                              <p class="comment-author" id="memberId"><%=bcBean.getMemberId() %> &nbsp</p>
+                              <p class="comment-date" id ="bcDate"><%=bcBean.getBcDate()%></p>
+                              
+                              <%if(bcBean.getMemberId().equals(memberId)) {%>
                             <a href="deletecomment.jsp?memberId=<%=memberId%>&bcNum=<%=bcBean.getBcNum()%>&moimNum=<%=no%> " style = "margin-left: 15px;">[삭제]</a>
                             
                             <%} // 댓글 수정,삭제 버튼%>
-                              <p class="comment-author" id="memberId"><%=bcBean.getMemberId() %></p>
-                              <p class="comment-date" id ="bcDate"><%=bcBean.getBcDate()%></p>
+                            
                             </div>
                             <p class="comment-text" id="bcContent"><%=bcBean.getBcContent()%></p>
                          </li>
-                   </ul>
+                         <br>
+                         
                     <%}// 댓글 for문%>
                     <form method="post" action="insertboardProc.jsp?mbNum=<%=mbBean.getMbNum()%>&memberId=<%=memberId%>&moimNum=<%=no%>" class="comment-form" name="commentFrm" id="commentFrm">
-                      <label for="comment-input" style = "width: 95px; position: relative; bottom: -20px; left: 5px;"> 댓글 작성 </label>
+                      <label for="comment-input" style = "width: 95px; position: relative; bottom: -20px; left: 20px;"> 댓글 </label>
                       <input type="text" id="comment-input" name="comment-input">
-                      <button onclick="makeboardcomment()">작성</button>
+                      <button onclick="makeboardcomment()" style = "width: 75px;">작성</button>
                    </form>
                   </div>
                  </div>
@@ -723,6 +727,15 @@
                     </button>
                   <%	} 
                   }%>
+                      <script>
+    function registerPhoto() {
+                                var w = 500; // 창 너비
+                                var h = 750; // 창 높이
+                                var left = (screen.width / 2) - (w / 2); // 중앙에서부터 창의 왼쪽 위치 계산
+                                var top = (screen.height / 2) - (h / 2); // 중앙에서부터 창의 위쪽 위치 계산
+                                window.open("uploadphotos.jsp", "새창 이름", "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left);
+                            }
+    </script>
                 </div>
                 <br>
                 <div class="image-container">
@@ -894,14 +907,28 @@
     }
     //게시글 등록 창 띄우기
     function makeboard(no, memberId){
-       url = "makeboard.jsp?num=" + no + "&memberId=" + memberId;
-           window.open(url,"Board MAKE","width=700, height=800");
+   //    url = "makeboard.jsp?num=" + no + "&memberId=" + memberId;
+   //        window.open(url,"Board MAKE","width=700, height=800");   
+
+                    var w = 500; // 창 너비
+                    var h = 850; // 창 높이
+                    var left = (screen.width / 2) - (w / 2); // 중앙에서부터 창의 왼쪽 위치 계산
+                    var top = (screen.height / 2) - (h / 2); // 중앙에서부터 창의 위쪽 위치 계산
+                    window.open("makeboard.jsp?num=" + no + "&memberId=" + memberId, "새창 이름", "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left);
+                
+   
     }
     
     // 사진 js
         function registerPhoto(memberId, no){
-   		url = "uploadphotos.jsp?memberId=" + memberId + "&moimNum=" + no;
-      	window.open(url,"Board MAKE","width=700, height=800");
+   //		url = "uploadphotos.jsp?memberId=" + memberId + "&moimNum=" + no;
+    //  	window.open(url,"Board MAKE","width=700, height=800");
+      	
+        var w = 500; // 창 너비
+        var h = 750; // 창 높이
+        var left = (screen.width / 2) - (w / 2); // 중앙에서부터 창의 왼쪽 위치 계산
+        var top = (screen.height / 2) - (h / 2); // 중앙에서부터 창의 위쪽 위치 계산
+        window.open("uploadphotos.jsp?memberId=" + memberId + "&moimNum=" + no , "새창 이름", "width=" + w + ",height=" + h + ",top=" + top + ",left=" + left);
     }
 
     function showDetail(imageUrl, memberId, no, photoNum) {
